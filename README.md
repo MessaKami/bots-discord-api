@@ -163,40 +163,5 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Déploiement
-
-Lorsque vous êtes prêt à déployer votre application NestJS en production, il y a plusieurs étapes clés à suivre pour garantir un fonctionnement optimal. Consultez la [documentation de déploiement](https://docs.nestjs.com/deployment) pour plus d'informations.
-
-Si vous recherchez une plateforme cloud pour déployer votre application NestJS, découvrez [Mau](https://mau.nestjs.com), notre plateforme officielle de déploiement d'applications NestJS sur AWS. Mau rend le déploiement simple et rapide, en quelques étapes simples :
-
-```bash
-$ npm install -g mau
-$ mau deploy
-```
-
-Avec Mau, vous pouvez déployer votre application en quelques clics, vous permettant de vous concentrer sur le développement plutôt que sur la gestion de l'infrastructure.
-
-## Ressources
-
-Voici quelques ressources utiles pour travailler avec NestJS :
-
-- Visitez la [Documentation NestJS](https://docs.nestjs.com) pour en savoir plus sur le framework.
-- Pour vos questions et le support, rejoignez notre [canal Discord](https://discord.gg/G7Qnnhy).
-- Pour approfondir vos connaissances, découvrez nos [formations](https://courses.nestjs.com/) vidéo officielles.
-- Déployez votre application sur AWS avec [NestJS Mau](https://mau.nestjs.com) en quelques clics.
-- Visualisez votre application et interagissez en temps réel avec [NestJS Devtools](https://devtools.nestjs.com).
-- Besoin d'aide sur votre projet ? Consultez notre [support entreprise](https://enterprise.nestjs.com).
-- Pour rester informé, suivez-nous sur [X](https://x.com/nestframework) et [LinkedIn](https://linkedin.com/company/nestjs).
-- Recherchez un emploi ou proposez des offres sur notre [Job board](https://jobs.nestjs.com).
-
-## Support
-
-NestJS est un projet open source sous licence MIT. Il peut se développer grâce aux sponsors et au soutien de ses incroyables contributeurs. Si vous souhaitez les rejoindre, [en savoir plus ici](https://docs.nestjs.com/support).
-
-## Contact
-
-- Auteur - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Site web - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
 
 
