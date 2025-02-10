@@ -42,6 +42,22 @@ Cette API est conçue pour gérer des bots Discord en utilisant le framework Nes
 
 Afin de maintenir une cohérence et une clarté dans notre travail collaboratif, nous avons mis en place des normes pour les messages de commit et les pull requests.
 
+## Utilisation de GitFlow
+
+Le projet suit le workflow GitFlow pour la gestion des branches. Voici les principales branches à utiliser :
+
+- `main` : Branche de production, contient le code stable
+- `develop` : Branche principale de développement
+- `feature/*` : Branches pour les nouvelles fonctionnalités
+- `hotfix/*` : Branches pour les corrections urgentes
+- `release/*` : Branches pour la préparation des versions
+
+Règles importantes :
+- Toute nouvelle fonctionnalité doit partir de `develop` et créer une branche `feature/nom-de-la-feature`
+- Les corrections urgentes partent de `main` avec une branche `hotfix/nom-du-fix`
+- Les branches `feature` sont fusionnées dans `develop`
+- Les `hotfix` sont fusionnés dans `main` ET `develop`
+
 ## Messages de commit
 
 Les messages de commit doivent suivre ce format :
