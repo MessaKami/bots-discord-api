@@ -24,76 +24,178 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Cette API est conçue pour gérer des bots Discord en utilisant le framework NestJS et Fastify. 
 
-## Project setup
+## Sommaire
+
+- [Installation](#installation)
+- [Configuration et Démarrage](#configuration-et-démarrage)
+- [Tests](#tests)
+- [Déploiement](#déploiement)
+- [Ressources](#ressources)
+- [Normes des Commits et Pull Requests](#normes-pour-les-commits-et-les-pull-requests)
+- [Support](#support)
+- [Contact](#contact)
+
+# Normes pour les commits et les pull requests ✍️
+
+Afin de maintenir une cohérence et une clarté dans notre travail collaboratif, nous avons mis en place des normes pour les messages de commit et les pull requests.
+
+## Messages de commit
+
+Les messages de commit doivent suivre ce format :
+
+    type(portée): titre du commit
+
+### Explication :
+
+**_type_** : Le type de modification, par exemple "fix" ou "feat".
+
+**_portée_** : Le dossier concerné (un commit par fichier modifié, supprimé ou ajouté).
+
+**_titre du commit_**: Une description concise du changement apporté. En l'occurence  (en anglais)
+
+### Exemple :
+
+```
+  feat(controller): add problem endpoints
+```
+
+## Body du commit (corps détaillé)
+
+**_Ajouter un body_** : Si le titre du commit n'est pas assez explicite sur la localisation de la modification, le nom du fichier doit être précisé dans le body.
+
+### Exemple :
+
+```
+In file "problem.controller.ts" 
+```
+
+Cela permet de donner plus d'informations sur les raisons du changement, son impact ou les fichiers modifiés.
+
+## Longueur des commits
+
+**_Bonne pratique_** : Respecter une longueur maximale d'environ 50 caractères pour les titres des commits. Cela permet d'avoir des messages concis, faciles à lire et à comprendre.
+
+## Commits atomiques
+
+**_Commits atomiques_** : Chaque commit doit être atomique, c'est-à-dire qu'il doit se concentrer sur une seule fonctionnalité ou un seul changement.
+Cela veut dire un commit par fichier modifié, supprimé ou ajouté au minimum.
+
+Cela garantit une meilleure traçabilité et simplifie la gestion des erreurs.
+
+## Noms des pull requests
+
+**_Nom en anglais_** : Les titres des pull requests doivent être rédigés en anglais pour garantir une compréhension globale de l'équipe.
+
+## Labels sur les pull requests
+
+**_Ajout de labels_** : Chaque pull request doit inclure un ou plusieurs labels pour faciliter la gestion des PRs.
+
+Les labels indiquent le type de changement.
+
+Par exemple :
+
+![Hotfix](https://img.shields.io/badge/Hotfix-ff0000?style=flat)
+![Feature](https://img.shields.io/badge/Feature-blue?style=flat)
+
+## Noms de fichiers
+
+**_Nom des fichiers en français_** : Les noms des fichiers dans le projet doivent être en français pour garder une cohérence avec la langue principale du projet.
+
+Utiliser le **kebab-case** : Les noms de fichiers doivent être écrits en kebab-case, c'est-à-dire tout en minuscules, avec des mots séparés par des tirets.
+
+**_Exemple_** :
+
+    gestion-utilisateurs.js
+    verifier-email.md
+
+## Suivi des changements dans les pull requests
+
+**_Demandes de changements détaillées par les reviewers_** : Si un reviewer exige des modifications sur une pull request, il doit clairement spécifier dans un commentaire les changements à effectuer.
+
+Le reviewer doit fournir une explication détaillée pour s'assurer que le contributeur comprend bien les modifications demandées. Cela favorise la transparence et permet à tous les membres de l'équipe de suivre l'évolution de la pull request.
+
+## Processus d'approbation et de fusion des pull requests
+
+**_Approbation partagée_** : Une pull request doit être validée par au moins un membre du groupe émetteur de la PR en question.
+
+**_Nombre minimum de reviewers_** : Pour qu'une pull request soit fusionnée, elle doit être approuvée par un minimum de trois reviewers, y compris des membres externes au groupe émetteur, afin de garantir une évaluation complète et de qualité.
+
+**_Validation du Tech Lead_** : Parmi les reviewers, le Tech Lead du groupe émetteur de la pull request doit obligatoirement faire partie des approbateurs. L'approbation finale du Tech Lead est nécessaire pour qu'un membre du groupe puisse procéder à la fusion. Il revient au Tech Lead de donner l'aval définitif, assurant que la pull request est prête à être intégrée dans la base de code principale.
+
+**_Responsabilité lors de la fusion_** : Le tech lead qui approuve le merge d'une pull request est responsable de la fusion de celle-ci. En acceptant de fusionner la pull request, il accepte également de prendre la responsabilité en cas de problèmes futurs liés à cette pull request.
+
+**_Interdiction pour l'émetteur de fusionner sa pull request_** : L'émetteur de la pull request n'est pas autorisé à fusionner sa propre pull request. Cela permet de garantir une validation externe par les autres membres du groupe ou par des reviewers indépendants, pour renforcer la qualité et la fiabilité des modifications apportées.
+
+**_Annulation des approbations de pull requests lorsque de nouveaux commits sont poussés_** : La règle "Dismiss stale pull request approvals when new commits are pushed" doit être activée. Cela signifie que si des commits supplémentaires sont ajoutés à une pull request déjà approuvée, les approbations précédentes seront automatiquement révoquées. Cette règle garantit que les modifications récentes sont également examinées par les reviewers, assurant ainsi que l'évaluation de la pull request reste valide et à jour.
+
+## Installation
 
 ```bash
 $ npm install
 ```
 
-## Compile and run the project
+## Configuration et Démarrage
 
 ```bash
-# development
+# développement
 $ npm run start
 
-# watch mode
+# mode watch
 $ npm run start:dev
 
-# production mode
+# mode production
 $ npm run start:prod
 ```
 
-## Run tests
+## Tests
 
 ```bash
-# unit tests
+# tests unitaires
 $ npm run test
 
-# e2e tests
+# tests e2e
 $ npm run test:e2e
 
-# test coverage
+# couverture de tests
 $ npm run test:cov
 ```
 
-## Deployment
+## Déploiement
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+Lorsque vous êtes prêt à déployer votre application NestJS en production, il y a plusieurs étapes clés à suivre pour garantir un fonctionnement optimal. Consultez la [documentation de déploiement](https://docs.nestjs.com/deployment) pour plus d'informations.
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+Si vous recherchez une plateforme cloud pour déployer votre application NestJS, découvrez [Mau](https://mau.nestjs.com), notre plateforme officielle de déploiement d'applications NestJS sur AWS. Mau rend le déploiement simple et rapide, en quelques étapes simples :
 
 ```bash
 $ npm install -g mau
 $ mau deploy
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+Avec Mau, vous pouvez déployer votre application en quelques clics, vous permettant de vous concentrer sur le développement plutôt que sur la gestion de l'infrastructure.
 
-## Resources
+## Ressources
 
-Check out a few resources that may come in handy when working with NestJS:
+Voici quelques ressources utiles pour travailler avec NestJS :
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+- Visitez la [Documentation NestJS](https://docs.nestjs.com) pour en savoir plus sur le framework.
+- Pour vos questions et le support, rejoignez notre [canal Discord](https://discord.gg/G7Qnnhy).
+- Pour approfondir vos connaissances, découvrez nos [formations](https://courses.nestjs.com/) vidéo officielles.
+- Déployez votre application sur AWS avec [NestJS Mau](https://mau.nestjs.com) en quelques clics.
+- Visualisez votre application et interagissez en temps réel avec [NestJS Devtools](https://devtools.nestjs.com).
+- Besoin d'aide sur votre projet ? Consultez notre [support entreprise](https://enterprise.nestjs.com).
+- Pour rester informé, suivez-nous sur [X](https://x.com/nestframework) et [LinkedIn](https://linkedin.com/company/nestjs).
+- Recherchez un emploi ou proposez des offres sur notre [Job board](https://jobs.nestjs.com).
 
 ## Support
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+NestJS est un projet open source sous licence MIT. Il peut se développer grâce aux sponsors et au soutien de ses incroyables contributeurs. Si vous souhaitez les rejoindre, [en savoir plus ici](https://docs.nestjs.com/support).
 
-## Stay in touch
+## Contact
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
+- Auteur - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
+- Site web - [https://nestjs.com](https://nestjs.com/)
 - Twitter - [@nestframework](https://twitter.com/nestframework)
 
-## License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
