@@ -28,12 +28,13 @@ Cette API est conçue pour gérer des bots Discord en utilisant le framework Nes
 
 ## Sommaire
 
+- [Normes des Commits et Pull Requests](#normes-pour-les-commits-et-les-pull-requests)
 - [Installation](#installation)
 - [Configuration et Démarrage](#configuration-et-démarrage)
 - [Tests](#tests)
 - [Déploiement](#déploiement)
 - [Ressources](#ressources)
-- [Normes des Commits et Pull Requests](#normes-pour-les-commits-et-les-pull-requests)
+
 - [Support](#support)
 - [Contact](#contact)
 
