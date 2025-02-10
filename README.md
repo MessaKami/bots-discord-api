@@ -163,5 +163,19 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+## Contributeurs
+
+- [aReynier](https://github.com/aReynier)
+- [AyoubLaroussi](https://github.com/ayoub-laroussi)
+- [Boris betremieux](https://github.com/BborisB )
+- [Martial Floquet](https://github.com/martial59110)
+- [EnguerranSGG](https://github.com/EnguerranSGG)
+- [Gabriel Luthun](https://github.com/gabrielluthun)
+- [Julien Beauchant](https://github.com/julienbeauchant)
+- [Messa](https://github.com/MessaKami)
+- [YohanF1245](https://github.com/YohanF1245)
+- [Justin Didelot](https://github.com/Srekaens)
+- [Abdel](https://github.com/UnknOownU)
+
 
 
