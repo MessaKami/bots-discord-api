@@ -1,7 +1,4 @@
-version: '3.8'
-
 services:
-  
   app-prod:
     container_name: bots-api-prod
     build:
@@ -15,8 +12,8 @@ services:
       - /app/node_modules
     depends_on:
       - db
-    profiles:
-      - prod
+    networks:
+      - app-network
 
   db: 
     image: postgres:17-alpine
@@ -29,6 +26,8 @@ services:
       - "5432:5432"
     volumes: 
       - db-data:/var/lib/postgresql/data
+    networks:
+      - app-network
 
   nginx:
     image: nginx:latest
@@ -40,6 +39,12 @@ services:
     depends_on:
       - app-prod
     restart: always    
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
 
 volumes:
   db-data:
