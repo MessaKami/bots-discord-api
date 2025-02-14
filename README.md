@@ -34,7 +34,11 @@ Cette API est conçue pour gérer des bots Discord en utilisant le framework Nes
 - [Tests](#tests)
 - [Déploiement](#déploiement)
 - [Ressources](#ressources)
-
+- [API Endpoints](#api-endpoints)
+  - [Guild Endpoints](#guild-endpoints)
+  - [Campus Endpoints](#campus-endpoints)
+  - [Channel Endpoints](#channel-endpoints)
+  - [Promotion Endpoints](#promotion-endpoints)
 - [Support](#support)
 - [Contact](#contact)
 
