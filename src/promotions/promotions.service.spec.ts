@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PromotionService } from './promotion.service';
+import { PromotionService } from './promotions.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Promotion } from './entities/promotion.entity';
 
