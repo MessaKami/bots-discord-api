@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ChannelController } from './channels.controller';
 import { ChannelService } from './channels.service';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 
 describe('ChannelController', () => {
   let controller: ChannelController;
@@ -12,11 +13,11 @@ describe('ChannelController', () => {
         {
           provide: ChannelService,
           useValue: {
-            create: jest.fn(),
-            findAll: jest.fn(),
-            findOne: jest.fn(),
-            update: jest.fn(),
-            remove: jest.fn(),
+            create: vi.fn(),
+            findAll: vi.fn(),
+            findOne: vi.fn(),
+            update: vi.fn(),
+            remove: vi.fn(),
           },
         },
       ],

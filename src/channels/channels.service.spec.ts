@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ChannelService } from './channels.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Channel } from './entities/channel.entity';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 
 describe('ChannelService', () => {
   let service: ChannelService;
@@ -13,11 +14,11 @@ describe('ChannelService', () => {
         {
           provide: getRepositoryToken(Channel),
           useValue: {
-            create: jest.fn(),
-            save: jest.fn(),
-            find: jest.fn(),
-            findOneBy: jest.fn(),
-            delete: jest.fn(),
+            create: vi.fn(),
+            save: vi.fn(),
+            find: vi.fn(),
+            findOneBy: vi.fn(),
+            delete: vi.fn(),
           },
         },
       ],
