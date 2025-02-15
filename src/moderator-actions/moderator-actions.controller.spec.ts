@@ -4,6 +4,7 @@ import { ModeratorActionsService } from './moderator-actions.service';
 import { CreateModeratorActionDto, ActionType } from './dto/create-moderator-action.dto';
 import { UpdateModeratorActionDto } from './dto/update-moderator-action.dto';
 import { NotFoundException, BadRequestException } from '@nestjs/common';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 
 describe('ModeratorActionsController', () => {
   let controller: ModeratorActionsController;
@@ -21,11 +22,11 @@ describe('ModeratorActionsController', () => {
   };
 
   const mockService = {
-    create: jest.fn(),
-    findAll: jest.fn(),
-    findOne: jest.fn(),
-    update: jest.fn(),
-    remove: jest.fn(),
+    create: vi.fn(),
+    findAll: vi.fn(),
+    findOne: vi.fn(),
+    update: vi.fn(),
+    remove: vi.fn(),
   };
 
   beforeEach(async () => {
@@ -44,7 +45,7 @@ describe('ModeratorActionsController', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe('create', () => {
