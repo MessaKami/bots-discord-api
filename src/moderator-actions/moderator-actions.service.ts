@@ -9,7 +9,7 @@ import { ModeratorAction } from './entities/moderator-action.entity';
 export class ModeratorActionsService {
   constructor(
     @InjectRepository(ModeratorAction)
-    private moderatorActionRepository: Repository<ModeratorAction>,
+    private readonly moderatorActionRepository: Repository<ModeratorAction>,
   ) {}
 
   async create(createModeratorActionDto: CreateModeratorActionDto): Promise<ModeratorAction> {
