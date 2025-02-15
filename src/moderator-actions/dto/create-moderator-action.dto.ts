@@ -51,7 +51,7 @@ export class CreateModeratorActionDto {
    */
   @IsOptional()
   @IsString({ message: 'La durée doit être une chaîne de caractères' })
-  @Matches(/^(\d+)(m|h|d|w)$/, { 
+  @Matches(/^(\d+)[mhdw]$/, { 
     message: 'La durée doit être au format: [nombre][unité] (ex: 30m, 24h, 7d, 1w)'
   })
   duration?: string;
