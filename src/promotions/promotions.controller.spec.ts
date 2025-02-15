@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PromotionController } from './promotions.controller';
 import { PromotionService } from './promotions.service';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 
 describe('PromotionController', () => {
   let controller: PromotionController;
@@ -12,11 +13,11 @@ describe('PromotionController', () => {
         {
           provide: PromotionService,
           useValue: {
-            create: jest.fn(),
-            findAll: jest.fn(),
-            findOne: jest.fn(),
-            update: jest.fn(),
-            remove: jest.fn(),
+            create: vi.fn(),
+            findAll: vi.fn(),
+            findOne: vi.fn(),
+            update: vi.fn(),
+            remove: vi.fn(),
           },
         },
       ],

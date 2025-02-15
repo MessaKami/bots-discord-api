@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { PromotionService } from './promotions.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Promotion } from './entities/promotion.entity';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 
 describe('PromotionService', () => {
   let service: PromotionService;
@@ -13,11 +14,11 @@ describe('PromotionService', () => {
         {
           provide: getRepositoryToken(Promotion),
           useValue: {
-            create: jest.fn(),
-            save: jest.fn(),
-            find: jest.fn(),
-            findOneBy: jest.fn(),
-            delete: jest.fn(),
+            create: vi.fn(),
+            save: vi.fn(),
+            find: vi.fn(),
+            findOneBy: vi.fn(),
+            delete: vi.fn(),
           },
         },
       ],
