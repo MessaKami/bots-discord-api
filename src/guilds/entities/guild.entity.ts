@@ -2,13 +2,13 @@ import { Entity, Column, PrimaryColumn } from 'typeorm';
 
 @Entity('guilds')
 export class Guild {
-  @PrimaryColumn('bigint', { name: 'guild_id' })
+  @PrimaryColumn('varchar', { name: 'uuid_guild' })
   uuid: string;
 
-  @Column()
+  @Column({ type: 'varchar', length: 50 }) 
   name: string;
 
-  @Column({ name: 'member_count' })
+  @Column({ name: 'member_count', type: 'int' })
   memberCount: number;
 
   @Column({ type: 'jsonb', nullable: true })
