@@ -3,9 +3,8 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ModeratorActionsService } from './moderator-actions.service';
 import { ModeratorAction } from './entities/moderator-action.entity';
-import { CreateModeratorActionDto } from './dto/create-moderator-action.dto';
+import { CreateModeratorActionDto, ActionType } from './dto/create-moderator-action.dto';
 import { UpdateModeratorActionDto } from './dto/update-moderator-action.dto';
-import { ActionType } from './dto/create-moderator-action.dto';
 import { NotFoundException, BadRequestException } from '@nestjs/common';
 
 describe('ModeratorActionsService', () => {
