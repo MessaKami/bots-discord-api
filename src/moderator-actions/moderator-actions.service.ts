@@ -12,15 +12,25 @@ export class ModeratorActionsService {
     private readonly moderatorActionRepository: Repository<ModeratorAction>,
   ) {}
 
-  async create(createModeratorActionDto: CreateModeratorActionDto): Promise<ModeratorAction> {
+  /**
+   * Crée une nouvelle action de modération
+   * @throws BadRequestException si la création échoue
+   */
+  async create(createDto: CreateModeratorActionDto): Promise<ModeratorAction> {
     try {
-      const moderatorAction = this.moderatorActionRepository.create(createModeratorActionDto);
+      const moderatorAction = this.moderatorActionRepository.create(createDto);
       return await this.moderatorActionRepository.save(moderatorAction);
     } catch (error) {
-      throw new BadRequestException('Impossible de créer l\'action de modération');
+      throw new BadRequestException(
+        'Impossible de créer l\'action de modération: ' + error.message,
+      );
     }
   }
 
+  /**
+   * Récupère toutes les actions de modération
+   * @returns Liste des actions triées par date de création
+   */
   async findAll(): Promise<ModeratorAction[]> {
     try {
       return await this.moderatorActionRepository.find({
@@ -29,54 +39,70 @@ export class ModeratorActionsService {
         },
       });
     } catch (error) {
-      throw new BadRequestException('Impossible de récupérer les actions de modération');
+      throw new BadRequestException(
+        'Erreur lors de la récupération des actions de modération',
+      );
     }
   }
 
+  /**
+   * Récupère une action de modération spécifique
+   * @throws NotFoundException si l'action n'existe pas
+   */
   async findOne(id: string): Promise<ModeratorAction> {
     try {
-      const moderatorAction = await this.moderatorActionRepository.findOne({
+      const action = await this.moderatorActionRepository.findOne({
         where: { id },
       });
 
-      if (!moderatorAction) {
-        throw new NotFoundException('Action de modération non trouvée');
+      if (!action) {
+        throw new NotFoundException(
+          `Action de modération avec l'ID ${id} non trouvée`,
+        );
       }
 
-      return moderatorAction;
+      return action;
     } catch (error) {
       if (error instanceof NotFoundException) {
         throw error;
       }
-      throw new BadRequestException('Impossible de récupérer l\'action de modération');
+      throw new BadRequestException(
+        `Erreur lors de la récupération de l'action de modération: ${error.message}`,
+      );
     }
   }
 
-  async update(id: string, updateModeratorActionDto: UpdateModeratorActionDto): Promise<ModeratorAction> {
+  /**
+   * Met à jour une action de modération
+   * @throws NotFoundException si l'action n'existe pas
+   * @throws BadRequestException si la mise à jour échoue
+   */
+  async update(id: string, updateDto: UpdateModeratorActionDto): Promise<ModeratorAction> {
+    const existingAction = await this.findOne(id);
+
     try {
-      const moderatorAction = await this.findOne(id);
-      
-      Object.assign(moderatorAction, updateModeratorActionDto);
-      
-      return await this.moderatorActionRepository.save(moderatorAction);
+      Object.assign(existingAction, updateDto);
+      return await this.moderatorActionRepository.save(existingAction);
     } catch (error) {
-      if (error instanceof NotFoundException) {
-        throw error;
-      }
-      throw new BadRequestException('Impossible de mettre à jour l\'action de modération');
+      throw new BadRequestException(
+        `Erreur lors de la mise à jour de l'action de modération: ${error.message}`,
+      );
     }
   }
 
-  async remove(id: string): Promise<ModeratorAction> {
+  /**
+   * Supprime une action de modération
+   * @throws NotFoundException si l'action n'existe pas
+   */
+  async remove(id: string): Promise<void> {
+    const action = await this.findOne(id);
+
     try {
-      const moderatorAction = await this.findOne(id);
-      
-      return await this.moderatorActionRepository.remove(moderatorAction);
+      await this.moderatorActionRepository.remove(action);
     } catch (error) {
-      if (error instanceof NotFoundException) {
-        throw error;
-      }
-      throw new BadRequestException('Impossible de supprimer l\'action de modération');
+      throw new BadRequestException(
+        `Erreur lors de la suppression de l'action de modération: ${error.message}`,
+      );
     }
   }
 }
