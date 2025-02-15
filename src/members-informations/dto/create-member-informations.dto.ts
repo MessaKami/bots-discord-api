@@ -1,9 +1,10 @@
-import { IsString, IsEmail, MaxLength } from 'class-validator';
+import { IsString, IsEmail, MaxLength, MinLength } from 'class-validator';
 
 export class CreateMemberInformationsDto {
 
     @IsString()
     @MaxLength(36)
+    @MinLength(36)
     uuid_member: string;
 
     @IsString()
