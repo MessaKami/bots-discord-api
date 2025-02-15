@@ -3,14 +3,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from './config/typeorm.config';
 import { GuildModule } from './guilds/guilds.module';
 import { CampusModule } from './campuses/campuses.module';
-import { MemberInformationsModule } from './member-informations/member-informations.module';
+import { MembersInformationsModule } from './members-informations/members-informations.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(typeOrmConfig),
     GuildModule,
     CampusModule,
-    MemberInformationsModule,
+    MembersInformationsModule,
   ],
   controllers: [],
   providers: [],
