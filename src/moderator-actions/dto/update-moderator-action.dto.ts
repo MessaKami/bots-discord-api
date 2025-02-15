@@ -1,7 +1,7 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { CreateModeratorActionDto } from './create-moderator-action.dto';
+import { CreateModeratorActionDto, ActionType } from './create-moderator-action.dto';
 import { IsOptional, IsString, IsEnum, IsUUID, Length, Matches } from 'class-validator';
-import { ActionType } from './create-moderator-action.dto';
+
 
 /**
  * DTO pour la mise à jour d'une action de modération
