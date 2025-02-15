@@ -1,9 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ModeratorActionsController } from './moderator-actions.controller';
 import { ModeratorActionsService } from './moderator-actions.service';
-import { CreateModeratorActionDto } from './dto/create-moderator-action.dto';
+import { CreateModeratorActionDto, ActionType } from './dto/create-moderator-action.dto';
 import { UpdateModeratorActionDto } from './dto/update-moderator-action.dto';
-import { ActionType } from './dto/create-moderator-action.dto';
 import { NotFoundException, BadRequestException } from '@nestjs/common';
 
 describe('ModeratorActionsController', () => {
