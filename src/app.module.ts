@@ -4,6 +4,7 @@ import { typeOrmConfig } from './config/typeorm.config';
 import { GuildModule } from './guilds/guilds.module';
 import { CampusModule } from './campuses/campuses.module';
 import { MembersInformationsModule } from './members-informations/members-informations.module';
+import { CategoriesModule } from './categories/categories.module';
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { MembersInformationsModule } from './members-informations/members-inform
     GuildModule,
     CampusModule,
     MembersInformationsModule,
+    CategoriesModule,
   ],
   controllers: [],
   providers: [],
