@@ -6,7 +6,7 @@ import { CampusModule } from './campuses/campuses.module';
 import { MembersInformationsModule } from './members-informations/members-informations.module';
 import { CategoriesModule } from './categories/categories.module';
 import { RolesModule } from './roles/roles.module';
-
+import { MembersModule } from './members/members.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot(typeOrmConfig),
@@ -15,6 +15,7 @@ import { RolesModule } from './roles/roles.module';
     MembersInformationsModule,
     CategoriesModule,
     RolesModule,
+    MembersModule,
   ],
   controllers: [],
   providers: [],
