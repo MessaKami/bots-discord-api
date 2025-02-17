@@ -9,6 +9,8 @@ import { GuildsTemplatesModule } from './guilds-templates/guilds-templates.modul
 import { ModeratorActionsModule } from './moderator-actions/moderator-actions.module';
 import { MembersInformationsModule } from './members-informations/members-informations.module';
 import { CategoriesModule } from './categories/categories.module';
+import { RolesModule } from './roles/roles.module';
+import { MembersModule } from './members/members.module';
 
 /**
  * Module principal de l'application
@@ -29,6 +31,8 @@ import { CategoriesModule } from './categories/categories.module';
     ModeratorActionsModule,
     MembersInformationsModule,
     CategoriesModule,
+    RolesModule,
+    MembersModule,
   ],
   controllers: [],
   providers: [],
