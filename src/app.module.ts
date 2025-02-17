@@ -11,6 +11,7 @@ import { MembersInformationsModule } from './members-informations/members-inform
 import { CategoriesModule } from './categories/categories.module';
 import { RolesModule } from './roles/roles.module';
 import { MembersModule } from './members/members.module';
+import { QuestionsModule } from './questions/questions.module';
 
 /**
  * Module principal de l'application
@@ -33,6 +34,7 @@ import { MembersModule } from './members/members.module';
     CategoriesModule,
     RolesModule,
     MembersModule,
+    QuestionsModule,
   ],
   controllers: [],
   providers: [],
