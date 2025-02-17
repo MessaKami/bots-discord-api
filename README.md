@@ -34,7 +34,11 @@ Cette API est conçue pour gérer des bots Discord en utilisant le framework Nes
 - [Tests](#tests)
 - [Déploiement](#déploiement)
 - [Ressources](#ressources)
-
+- [API Endpoints](#api-endpoints)
+  - [Guild Endpoints](#guild-endpoints)
+  - [Campus Endpoints](#campus-endpoints)
+  - [Channel Endpoints](#channel-endpoints)
+  - [Promotion Endpoints](#promotion-endpoints)
 - [Support](#support)
 - [Contact](#contact)
 
@@ -268,6 +272,102 @@ Example: `/campus/550e8400-e29b-41d4-a716-446655440000`
 - **DELETE** `/campus/:uuid`
 Example: `/campus/550e8400-e29b-41d4-a716-446655440000`
 
+### Guilds-Templates Endpoints
+
+#### Create a Guild Template
+- **POST** `/guilds-templates`
+```json
+{
+  "uuid": "123456789012345678",
+  "name": "Server Template",
+}
+```
+
+#### Get All Guild Templates
+- **GET** `/guilds-templates`
+
+#### Get One Guild Template
+- **GET** `/guilds-templates/:uuid`
+Example: `/guilds-templates/123456789012345678`
+
+#### Update a Guild Template
+- **PUT** `/guilds-templates/:uuid`
+```json
+{
+  "name": "Updated Template Name",
+}
+```
+
+#### Delete a Guild Template
+- **DELETE** `/guilds-templates/:uuid`
+Example: `/guilds-templates/123456789012345678`
+
+### Channel Endpoints
+
+#### Create a Channel
+- **POST** `/channels`
+```json
+{
+  "name": "general",
+  "type": "text",
+  "channelPosition": 1
+}
+```
+
+#### Get All Channels
+- **GET** `/channels`
+
+#### Get One Channel
+- **GET** `/channels/:uuid`
+Example: `/channels/123456789012345678`
+
+#### Update a Channel
+- **PUT** `/channels/:uuid`
+```json
+{
+  "name": "announcements",
+  "type": "text",
+  "channelPosition": 2
+}
+```
+
+#### Delete a Channel
+- **DELETE** `/channels/:uuid`
+Example: `/channels/123456789012345678`
+
+### Promotion Endpoints
+
+#### Create a Promotion
+- **POST** `/promotions`
+```json
+{
+  "name": "Dev Web 2024",
+  "startDate": "2024-01-01T00:00:00.000Z",
+  "endDate": "2024-12-31T23:59:59.999Z"
+}
+```
+
+#### Get All Promotions
+- **GET** `/promotions`
+
+#### Get One Promotion
+- **GET** `/promotions/:uuid`
+Example: `/promotions/550e8400-e29b-41d4-a716-446655440000`
+
+#### Update a Promotion
+- **PUT** `/promotions/:uuid`
+```json
+{
+  "name": "Dev Web 2024 - Updated",
+  "startDate": "2024-02-01T00:00:00.000Z",
+  "endDate": "2024-12-31T23:59:59.999Z"
+}
+```
+
+#### Delete a Promotion
+- **DELETE** `/promotions/:uuid`
+Example: `/promotions/550e8400-e29b-41d4-a716-446655440000`
+
 Note: 
 - All timestamps (`createdAt`, `updatedAt`) are managed automatically
 - For Guild endpoints, the `uuid` must be a valid Discord server ID (17-20 digits)
@@ -346,3 +446,8 @@ Example: `/categories/57bb2c9b-a472-408d-9b90-4a834da929d0`
 #### Delete category
 - **DELETE** `/categories/:uuidSF`  
 Example: `/categories/57bb2c9b-a472-408d-9b90-4a834da929d0`
+
+Note: 
+- All timestamps (`createdAt`, `updatedAt`) are managed automatically
+- For Guild endpoints, the `uuid` must be a valid Discord server ID (17-20 digits)
+- For Campus endpoints, the `uuid` is automatically generated

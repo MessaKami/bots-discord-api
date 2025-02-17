@@ -5,6 +5,7 @@ import { typeOrmConfig } from './config/typeorm.config';
 // Modules de l'application
 import { GuildModule } from './guilds/guilds.module';
 import { CampusModule } from './campuses/campuses.module';
+import { GuildsTemplatesModule } from './guilds-templates/guilds-templates.module';
 import { ModeratorActionsModule } from './moderator-actions/moderator-actions.module';
 import { MembersInformationsModule } from './members-informations/members-informations.module';
 import { CategoriesModule } from './categories/categories.module';
@@ -26,6 +27,7 @@ import { MembersModule } from './members/members.module';
     // Modules fonctionnels
     GuildModule,
     CampusModule,
+    GuildsTemplatesModule,
     ModeratorActionsModule,
     MembersInformationsModule,
     CategoriesModule,
