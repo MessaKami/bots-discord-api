@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ResourcesModule } from './resources/resources.module';
-import { Resource } from './resources/entities/resource.entity';
+import { ReportsModule } from './reports/reports.module';
+import { typeOrmConfig } from './config/typeorm.config';
 
 /**
  * Module principal de l'application
@@ -12,17 +13,9 @@ import { Resource } from './resources/entities/resource.entity';
  */
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'postgres',
-      database: 'discord_bot',
-      entities: [Resource],
-      synchronize: true,
-    }),
+    TypeOrmModule.forRoot(typeOrmConfig),
     ResourcesModule,
+    ReportsModule,
   ],
   controllers: [],
   providers: [],
