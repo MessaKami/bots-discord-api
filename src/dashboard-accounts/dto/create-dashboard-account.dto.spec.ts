@@ -6,7 +6,7 @@ describe('CreateDashboardAccountDto', () => {
     it('should validate a valid DTO', async () => {
         const dto = new CreateDashboardAccountDto();
         dto.uuidDashboardAccount = '123e4567-e89b-12d3-a456-426614174000';
-        dto.email = 'test@exemple.com';
+        dto.email = 'test@example.com';
         dto.password = 'password123';
 
         const errors = await validate(dto);
@@ -15,10 +15,18 @@ describe('CreateDashboardAccountDto', () => {
 
     it('should fail validation for missing required fields', async () => {
         const dto = new CreateDashboardAccountDto();
-        // Missing uuidDashboardAccount, email, and password
+        // Ne pas définir les champs pour tester la validation des champs requis
 
         const errors = await validate(dto);
-        expect(errors).toHaveLength(3); // Expecting errors for uuidDashboardAccount, email, and password
+        
+        // Vérifier le nombre total d'erreurs
+        expect(errors).toHaveLength(3);
+        
+        // Vérifier que chaque champ requis génère une erreur
+        const errorProperties = errors.map(error => error.property);
+        expect(errorProperties).toContain('uuidDashboardAccount');
+        expect(errorProperties).toContain('email');
+        expect(errorProperties).toContain('password');
     });
 
     it('should fail validation for invalid email', async () => {
@@ -28,17 +36,18 @@ describe('CreateDashboardAccountDto', () => {
         dto.password = 'password123';
 
         const errors = await validate(dto);
-        expect(errors).toHaveLength(1); // Expecting error for invalid email
+        expect(errors).toHaveLength(1);
+        expect(errors[0].property).toBe('email');
     });
 
-    it('should validate optional fields', async () => {
+    it('should fail validation for short password', async () => {
         const dto = new CreateDashboardAccountDto();
         dto.uuidDashboardAccount = '123e4567-e89b-12d3-a456-426614174000';
         dto.email = 'test@example.com';
-        dto.password = 'password123';
-        // createdAt and updatedAt are optional, so we don't set them
+        dto.password = 'short';
 
         const errors = await validate(dto);
-        expect(errors).toHaveLength(0); // No errors expected
+        expect(errors).toHaveLength(1);
+        expect(errors[0].property).toBe('password');
     });
 });

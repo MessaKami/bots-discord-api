@@ -1,5 +1,4 @@
-import { IsString, IsEmail, IsOptional, MinLength, IsBoolean } from 'class-validator';
-import { Timestamp } from 'typeorm';
+import { IsString, IsEmail, MinLength, IsUUID, IsNotEmpty } from 'class-validator';
 
 export class CreateDashboardAccountDto {
     // Swagger
@@ -8,6 +7,8 @@ export class CreateDashboardAccountDto {
     //     type: String,
     //     example: '123e4567-e89b-12d3-a456-426614174000',
     // })
+    @IsNotEmpty()
+    @IsUUID()
     uuidDashboardAccount: string;
 
     // Swagger
@@ -16,6 +17,7 @@ export class CreateDashboardAccountDto {
     //     type: String,
     //     example: 'test@example.com',
     // })
+    @IsNotEmpty()
     @IsEmail()
     email: string;
 
@@ -25,6 +27,7 @@ export class CreateDashboardAccountDto {
     //     type: String,
     //     example: 'password123',
     // })
+    @IsNotEmpty()
     @IsString()
     @MinLength(8)
     password: string;
