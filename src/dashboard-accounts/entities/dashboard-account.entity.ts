@@ -14,11 +14,19 @@ export class DashboardAccount {
     @Column({ type: 'varchar' })
     password: string;
 
-    @CreateDateColumn({ type: 'timestamp' })
-    createdAt: Timestamp;
+    @Column({
+        name: 'created_at',
+        type: 'timestamp',
+        default: () => 'CURRENT_TIMESTAMP',
+      })
+    createdAt: Date;
 
-    @UpdateDateColumn({ type: 'timestamp' })
-    updatedAt: Timestamp;
+    @Column({
+        name: 'updated_at',
+        type: 'timestamp',
+        nullable: true,
+      })
+    updatedAt: Date;
 
     // @ManyToOne(() => DiscordUser, discordUser => discordUser.dashboardAccounts) 
     // @JoinColumn({ name: 'uuidDiscord' })
