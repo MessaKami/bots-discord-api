@@ -272,6 +272,36 @@ Example: `/campus/550e8400-e29b-41d4-a716-446655440000`
 - **DELETE** `/campus/:uuid`
 Example: `/campus/550e8400-e29b-41d4-a716-446655440000`
 
+### Guilds-Templates Endpoints
+
+#### Create a Guild Template
+- **POST** `/guilds-templates`
+```json
+{
+  "uuid": "123456789012345678",
+  "name": "Server Template",
+}
+```
+
+#### Get All Guild Templates
+- **GET** `/guilds-templates`
+
+#### Get One Guild Template
+- **GET** `/guilds-templates/:uuid`
+Example: `/guilds-templates/123456789012345678`
+
+#### Update a Guild Template
+- **PUT** `/guilds-templates/:uuid`
+```json
+{
+  "name": "Updated Template Name",
+}
+```
+
+#### Delete a Guild Template
+- **DELETE** `/guilds-templates/:uuid`
+Example: `/guilds-templates/123456789012345678`
+
 ### Channel Endpoints
 
 #### Create a Channel
@@ -416,3 +446,8 @@ Example: `/categories/57bb2c9b-a472-408d-9b90-4a834da929d0`
 #### Delete category
 - **DELETE** `/categories/:uuidSF`  
 Example: `/categories/57bb2c9b-a472-408d-9b90-4a834da929d0`
+
+Note: 
+- All timestamps (`createdAt`, `updatedAt`) are managed automatically
+- For Guild endpoints, the `uuid` must be a valid Discord server ID (17-20 digits)
+- For Campus endpoints, the `uuid` is automatically generated
