@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 // import { DiscordUser } from '../../discord-users/entities/discord-user.entity';
 // import { bigint } from '../../types';
+import { Timestamp } from 'typeorm';
 
 @Entity('dashboard_accounts')
 export class DashboardAccount {
@@ -13,11 +14,11 @@ export class DashboardAccount {
     @Column({ type: 'varchar' })
     password: string;
 
-    @CreateDateColumn()
-    createdAt: Date;
+    @CreateDateColumn({ type: 'timestamp' })
+    createdAt: Timestamp;
 
-    @UpdateDateColumn()
-    updatedAt: Date;
+    @UpdateDateColumn({ type: 'timestamp' })
+    updatedAt: Timestamp;
 
     // @ManyToOne(() => DiscordUser, discordUser => discordUser.dashboardAccounts) 
     // @JoinColumn({ name: 'uuidDiscord' })

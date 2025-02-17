@@ -1,4 +1,5 @@
 import { IsString, IsEmail, IsOptional, MinLength, IsBoolean } from 'class-validator';
+import { Timestamp } from 'typeorm';
 
 export class CreateDashboardAccountDto {
     uuidDashboardAccount: string;
@@ -12,9 +13,9 @@ export class CreateDashboardAccountDto {
     
     @IsOptional()
     @IsString()
-    createdAt: Date;
+    createdAt: Timestamp;
 
     @IsOptional()
     @IsString()
-    updatedAt: Date;
+    updatedAt: Timestamp;
 }
