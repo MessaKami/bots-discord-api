@@ -2,10 +2,12 @@ import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateCol
 
 @Entity('campus')
 export class Campus {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn('uuid', {
+    name: 'uuid_campus',
+  })
   uuid: string;
 
-  @Column()
+  @Column({type: 'varchar', length: 50})
   name: string;
 
   @CreateDateColumn({
