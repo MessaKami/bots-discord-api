@@ -6,6 +6,8 @@ import { typeOrmConfig } from './config/typeorm.config';
 import { GuildModule } from './guilds/guilds.module';
 import { CampusModule } from './campuses/campuses.module';
 import { ModeratorActionsModule } from './moderator-actions/moderator-actions.module';
+import { MembersInformationsModule } from './members-informations/members-informations.module';
+import { CategoriesModule } from './categories/categories.module';
 
 /**
  * Module principal de l'application
@@ -23,6 +25,8 @@ import { ModeratorActionsModule } from './moderator-actions/moderator-actions.mo
     GuildModule,
     CampusModule,
     ModeratorActionsModule,
+    MembersInformationsModule,
+    CategoriesModule,
   ],
   controllers: [],
   providers: [],
