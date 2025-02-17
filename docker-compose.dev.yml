@@ -6,12 +6,14 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    env_file: .env.development
+    environment:
+      - NODE_ENV=development
     ports:
       - "3000:3000"
     volumes:
       - .:/app
       - /app/node_modules
+      - app_logs:/app/logs
     depends_on:
       - db  
     networks:
@@ -34,6 +36,6 @@ services:
 networks:
   app-network:
     driver: bridge
-
 volumes:
   db-data:
+  app_logs:
