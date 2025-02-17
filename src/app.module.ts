@@ -14,6 +14,7 @@ import { RolesModule } from './roles/roles.module';
 import { MembersModule } from './members/members.module';
 import { XpTransactionsModule } from './xp-transactions/xp-transactions.module';
 import { QuestionsModule } from './questions/questions.module';
+import { DashboardAccountModule } from './dashboard-accounts/dashboard-accounts.module';
 
 /**
  * Module principal de l'application
@@ -39,6 +40,7 @@ import { QuestionsModule } from './questions/questions.module';
     MembersModule,
     XpTransactionsModule,
     QuestionsModule,
+    DashboardAccountModule,
   ],
   controllers: [],
   providers: [],
