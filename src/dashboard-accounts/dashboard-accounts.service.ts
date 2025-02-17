@@ -33,9 +33,14 @@ export class DashboardAccountService {
     }
 
     async deleteByUUID(uuidDashboardAccount: string): Promise<void> {
-        const result = await this.dashboardAccountRepository.delete({ uuidDashboardAccount });
-        if (result.affected === 0) {
+        const dashboardAccount = await this.dashboardAccountRepository.findOne({ 
+            where: { uuidDashboardAccount } 
+        });
+        
+        if (!dashboardAccount) {
             throw new NotFoundException(`Dashboard account with UUID ${uuidDashboardAccount} not found`);
         }
+        
+        await this.dashboardAccountRepository.delete({ uuidDashboardAccount });
     }
 }
