@@ -1,18 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { typeOrmConfig } from './config/typeorm.config';
-
-// Modules de l'application
-import { GuildModule } from './guilds/guilds.module';
-import { CampusModule } from './campuses/campuses.module';
-import { GuildsTemplatesModule } from './guilds-templates/guilds-templates.module';
-import { ModeratorActionsModule } from './moderator-actions/moderator-actions.module';
-import { MembersInformationsModule } from './members-informations/members-informations.module';
-import { CategoriesModule } from './categories/categories.module';
-import { AnswersModule } from './answers/answers.module';
-import { RolesModule } from './roles/roles.module';
-import { MembersModule } from './members/members.module';
-import { QuestionsModule } from './questions/questions.module';
+import { ResourcesModule } from './resources/resources.module';
+import { Resource } from './resources/entities/resource.entity';
 
 /**
  * Module principal de l'application
@@ -23,20 +12,17 @@ import { QuestionsModule } from './questions/questions.module';
  */
 @Module({
   imports: [
-    // Configuration de la base de données
-    TypeOrmModule.forRoot(typeOrmConfig),
-
-    // Modules fonctionnels
-    GuildModule,
-    CampusModule,
-    GuildsTemplatesModule,
-    ModeratorActionsModule,
-    MembersInformationsModule,
-    CategoriesModule,
-    AnswersModule,
-    RolesModule,
-    MembersModule,
-    QuestionsModule,
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: 'postgres',
+      password: 'postgres',
+      database: 'discord_bot',
+      entities: [Resource],
+      synchronize: true,
+    }),
+    ResourcesModule,
   ],
   controllers: [],
   providers: [],
