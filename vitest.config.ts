@@ -3,23 +3,16 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   test: {
-    include: ['src/{promotions,channels}/**/*.spec.ts'],
+    include: ["src/**/*.spec.ts", "src/**/__tests__/*.test.ts"],
     exclude: ['node_modules', 'dist'],
     globals: true,
     environment: 'node',
+    root: './',
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
       include: ['src/{promotions,channels}/**/*.ts'],
       exclude: ['**/*.spec.ts', '**/index.ts'],
-    },
-  },
-});
-    globals: true,
-    root: './',
-    coverage: {
-      provider: 'v8',
-      reporter: ['text', 'json', 'html'],
     },
   },
   plugins: [
