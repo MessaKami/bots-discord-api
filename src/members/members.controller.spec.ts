@@ -52,10 +52,10 @@ describe('MembersController', () => {
         guild_username: 'TestUser',
         xp: '100.00',
         level: 1,
-        communit_role: 'Member',
+        community_role: 'Member',
         status: 'Active',
-        created_at: new Date(),
-        updated_at: new Date()
+        uuid_guild: '123e4567-e89b-12d3-a456-426614174001',
+        uuid_discord: '123e4567-e89b-12d3-a456-426614174002'
       };
 
       vi.mocked(membersService.create).mockResolvedValue(mockMember);
