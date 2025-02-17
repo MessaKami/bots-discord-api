@@ -35,9 +35,10 @@ export class ResourcesService {
   }
 
   async remove(uuid: string): Promise<void> {
-    const result = await this.resourcesRepository.delete(uuid);
-    if (result.affected === 0) {
+    const resource = await this.findOne(uuid);
+    if (!resource) {
       throw new NotFoundException(`Resource with UUID ${uuid} not found`);
     }
+    await this.resourcesRepository.delete({ uuid_resource: uuid });
   }
 } 
