@@ -8,8 +8,6 @@ describe('CreateDashboardAccountDto', () => {
         dto.uuidDashboardAccount = '123e4567-e89b-12d3-a456-426614174000';
         dto.email = 'test@exemple.com';
         dto.password = 'password123';
-        dto.createdAt = new Timestamp();
-        dto.updatedAt = new Timestamp();
 
         const errors = await validate(dto);
         expect(errors).toHaveLength(0);
