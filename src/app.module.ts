@@ -9,6 +9,7 @@ import { GuildsTemplatesModule } from './guilds-templates/guilds-templates.modul
 import { ModeratorActionsModule } from './moderator-actions/moderator-actions.module';
 import { MembersInformationsModule } from './members-informations/members-informations.module';
 import { CategoriesModule } from './categories/categories.module';
+import { AnswersModule } from './answers/answers.module';
 import { RolesModule } from './roles/roles.module';
 import { MembersModule } from './members/members.module';
 import { QuestionsModule } from './questions/questions.module';
@@ -32,6 +33,7 @@ import { QuestionsModule } from './questions/questions.module';
     ModeratorActionsModule,
     MembersInformationsModule,
     CategoriesModule,
+    AnswersModule,
     RolesModule,
     MembersModule,
     QuestionsModule,
