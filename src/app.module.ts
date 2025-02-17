@@ -5,6 +5,7 @@ import { GuildModule } from './guilds/guilds.module';
 import { CampusModule } from './campuses/campuses.module';
 import { MembersInformationsModule } from './members-informations/members-informations.module';
 import { CategoriesModule } from './categories/categories.module';
+import { RolesModule } from './roles/roles.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { CategoriesModule } from './categories/categories.module';
     CampusModule,
     MembersInformationsModule,
     CategoriesModule,
+    RolesModule,
   ],
   controllers: [],
   providers: [],
