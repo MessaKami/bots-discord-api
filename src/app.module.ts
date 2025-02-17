@@ -12,6 +12,7 @@ import { CategoriesModule } from './categories/categories.module';
 import { AnswersModule } from './answers/answers.module';
 import { RolesModule } from './roles/roles.module';
 import { MembersModule } from './members/members.module';
+import { XpTransactionsModule } from './xp-transactions/xp-transactions.module';
 import { QuestionsModule } from './questions/questions.module';
 
 /**
@@ -36,6 +37,7 @@ import { QuestionsModule } from './questions/questions.module';
     AnswersModule,
     RolesModule,
     MembersModule,
+    XpTransactionsModule,
     QuestionsModule,
   ],
   controllers: [],
