@@ -11,6 +11,7 @@ import { MembersInformationsModule } from './members-informations/members-inform
 import { CategoriesModule } from './categories/categories.module';
 import { RolesModule } from './roles/roles.module';
 import { MembersModule } from './members/members.module';
+import { XpTransactionsModule } from './xp-transactions/xp-transactions.module';
 
 /**
  * Module principal de l'application
@@ -33,6 +34,7 @@ import { MembersModule } from './members/members.module';
     CategoriesModule,
     RolesModule,
     MembersModule,
+    XpTransactionsModule,
   ],
   controllers: [],
   providers: [],
