@@ -68,7 +68,8 @@ Les messages de commit doivent suivre ce format :
 
 **_type_** : Le type de modification, par exemple "fix" ou "feat".
 
-**_portée_** : Le dossier concerné (un commit par fichier modifié, supprimé ou ajouté).
+**_portée_** : Le dossier concerné (un commit par fichier modifié, supprimé ou ajouté). La portée à indiquer sera l'identifiant de la tâche associée au ticket, par exemple noter 86c21fxeg pour la tâche suivante: \
+![Exemple de tâche](./src/assets/task-scope-example.png)
 
 **_titre du commit_**: Une description concise du changement apporté. En l'occurence  (en anglais)
 
@@ -275,12 +276,6 @@ Example: `/campus/550e8400-e29b-41d4-a716-446655440000`
 {
   "uuid": "123456789012345678",
   "name": "Server Template",
-  "description": "A template for creating new Discord servers",
-  "configuration": {
-    "welcomeChannel": "123456789",
-    "prefix": "!",
-    "language": "fr"
-  }
 }
 ```
 
@@ -296,18 +291,86 @@ Example: `/guilds-templates/123456789012345678`
 ```json
 {
   "name": "Updated Template Name",
-  "description": "Updated template description",
-  "configuration": {
-    "welcomeChannel": "987654321",
-    "prefix": "?",
-    "language": "en"
-  }
 }
 ```
 
 #### Delete a Guild Template
 - **DELETE** `/guilds-templates/:uuid`
 Example: `/guilds-templates/123456789012345678`
+
+### Members Informations Endpoints
+
+#### Create member informations
+
+- **POST** `/members-informations`
+```json
+{
+  "uuid-member": "123456789012345678",
+  "firstname": "Hidetaka",
+  "lastname": "Miyazaki",
+  "email": "hidetaka.miyazaki@from-software.com"
+}
+```
+
+#### Get All members informations 
+- **GET** `/members-informations`
+
+#### Get One member informations
+- **GET** `/members-informations/:uuid`
+Example: `/members-informations/57bb2c9b-a472-408d-9b90-4a834da929d0`
+
+
+#### Update member informations
+- **PUT** `/members-informations/:uuid`
+```json
+{
+  "uuid-member": "123456789012345678",
+  "firstname": "Hidetaka",
+  "lastname": "Miyazaki",
+  "email": "hidetaka.miyazaki@from-software.jp"
+}
+```
+
+#### Delete member informations
+
+- **DELETE** `/members-informations/:uuid`
+Example: `/members-informations/57bb2c9b-a472-408d-9b90-4a834da929d0`
+
+### Categories Endpoints
+
+#### Create category
+
+- **POST** `/categories`
+```json
+{
+  "uuidSF": "123456789012345678",
+  "uuid_guild": "987654321098765432",
+  "name": "General",
+  "position": 1
+}
+```
+
+#### Get All categories 
+- **GET** `/categories`
+
+#### Get One category
+- **GET** `/categories/:uuidSF`  
+Example: `/categories/57bb2c9b-a472-408d-9b90-4a834da929d0`
+
+#### Update category
+- **PUT** `/categories/:uuidSF`
+```json
+{
+  "uuidSF": "123456789012345678",
+  "uuid_guild": "987654321098765432",
+  "name": "Updated Category",
+  "position": 2
+}
+```
+
+#### Delete category
+- **DELETE** `/categories/:uuidSF`  
+Example: `/categories/57bb2c9b-a472-408d-9b90-4a834da929d0`
 
 Note: 
 - All timestamps (`createdAt`, `updatedAt`) are managed automatically
