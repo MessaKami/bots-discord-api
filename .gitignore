@@ -62,8 +62,3 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 # Cursor rules
 .cursorrules
-
-# Playwright
-/playwright-report
-/test-results
-/playwright/.cache

@@ -1,10 +1,10 @@
 import { Module, OnModuleInit } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ResourcesModule } from './resources/resources.module';
+import { ReportsModule } from './reports/reports.module';
 import { typeOrmConfig } from './config/typeorm.config';
 import { LoggerModule, PinoLogger } from 'nestjs-pino';
 import { loggerConfig } from './config/logger.config';
-
-// Modules de l'application
 import { GuildModule } from './guilds/guilds.module';
 import { CampusModule } from './campuses/campuses.module';
 import { GuildsTemplatesModule } from './guilds-templates/guilds-templates.module';
@@ -27,11 +27,9 @@ import { QuestionsModule } from './questions/questions.module';
  */
 @Module({
   imports: [
-    // Configuration de la base de données
     TypeOrmModule.forRoot(typeOrmConfig),
-    // Configuration du logger
+    ResourcesModule,
     LoggerModule.forRoot(loggerConfig),
-    // Modules fonctionnels
     GuildModule,
     CampusModule,
     GuildsTemplatesModule,
