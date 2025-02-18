@@ -1,6 +1,8 @@
-import { Module } from '@nestjs/common';
+import { Module, OnModuleInit } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from './config/typeorm.config';
+import { LoggerModule, PinoLogger } from 'nestjs-pino';
+import { loggerConfig } from './config/logger.config';
 
 // Modules de l'application
 import { GuildModule } from './guilds/guilds.module';
@@ -9,21 +11,26 @@ import { GuildsTemplatesModule } from './guilds-templates/guilds-templates.modul
 import { ModeratorActionsModule } from './moderator-actions/moderator-actions.module';
 import { MembersInformationsModule } from './members-informations/members-informations.module';
 import { CategoriesModule } from './categories/categories.module';
+import { AnswersModule } from './answers/answers.module';
 import { RolesModule } from './roles/roles.module';
 import { MembersModule } from './members/members.module';
+import { XpTransactionsModule } from './xp-transactions/xp-transactions.module';
+import { QuestionsModule } from './questions/questions.module';
 
 /**
  * Module principal de l'application
  * 
  * Ce module importe et configure :
  * - La connexion à la base de données via TypeORM
+ * - Le système de logging via Pino
  * - Les modules fonctionnels de l'application
  */
 @Module({
   imports: [
     // Configuration de la base de données
     TypeOrmModule.forRoot(typeOrmConfig),
-
+    // Configuration du logger
+    LoggerModule.forRoot(loggerConfig),
     // Modules fonctionnels
     GuildModule,
     CampusModule,
@@ -31,10 +38,21 @@ import { MembersModule } from './members/members.module';
     ModeratorActionsModule,
     MembersInformationsModule,
     CategoriesModule,
+    AnswersModule,
     RolesModule,
     MembersModule,
+    XpTransactionsModule,
+    QuestionsModule,
   ],
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule implements OnModuleInit {
+  constructor(private readonly logger: PinoLogger) {
+    this.logger.setContext('AppModule');
+  }
+
+  onModuleInit() {
+    this.logger.info('Application started 🚀');
+  }
+}
