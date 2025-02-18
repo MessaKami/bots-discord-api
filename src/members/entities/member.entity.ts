@@ -1,8 +1,7 @@
+import { Entity, Column, PrimaryColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToOne } from 'typeorm';
 
-
-import { Entity, Column, PrimaryColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { Guild } from '../../guilds/entities/guild.entity';
-
+import { IdentificationRequest } from 'src/identification-requests/entities/identification-request.entity';
 @Entity('members')
 export class Member {
   @PrimaryColumn('uuid', { name: 'uuid_member' })
@@ -39,5 +38,7 @@ export class Member {
   @JoinColumn({ name: 'uuid_guild' })
   guild: Guild;
 
-  
+  @OneToOne(() => IdentificationRequest, (identificationRequest) => identificationRequest.member)
+  identificationRequest: IdentificationRequest
+
 }
