@@ -13,6 +13,7 @@ import { AnswersModule } from './answers/answers.module';
 import { RolesModule } from './roles/roles.module';
 import { MembersModule } from './members/members.module';
 import { QuestionsModule } from './questions/questions.module';
+import { IdentificationRequestsModule } from './identification-requests/identification-requests.module';
 
 /**
  * Module principal de l'application
@@ -37,6 +38,7 @@ import { QuestionsModule } from './questions/questions.module';
     RolesModule,
     MembersModule,
     QuestionsModule,
+    IdentificationRequestsModule,
   ],
   controllers: [],
   providers: [],
