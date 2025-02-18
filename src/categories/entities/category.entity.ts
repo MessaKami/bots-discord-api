@@ -1,8 +1,9 @@
-import { Entity, Column, PrimaryColumn, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryColumn, CreateDateColumn, UpdateDateColumn, OneToMany, OneToOne, JoinColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Channel } from '../../channels/entities/channel.entity';
-
-@Entity('Categories')
+import { Guild } from 'src/guilds/entities/guild.entity';
+import { Course } from 'src/courses/entities/course.entity';
+@Entity('categories')
 export class Category {
   @ApiProperty({
     description: 'ID Discord de la catégorie',
@@ -44,12 +45,27 @@ export class Category {
   @ApiProperty({
     description: 'Date de création'
   })
-  @CreateDateColumn({ name: 'created_at' })
+  @CreateDateColumn({
+    name: 'created_at',
+    type: 'timestamp',
+  })
   createdAt: Date;
 
   @ApiProperty({
     description: 'Date de dernière mise à jour'
   })
-  @UpdateDateColumn({ name: 'updated_at' })
+  @UpdateDateColumn({
+    name: 'updated_at',
+    type: 'timestamp',
+    nullable: true,
+  })
   updatedAt: Date;
+
+  @OneToOne(() => Guild)
+  @JoinColumn({ name: 'uuid_guild' })
+  guild: Guild;
+
+  @OneToOne(() => Course, course => course.category)
+  @JoinColumn({ name: 'uuid_course' })
+  course: Course;
 }

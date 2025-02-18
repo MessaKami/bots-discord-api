@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
+import { Course } from '../../courses/entities/course.entity';
 
 @Entity('Promotions')
 export class Promotion {
@@ -58,4 +59,8 @@ export class Promotion {
   })
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
+
+  @ManyToOne(() => Course, course => course.promotions)
+  @JoinColumn({ name: 'uuid_course' })
+  course: Course;
 }
