@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, ManyToMany } from 'typeorm';
 import { Guild } from '../../guilds/entities/guild.entity';
+import { Member } from '../../members/entities/member.entity';
 import { ApiProperty } from '@nestjs/swagger';
 
 @Entity('roles')
@@ -75,4 +76,11 @@ export class Role {
   @ManyToOne(() => Guild, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'uuid_guild' })
   guild: Guild;
+
+  @ApiProperty({
+    description: 'Membres ayant ce rôle',
+    type: () => [Member]
+  })
+  @ManyToMany(() => Member, member => member.roles)
+  members: Member[];
 }
