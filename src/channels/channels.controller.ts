@@ -1,11 +1,11 @@
 import { Controller, Get, Post, Body, Put, Param, Delete, NotFoundException } from '@nestjs/common';
-import { ChannelService } from './channels.service';
+import { ChannelsService } from './channels.service';
 import { CreateChannelDto } from './dto/create-channel.dto';
 import { UpdateChannelDto } from './dto/update-channel.dto';
 
 @Controller('channels')
-export class ChannelController {
-  constructor(private readonly channelService: ChannelService) {}
+export class ChannelsController {
+  constructor(private readonly channelService: ChannelsService) {}
 
   @Post()
   create(@Body() createChannelDto: CreateChannelDto) {

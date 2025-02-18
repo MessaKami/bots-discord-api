@@ -1,16 +1,16 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ChannelService } from './channels.service';
+import { ChannelsService } from './channels.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Channel } from './entities/channel.entity';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 
-describe('ChannelService', () => {
-  let service: ChannelService;
+describe('ChannelsService', () => {
+  let service: ChannelsService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        ChannelService,
+        ChannelsService,
         {
           provide: getRepositoryToken(Channel),
           useValue: {
@@ -24,7 +24,7 @@ describe('ChannelService', () => {
       ],
     }).compile();
 
-    service = module.get<ChannelService>(ChannelService);
+    service = module.get<ChannelsService>(ChannelsService);
   });
 
   it('should be defined', () => {

@@ -6,7 +6,7 @@ import { UpdateChannelDto } from './dto/update-channel.dto';
 import { Channel } from './entities/channel.entity';
 
 @Injectable()
-export class ChannelService {
+export class ChannelsService {
   constructor(
     @InjectRepository(Channel)
     private channelRepository: Repository<Channel>,
