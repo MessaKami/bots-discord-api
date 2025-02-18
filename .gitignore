@@ -17,6 +17,7 @@ lerna-debug.log*
 
 # Tests
 /coverage
+/test-results/
 /.nyc_output
 
 # IDEs and editors
@@ -61,3 +62,8 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 # Cursor rules
 .cursorrules
+
+# Playwright
+/playwright-report
+/test-results
+/playwright/.cache
