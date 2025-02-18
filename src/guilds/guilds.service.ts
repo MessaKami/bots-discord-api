@@ -6,7 +6,7 @@ import { UpdateGuildDto } from './dto/update-guild.dto';
 import { Guild } from './entities/guild.entity';
 
 @Injectable()
-export class GuildService {
+export class GuildsService {
   constructor(
     @InjectRepository(Guild)
     private guildRepository: Repository<Guild>,

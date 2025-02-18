@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { GuildService } from './guilds.service';
+import { GuildsService } from './guilds.service';
 import { Repository } from 'typeorm';
 import { Guild } from './entities/guild.entity';
 import { CreateGuildDto } from './dto/create-guild.dto';
@@ -13,11 +13,11 @@ const mockRepository = {
   delete: vi.fn(),
 };
 
-describe('GuildService', () => {
-  let service: GuildService;
+describe('GuildsService', () => {
+  let service: GuildsService;
 
   beforeEach(() => {
-    service = new GuildService(mockRepository as unknown as Repository<Guild>);
+    service = new GuildsService(mockRepository as unknown as Repository<Guild>);
   });
 
   it('should be defined', () => {

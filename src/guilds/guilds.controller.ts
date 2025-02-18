@@ -1,11 +1,11 @@
 import { Controller, Get, Post, Body, Param, Delete, Put, NotFoundException } from '@nestjs/common';
-import { GuildService } from './guilds.service';
+import { GuildsService } from './guilds.service';
 import { CreateGuildDto } from './dto/create-guild.dto';
 import { UpdateGuildDto } from './dto/update-guild.dto';
 
-@Controller('guild')
-export class GuildController {
-  constructor(private readonly guildService: GuildService) {}
+@Controller('guilds')
+export class GuildsController {
+  constructor(private readonly guildService: GuildsService) {}
 
   @Post()
   create(@Body() createGuildDto: CreateGuildDto) {
