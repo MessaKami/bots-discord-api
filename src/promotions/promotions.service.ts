@@ -6,7 +6,7 @@ import { UpdatePromotionDto } from './dto/update-promotion.dto';
 import { Promotion } from './entities/promotion.entity';
 
 @Injectable()
-export class PromotionService {
+export class PromotionsService {
   constructor(
     @InjectRepository(Promotion)
     private promotionRepository: Repository<Promotion>,
