@@ -1,13 +1,13 @@
 import { Module, OnModuleInit } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ResourcesModule } from './resources/resources.module';
-import { ReportsModule } from './reports/reports.module';
 import { typeOrmConfig } from './config/typeorm.config';
 import { LoggerModule, PinoLogger } from 'nestjs-pino';
 import { loggerConfig } from './config/logger.config';
-import { GuildModule } from './guilds/guilds.module';
-import { CampusModule } from './campuses/campuses.module';
+import { GuildsModule } from './guilds/guilds.module';
+import { CampusesModule } from './campuses/campuses.module';
 import { GuildsTemplatesModule } from './guilds-templates/guilds-templates.module';
+import { ResourcesModule } from './resources/resources.module';
+import { ReportsModule } from './reports/reports.module';
 import { ModeratorActionsModule } from './moderator-actions/moderator-actions.module';
 import { MembersInformationsModule } from './members-informations/members-informations.module';
 import { CategoriesModule } from './categories/categories.module';
@@ -16,10 +16,12 @@ import { RolesModule } from './roles/roles.module';
 import { MembersModule } from './members/members.module';
 import { XpTransactionsModule } from './xp-transactions/xp-transactions.module';
 import { QuestionsModule } from './questions/questions.module';
+import { PromotionsModule } from './promotions/promotions.module';
+import { ChannelsModule } from './channels/channels.module';
 
 /**
  * Module principal de l'application
- * 
+ *
  * Ce module importe et configure :
  * - La connexion à la base de données via TypeORM
  * - Le système de logging via Pino
@@ -28,11 +30,11 @@ import { QuestionsModule } from './questions/questions.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot(typeOrmConfig),
-    ResourcesModule,
     LoggerModule.forRoot(loggerConfig),
-    GuildModule,
-    CampusModule,
+    GuildsModule,
+    CampusesModule,
     GuildsTemplatesModule,
+    ResourcesModule,
     ModeratorActionsModule,
     MembersInformationsModule,
     CategoriesModule,
@@ -41,6 +43,9 @@ import { QuestionsModule } from './questions/questions.module';
     MembersModule,
     XpTransactionsModule,
     QuestionsModule,
+    PromotionsModule,
+    ChannelsModule,
+    ReportsModule
   ],
   controllers: [],
   providers: [],
