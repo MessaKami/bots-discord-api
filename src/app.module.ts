@@ -1,8 +1,10 @@
-import { Module } from '@nestjs/common';
+import { Module, OnModuleInit } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ResourcesModule } from './resources/resources.module';
+import { ReportsModule } from './reports/reports.module';
 import { typeOrmConfig } from './config/typeorm.config';
-
-// Modules de l'application
+import { LoggerModule, PinoLogger } from 'nestjs-pino';
+import { loggerConfig } from './config/logger.config';
 import { GuildModule } from './guilds/guilds.module';
 import { CampusModule } from './campuses/campuses.module';
 import { GuildsTemplatesModule } from './guilds-templates/guilds-templates.module';
@@ -21,14 +23,14 @@ import { DashboardAccountModule } from './dashboard-accounts/dashboard-accounts.
  * 
  * Ce module importe et configure :
  * - La connexion à la base de données via TypeORM
+ * - Le système de logging via Pino
  * - Les modules fonctionnels de l'application
  */
 @Module({
   imports: [
-    // Configuration de la base de données
     TypeOrmModule.forRoot(typeOrmConfig),
-
-    // Modules fonctionnels
+    ResourcesModule,
+    LoggerModule.forRoot(loggerConfig),
     GuildModule,
     CampusModule,
     GuildsTemplatesModule,
@@ -45,4 +47,12 @@ import { DashboardAccountModule } from './dashboard-accounts/dashboard-accounts.
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule implements OnModuleInit {
+  constructor(private readonly logger: PinoLogger) {
+    this.logger.setContext('AppModule');
+  }
+
+  onModuleInit() {
+    this.logger.info('Application started 🚀');
+  }
+}
