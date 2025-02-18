@@ -8,17 +8,23 @@ import { Repository } from 'typeorm';
 import { describe, it, expect, beforeAll, afterAll, beforeEach } from 'vitest';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { typeOrmConfig } from '../config/typeorm.config';
+import { ResourcesService } from './resources.service';
 
 const NON_EXISTENT_UUID = '00000000-0000-0000-0000-000000000000';
 
 describe('Resources Integration Tests', () => {
   let app: INestApplication;
   let repository: Repository<Resource>;
+  let resourcesService: ResourcesService;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [
-        TypeOrmModule.forRoot(typeOrmConfig),
+        TypeOrmModule.forRoot({
+          ...typeOrmConfig,
+          synchronize: true, // S'assurer que les tables sont créées
+          logging: true, // Activer les logs SQL
+        }),
         ResourcesModule,
       ],
     }).compile();
@@ -26,6 +32,7 @@ describe('Resources Integration Tests', () => {
     app = moduleFixture.createNestApplication();
     app.useGlobalPipes(new ValidationPipe());
     repository = moduleFixture.get<Repository<Resource>>(getRepositoryToken(Resource));
+    resourcesService = moduleFixture.get<ResourcesService>(ResourcesService);
     await app.init();
   });
 
@@ -81,29 +88,48 @@ describe('Resources Integration Tests', () => {
 
   describe('GET /resources', () => {
     it('should return an array of resources', async () => {
-      // Créer quelques ressources de test
-      await repository.save([
-        {
+      // Créer les ressources via le service
+      await Promise.all([
+        resourcesService.create({
           title: 'Resource 1',
           description: 'Description 1',
           content: 'Content 1',
           status: 'active',
-        },
-        {
+        }),
+        resourcesService.create({
           title: 'Resource 2',
           description: 'Description 2',
           content: 'Content 2',
           status: 'inactive',
-        },
+        }),
       ]);
+
+      // Vérifier que les ressources ont été créées
+      const allResources = await resourcesService.findAll();
+      console.log('Resources in database:', allResources);
 
       const response = await request(app.getHttpServer())
         .get('/resources')
         .expect(200);
 
+      console.log('API response:', response.body);
+
+      expect(response.body).toBeDefined();
+      expect(Array.isArray(response.body)).toBe(true);
       expect(response.body).toHaveLength(2);
-      expect(response.body[0].title).toBe('Resource 1');
-      expect(response.body[1].title).toBe('Resource 2');
+      
+      // Trier les ressources par titre pour s'assurer de l'ordre
+      const sortedResources = response.body.sort((a, b) => a.title.localeCompare(b.title));
+      expect(sortedResources[0].title).toBe('Resource 1');
+      expect(sortedResources[1].title).toBe('Resource 2');
+    });
+
+    it('should return empty array when no resources exist', async () => {
+      const response = await request(app.getHttpServer())
+        .get('/resources')
+        .expect(200);
+
+      expect(response.body).toEqual([]);
     });
   });
 
