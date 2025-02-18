@@ -418,7 +418,7 @@ Example: `/members-informations/57bb2c9b-a472-408d-9b90-4a834da929d0`
 - **POST** `/categories`
 ```json
 {
-  "uuidSF": "123456789012345678",
+  "uuid": "123456789012345678",
   "uuid_guild": "987654321098765432",
   "name": "General",
   "position": 1
@@ -429,14 +429,14 @@ Example: `/members-informations/57bb2c9b-a472-408d-9b90-4a834da929d0`
 - **GET** `/categories`
 
 #### Get One category
-- **GET** `/categories/:uuidSF`  
+- **GET** `/categories/:uuid`  
 Example: `/categories/57bb2c9b-a472-408d-9b90-4a834da929d0`
 
 #### Update category
-- **PUT** `/categories/:uuidSF`
+- **PUT** `/categories/:uuid`
 ```json
 {
-  "uuidSF": "123456789012345678",
+  "uuid": "123456789012345678",
   "uuid_guild": "987654321098765432",
   "name": "Updated Category",
   "position": 2
@@ -444,7 +444,7 @@ Example: `/categories/57bb2c9b-a472-408d-9b90-4a834da929d0`
 ```
 
 #### Delete category
-- **DELETE** `/categories/:uuidSF`  
+- **DELETE** `/categories/:uuid`  
 Example: `/categories/57bb2c9b-a472-408d-9b90-4a834da929d0`
 
 Note: 

@@ -17,22 +17,22 @@ export class CategoriesController {
     return this.categoriesService.findAll();
   }
 
-  @Get(':uuidSF')
-  findOne(@Param('uuidSF') uuidSF: string) {
-    return this.categoriesService.findOne(uuidSF);
+  @Get(':uuid')
+  findOne(@Param('uuid') uuid: string) {
+    return this.categoriesService.findOne(uuid);
   }
 
-  @Put(':uuidSF')
-  async update(@Param('uuidSF') uuidSF: string, @Body() updateCategoryDto: UpdateCategoryDto) {
-    const category = await this.categoriesService.update(uuidSF, updateCategoryDto);
+  @Put(':uuid')
+  async update(@Param('uuid') uuid: string, @Body() updateCategoryDto: UpdateCategoryDto) {
+    const category = await this.categoriesService.update(uuid, updateCategoryDto);
     if (!category) {
-      throw new NotFoundException(`Category with UUID "${uuidSF}" not found`);
+      throw new NotFoundException(`Category with UUID "${uuid}" not found`);
     }
     return category;
   }
 
-  @Delete(':uuidSF')
-  remove(@Param('uuidSF') uuidSF: string) {
-    return this.categoriesService.remove(uuidSF);
+  @Delete(':uuid')
+  remove(@Param('uuid') uuid: string) {
+    return this.categoriesService.remove(uuid);
   }
 }

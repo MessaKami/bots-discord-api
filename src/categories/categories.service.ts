@@ -25,12 +25,12 @@ export class CategoriesService {
     return this.categoriesRepository.find();
   }
 
-  findOne(uuidSF: string) {
-    return this.categoriesRepository.findOneBy({ uuidSF });
+  findOne(uuid: string) {
+    return this.categoriesRepository.findOneBy({ uuid });
   }
 
-  async update(uuidSF: string, updateCategoryDto: UpdateCategoryDto) {
-    const category = await this.categoriesRepository.findOneBy({ uuidSF });
+  async update(uuid: string, updateCategoryDto: UpdateCategoryDto) {
+    const category = await this.categoriesRepository.findOneBy({ uuid });
     if (!category) {
       return null;
     }
@@ -38,7 +38,7 @@ export class CategoriesService {
     return this.categoriesRepository.save(category);
   }
 
-  remove(uuidSF: string) {
-    return this.categoriesRepository.delete({ uuidSF });
+  remove(uuid: string) {
+    return this.categoriesRepository.delete({ uuid });
   }
 }

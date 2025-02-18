@@ -4,7 +4,7 @@ export class CreateCategoryDto {
 
     @IsString()
     @Length(18, 19)
-    uuidSF: string;
+    uuid: string;
 
     @IsString()
     @Length(18, 19)

@@ -26,7 +26,7 @@ describe('CategoriesService', () => {
 
   it('should create a new category', async () => {
     const dto: CreateCategoryDto = {
-      uuidSF: '123456789012345678',
+      uuid: '123456789012345678',
       uuid_guild: '987654321098765432',
       name: 'Test Category',
       position: 1,
@@ -41,33 +41,33 @@ describe('CategoriesService', () => {
   });
 
   it('should return an array of categories', async () => {
-    const result = [{ uuidSF: '123456789012345678', uuid_guild: '987654321098765432', name: 'Test Category', position: 1 }];
+    const result = [{ uuid: '123456789012345678', uuid_guild: '987654321098765432', name: 'Test Category', position: 1 }];
     mockRepository.find.mockResolvedValue(result);
     expect(await service.findAll()).toEqual(result);
     expect(mockRepository.find).toHaveBeenCalled();
   });
 
   it('should return a single category', async () => {
-    const result = { uuidSF: '123456789012345678', uuid_guild: '987654321098765432', name: 'Test Category', position: 1 };
+    const result = { uuid: '123456789012345678', uuid_guild: '987654321098765432', name: 'Test Category', position: 1 };
     mockRepository.findOneBy.mockResolvedValue(result);
     expect(await service.findOne('123456789012345678')).toEqual(result);
-    expect(mockRepository.findOneBy).toHaveBeenCalledWith({ uuidSF: '123456789012345678' });
+    expect(mockRepository.findOneBy).toHaveBeenCalledWith({ uuid: '123456789012345678' });
   });
 
   it('should update a category', async () => {
     const dto: UpdateCategoryDto = { name: 'Updated Category', position: 2 };
-    const result = { uuidSF: '123456789012345678', uuid_guild: '987654321098765432', name: 'Updated Category', position: 2 };
+    const result = { uuid: '123456789012345678', uuid_guild: '987654321098765432', name: 'Updated Category', position: 2 };
     mockRepository.findOneBy.mockResolvedValue(result);
     mockRepository.save.mockResolvedValue(result);
 
     expect(await service.update('123456789012345678', dto)).toEqual(result);
-    expect(mockRepository.findOneBy).toHaveBeenCalledWith({ uuidSF: '123456789012345678' });
+    expect(mockRepository.findOneBy).toHaveBeenCalledWith({ uuid: '123456789012345678' });
     expect(mockRepository.save).toHaveBeenCalledWith(result);
   });
 
   it('should delete a category', async () => {
     mockRepository.delete.mockResolvedValue({ affected: 1 });
     expect(await service.remove('123456789012345678')).toEqual({ affected: 1 });
-    expect(mockRepository.delete).toHaveBeenCalledWith({ uuidSF: '123456789012345678' });
+    expect(mockRepository.delete).toHaveBeenCalledWith({ uuid: '123456789012345678' });
   });
 });
