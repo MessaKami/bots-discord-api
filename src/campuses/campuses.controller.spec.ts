@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { CampusController } from './campuses.controller';
-import { CampusService } from './campuses.service';
+import { CampusesController } from './campuses.controller';
+import { CampusesService } from './campuses.service';
 import { CreateCampusDto } from './dto/create-campus.dto';
 import { UpdateCampusDto } from './dto/update-campus.dto';
 
@@ -12,11 +12,11 @@ const mockCampusService = {
   remove: vi.fn(),
 };
 
-describe('CampusController', () => {
-  let controller: CampusController;
+describe('CampusesController', () => {
+  let controller: CampusesController;
 
   beforeEach(() => {
-    controller = new CampusController(mockCampusService as unknown as CampusService);
+    controller = new CampusesController(mockCampusService as unknown as CampusesService);
   });
 
   it('should be defined', () => {
