@@ -19,6 +19,10 @@ export class AnswersService {
     const question = await this.questionsRepository.findOneBy({ 
       uuid: createAnswerDto.questionUuid 
     });
+
+    if (!question) {
+      return null;
+    }
     
     const answer = this.answersRepository.create({
       ...createAnswerDto,
