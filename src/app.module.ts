@@ -17,6 +17,7 @@ import { MembersModule } from './members/members.module';
 import { XpTransactionsModule } from './xp-transactions/xp-transactions.module';
 import { QuestionsModule } from './questions/questions.module';
 import { DashboardAccountModule } from './dashboard-accounts/dashboard-accounts.module';
+import { VotesModule } from './votes/votes.module';
 
 /**
  * Module principal de l'application
@@ -43,6 +44,7 @@ import { DashboardAccountModule } from './dashboard-accounts/dashboard-accounts.
     XpTransactionsModule,
     QuestionsModule,
     DashboardAccountModule,
+    VotesModule,
   ],
   controllers: [],
   providers: [],
