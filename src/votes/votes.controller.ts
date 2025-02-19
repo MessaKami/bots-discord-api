@@ -1,34 +1,154 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { 
+  Controller, 
+  Get, 
+  Post, 
+  Body, 
+  Put, 
+  Param, 
+  Delete, 
+  HttpStatus, 
+  HttpException,
+  ParseUUIDPipe
+} from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiResponse, ApiParam } from '@nestjs/swagger';
 import { VotesService } from './votes.service';
 import { CreateVoteDto } from './dto/create-vote.dto';
 import { UpdateVoteDto } from './dto/update-vote.dto';
+import { Vote } from './entities/vote.entity';
 
+@ApiTags('Votes')
 @Controller('votes')
 export class VotesController {
   constructor(private readonly votesService: VotesService) {}
 
   @Post()
-  create(@Body() createVoteDto: CreateVoteDto) {
-    return this.votesService.create(createVoteDto);
+  @ApiOperation({ summary: 'Créer un nouveau vote' })
+  @ApiResponse({ 
+    status: 201, 
+    description: 'Le vote a été créé avec succès',
+    type: Vote 
+  })
+  @ApiResponse({ 
+    status: 400, 
+    description: 'Requête invalide' 
+  })
+  async create(@Body() createVoteDto: CreateVoteDto): Promise<Vote> {
+    try {
+      return await this.votesService.create(createVoteDto);
+    } catch (error) {
+      throw new HttpException(
+        'Erreur lors de la création du vote',
+        HttpStatus.BAD_REQUEST
+      );
+    }
   }
 
   @Get()
-  findAll() {
-    return this.votesService.findAll();
+  @ApiOperation({ summary: 'Récupérer tous les votes' })
+  @ApiResponse({ 
+    status: 200, 
+    description: 'Liste des votes récupérée avec succès',
+    type: [Vote] 
+  })
+  async findAll(): Promise<Vote[]> {
+    try {
+      return await this.votesService.findAll();
+    } catch (error) {
+      throw new HttpException(
+        'Erreur lors de la récupération des votes',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.votesService.findOne(+id);
+  @ApiOperation({ summary: 'Récupérer un vote par son ID' })
+  @ApiParam({ name: 'id', description: 'ID du vote', type: 'string' })
+  @ApiResponse({ 
+    status: 200, 
+    description: 'Vote trouvé avec succès',
+    type: Vote 
+  })
+  @ApiResponse({ 
+    status: 404, 
+    description: 'Vote non trouvé' 
+  })
+  async findOne(@Param('id', ParseUUIDPipe) id: string): Promise<Vote> {
+    try {
+      const vote = await this.votesService.findOne(id);
+      if (!vote) {
+        throw new HttpException('Vote non trouvé', HttpStatus.NOT_FOUND);
+      }
+      return vote;
+    } catch (error) {
+      if (error instanceof HttpException) {
+        throw error;
+      }
+      throw new HttpException(
+        'Erreur lors de la récupération du vote',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateVoteDto: UpdateVoteDto) {
-    return this.votesService.update(+id, updateVoteDto);
+  @Put(':id')
+  @ApiOperation({ summary: 'Mettre à jour un vote' })
+  @ApiParam({ name: 'id', description: 'ID du vote', type: 'string' })
+  @ApiResponse({ 
+    status: 200, 
+    description: 'Vote mis à jour avec succès',
+    type: Vote 
+  })
+  @ApiResponse({ 
+    status: 404, 
+    description: 'Vote non trouvé' 
+  })
+  async update(
+    @Param('id', ParseUUIDPipe) id: string, 
+    @Body() updateVoteDto: UpdateVoteDto
+  ): Promise<Vote> {
+    try {
+      const vote = await this.votesService.update(id, updateVoteDto);
+      if (!vote) {
+        throw new HttpException('Vote non trouvé', HttpStatus.NOT_FOUND);
+      }
+      return vote;
+    } catch (error) {
+      if (error instanceof HttpException) {
+        throw error;
+      }
+      throw new HttpException(
+        'Erreur lors de la mise à jour du vote',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.votesService.remove(+id);
+  @ApiOperation({ summary: 'Supprimer un vote' })
+  @ApiParam({ name: 'id', description: 'ID du vote', type: 'string' })
+  @ApiResponse({ 
+    status: 200, 
+    description: 'Vote supprimé avec succès' 
+  })
+  @ApiResponse({ 
+    status: 404, 
+    description: 'Vote non trouvé' 
+  })
+  async remove(@Param('id', ParseUUIDPipe) id: string): Promise<void> {
+    try {
+      const result = await this.votesService.remove(id);
+      if (!result) {
+        throw new HttpException('Vote non trouvé', HttpStatus.NOT_FOUND);
+      }
+    } catch (error) {
+      if (error instanceof HttpException) {
+        throw error;
+      }
+      throw new HttpException(
+        'Erreur lors de la suppression du vote',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
   }
 }
