@@ -1,23 +1,19 @@
 import { Injectable } from '@nestjs/common';
-
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-
 import { CreateMemberInformationsDto } from './dto/create-member-informations.dto';
 import { UpdateMemberInformationsDto } from './dto/update-member-informations.dto';
-import { MemberInformations } from './entities/member-informations.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { MemberInformation } from './entities/member-information.entity';
 
 @Injectable()
 export class MembersInformationsService {
-  
   constructor(
-    @InjectRepository(MemberInformations)
-    private memberInformationsRepository: Repository<MemberInformations>,
+    @InjectRepository(MemberInformation)
+    private memberInformationsRepository: Repository<MemberInformation>,
   ) {}
 
-  create(createMemberInformationsDto: CreateMemberInformationsDto) {
-    const memberInformations = this.memberInformationsRepository.create(createMemberInformationsDto);
-    return this.memberInformationsRepository.save(memberInformations);
+  create(createMemberInformationDto: CreateMemberInformationsDto) {
+    return this.memberInformationsRepository.save(createMemberInformationDto);
   }
 
   findAll() {
@@ -28,17 +24,11 @@ export class MembersInformationsService {
     return this.memberInformationsRepository.findOneBy({ uuid });
   }
 
-  async update(uuid: string, updateMemberInformationsDto: UpdateMemberInformationsDto) {
-    const memberInformations = await this.memberInformationsRepository.findOneBy({ uuid });
-    if (!memberInformations) {
-      return null;
-    }
-    Object.assign(memberInformations, updateMemberInformationsDto);
-    return this.memberInformationsRepository.save(memberInformations);
+  update(uuid: string, updateMemberInformationDto: UpdateMemberInformationsDto) {
+    return this.memberInformationsRepository.update(uuid, updateMemberInformationDto);
   }
 
   remove(uuid: string) {
-    return this.memberInformationsRepository.delete({ uuid });
+    return this.memberInformationsRepository.delete(uuid);
   }
-
 }
