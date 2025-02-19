@@ -1,14 +1,14 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryColumn, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Channel } from '../../channels/entities/channel.entity';
 
 @Entity('Categories')
 export class Category {
   @ApiProperty({
-    description: 'UUID unique de la catégorie',
-    example: '123e4567-e89b-12d3-a456-426614174000'
+    description: 'ID Discord de la catégorie',
+    example: '123456789012345678'
   })
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryColumn({ type: 'varchar', length: 19 })
   uuid: string;
 
   @ApiProperty({
@@ -27,10 +27,10 @@ export class Category {
   position: number;
 
   @ApiProperty({
-    description: 'UUID du serveur Discord associé',
+    description: 'ID Discord du serveur associé',
     example: '123456789012345678'
   })
-  @Column({ name: 'guild_id' })
+  @Column({ name: 'guild_id', type: 'varchar', length: 19 })
   guildId: string;
 
   @ApiProperty({
@@ -38,22 +38,17 @@ export class Category {
     type: () => Channel,
     isArray: true
   })
-  @OneToMany(() => Channel, channel => channel.category, {
-    cascade: true,
-    eager: false
-  })
+  @OneToMany(() => Channel, channel => channel.category)
   channels: Channel[];
 
   @ApiProperty({
-    description: 'Date de création',
-    example: '2024-02-17T12:00:00Z'
+    description: 'Date de création'
   })
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
   @ApiProperty({
-    description: 'Date de dernière mise à jour',
-    example: '2024-02-17T12:00:00Z'
+    description: 'Date de dernière mise à jour'
   })
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
