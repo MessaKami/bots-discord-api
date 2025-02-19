@@ -1,9 +1,8 @@
-import { Entity, Column, PrimaryColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, ManyToMany, JoinTable } from 'typeorm';
-import { Guild } from '../../guilds/entities/guild.entity';
-import { Role } from '../../roles/entities/role.entity';
+import { Entity, Column, PrimaryColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Guild } from '../../guilds/entities/guild.entity'
 import { ApiProperty } from '@nestjs/swagger';
 
-@Entity('Members')
+@Entity('members')
 export class Member {
   @ApiProperty({
     description: 'UUID unique du membre',
@@ -83,23 +82,6 @@ export class Member {
   })
   @ManyToOne(() => Guild)
   @JoinColumn({ name: 'uuid_guild' })
-  guild: Guild;
+  guild: Guild;  
 
-  @ApiProperty({
-    description: 'Rôles du membre',
-    type: () => [Role]
-  })
-  @ManyToMany(() => Role)
-  @JoinTable({
-    name: 'members_roles',
-    joinColumn: {
-      name: 'uuid_member',
-      referencedColumnName: 'uuid'
-    },
-    inverseJoinColumn: {
-      name: 'uuid_role',
-      referencedColumnName: 'uuid'
-    }
-  })
-  roles: Role[];
 }

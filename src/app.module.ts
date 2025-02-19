@@ -16,6 +16,7 @@ import { RolesModule } from './roles/roles.module';
 import { MembersModule } from './members/members.module';
 import { XpTransactionsModule } from './xp-transactions/xp-transactions.module';
 import { QuestionsModule } from './questions/questions.module';
+import { IdentificationRequestsModule } from './identification-requests/identification-requests.module';
 import { DashboardAccountModule } from './dashboard-accounts/dashboard-accounts.module';
 import { VotesModule } from './votes/votes.module';
 
@@ -43,8 +44,10 @@ import { VotesModule } from './votes/votes.module';
     MembersModule,
     XpTransactionsModule,
     QuestionsModule,
+    IdentificationRequestsModule,
     DashboardAccountModule,
     VotesModule,
+    ReportsModule
   ],
   controllers: [],
   providers: [],
