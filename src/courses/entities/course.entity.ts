@@ -5,7 +5,7 @@ import { Role } from '../../roles/entities/role.entity';
 import { Promotion } from '../../promotions/entities/promotion.entity';
 import { Channel } from '../../channels/entities/channel.entity';
 
-@Entity('coursess')
+@Entity('course')
 export class Course {
     @PrimaryGeneratedColumn('uuid')
     uuidCourse: string;
