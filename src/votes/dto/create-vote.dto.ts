@@ -1,7 +1,8 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsEnum, IsNotEmpty, IsUUID, IsDateString, IsOptional } from 'class-validator';
+import { ApiProperty, OmitType } from '@nestjs/swagger';
+import { IsEnum, IsNotEmpty, IsUUID } from 'class-validator';
+import { Vote } from '../entities/vote.entity';
 
-export class CreateVoteDto {
+export class CreateVoteDto extends OmitType(Vote, ['voteUuid', 'voteCreatedAt', 'voteUpdatedAt'] as const) {
   @ApiProperty({
     description: 'ID de l\'utilisateur qui vote',
     example: '123e4567-e89b-12d3-a456-426614174000'
@@ -26,13 +27,4 @@ export class CreateVoteDto {
   @IsNotEmpty({ message: 'Le type de vote est requis' })
   @IsEnum(['upvote', 'downvote'], { message: 'Le type de vote doit être upvote ou downvote' })
   voteType: 'upvote' | 'downvote';
-
-  @ApiProperty({
-    description: 'Date de création du vote',
-    example: '2024-02-19T12:00:00Z',
-    required: false
-  })
-  @IsOptional()
-  @IsDateString({}, { message: 'La date de création doit être une date valide' })
-  createdAt?: string;
 }

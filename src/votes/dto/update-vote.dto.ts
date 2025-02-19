@@ -1,8 +1,10 @@
-import { ApiProperty, PartialType } from '@nestjs/swagger';
+import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
 import { IsEnum, IsOptional, IsUUID, IsDateString, IsBoolean } from 'class-validator';
-import { CreateVoteDto } from './create-vote.dto';
+import { Vote } from '../entities/vote.entity';
 
-export class UpdateVoteDto {
+export class UpdateVoteDto extends PartialType(
+  OmitType(Vote, ['voteUuid', 'voteCreatedAt', 'voteUpdatedAt'] as const)
+) {
   @ApiProperty({
     description: 'Type de vote (upvote ou downvote)',
     enum: ['upvote', 'downvote'],
