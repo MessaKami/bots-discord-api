@@ -44,6 +44,6 @@ export class VotesService {
       return false;
     }
     const result = await this.voteRepository.softDelete(id);
-    return result.affected > 0;
+    return result.affected ? result.affected > 0 : false;
   }
 }
