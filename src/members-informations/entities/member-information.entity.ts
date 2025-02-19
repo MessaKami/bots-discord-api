@@ -11,46 +11,34 @@ export class MemberInformation {
   uuid: string;
 
   @ApiProperty({
-    description: 'UUID du membre associé',
-    example: '123e4567-e89b-12d3-a456-426614174000'
-  })
-  @Column({ name: 'member_id' })
-  memberId: string;
-
-  @ApiProperty({
     description: 'Prénom du membre',
-    example: 'John',
-    maxLength: 50
+    example: 'John'
   })
-  @Column({ type: 'varchar', length: 50 })
-  firstname: string;
+  @Column({ name: 'firstname', type: 'varchar', length: 50 })
+  firstName: string;
 
   @ApiProperty({
     description: 'Nom du membre',
-    example: 'Doe',
-    maxLength: 50
+    example: 'Doe'
   })
-  @Column({ type: 'varchar', length: 50 })
-  lastname: string;
+  @Column({ name: 'lastname', type: 'varchar', length: 50 })
+  lastName: string;
 
   @ApiProperty({
     description: 'Email du membre',
-    example: 'john.doe@example.com',
-    maxLength: 100
+    example: 'john.doe@example.com'
   })
   @Column({ type: 'varchar', length: 100 })
   email: string;
 
   @ApiProperty({
-    description: 'Date de création',
-    example: '2024-02-17T12:00:00Z'
+    description: 'Date de création'
   })
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
   @ApiProperty({
-    description: 'Date de dernière mise à jour',
-    example: '2024-02-17T12:00:00Z'
+    description: 'Date de dernière mise à jour'
   })
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
