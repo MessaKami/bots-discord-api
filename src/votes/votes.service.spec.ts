@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { VotesService } from './votes.service';
-import { Repository } from 'typeorm';
+import { Repository, UpdateResult } from 'typeorm';
 import { Vote } from './entities/vote.entity';
 import { CreateVoteDto } from './dto/create-vote.dto';
 import { UpdateVoteDto } from './dto/update-vote.dto';
@@ -112,7 +112,11 @@ describe('VotesService', () => {
   describe('remove', () => {
     it('devrait supprimer un vote avec succès', async () => {
       vi.spyOn(repository, 'findOne').mockResolvedValue(mockVote);
-      vi.spyOn(repository, 'softDelete').mockResolvedValue({ affected: 1 });
+      vi.spyOn(repository, 'softDelete').mockResolvedValue({
+        affected: 1,
+        raw: [],
+        generatedMaps: []
+      } as UpdateResult);
 
       const result = await service.remove(mockVote.voteUuid);
 
