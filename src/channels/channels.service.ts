@@ -30,7 +30,15 @@ export class ChannelsService {
     if (!channel) {
       return null;
     }
-    Object.assign(channel, updateChannelDto);
+    
+    // Mise à jour des champs autorisés uniquement
+    const { name, type, channelPosition, categoryId } = updateChannelDto;
+    if (name !== undefined) channel.name = name;
+    if (type !== undefined) channel.type = type;
+    if (channelPosition !== undefined) channel.channelPosition = channelPosition;
+    if (categoryId !== undefined) channel.categoryId = categoryId;
+    
+    channel.updatedAt = new Date();
     return this.channelRepository.save(channel);
   }
 

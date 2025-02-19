@@ -1,4 +1,4 @@
-import { IsString, IsInt, IsEnum, MaxLength, Min } from 'class-validator';
+import { IsString, IsInt, IsEnum, MaxLength, Min, Length } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 enum ChannelType {
@@ -8,6 +8,14 @@ enum ChannelType {
 }
 
 export class CreateChannelDto {
+  @ApiProperty({
+    description: 'ID Discord du channel',
+    example: '123456789012345678'
+  })
+  @IsString()
+  @Length(17, 19)
+  uuid: string;
+
   @ApiProperty({
     description: 'Le nom du channel',
     example: 'général',
@@ -36,10 +44,11 @@ export class CreateChannelDto {
   channelPosition: number;
 
   @ApiProperty({
-    description: 'UUID de la catégorie associée',
-    example: '123e4567-e89b-12d3-a456-426614174000',
+    description: 'ID Discord de la catégorie associée',
+    example: '123456789012345678',
     required: false
   })
   @IsString()
+  @Length(17, 19)
   categoryId?: string;
 } 
