@@ -13,32 +13,38 @@ export class CategoriesService {
 
   constructor(
     @InjectRepository(Category)
-    private categoriesRepository: Repository<Category>,
+    private categoryRepository: Repository<Category>,
   ) {}
 
   create(createCategoryDto: CreateCategoryDto) {
-    const category = this.categoriesRepository.create(createCategoryDto);
-    return this.categoriesRepository.save(category);
+    const category = this.categoryRepository.create(createCategoryDto);
+    return this.categoryRepository.save(category);
   }
 
   findAll() {
-    return this.categoriesRepository.find();
+    return this.categoryRepository.find();
   }
 
   findOne(uuid: string) {
-    return this.categoriesRepository.findOneBy({ uuid });
+    return this.categoryRepository.findOneBy({ uuid });
   }
 
   async update(uuid: string, updateCategoryDto: UpdateCategoryDto) {
-    const category = await this.categoriesRepository.findOneBy({ uuid });
+    const category = await this.categoryRepository.findOneBy({ uuid });
     if (!category) {
       return null;
     }
-    Object.assign(category, updateCategoryDto);
-    return this.categoriesRepository.save(category);
+    
+    // Mise à jour des champs autorisés uniquement
+    const { name, position } = updateCategoryDto;
+    if (name !== undefined) category.name = name;
+    if (position !== undefined) category.position = position;
+    
+    category.updatedAt = new Date();
+    return this.categoryRepository.save(category);
   }
 
   remove(uuid: string) {
-    return this.categoriesRepository.delete({ uuid });
+    return this.categoryRepository.delete({ uuid });
   }
 }
