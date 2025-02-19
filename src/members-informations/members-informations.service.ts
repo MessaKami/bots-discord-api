@@ -24,8 +24,20 @@ export class MembersInformationsService {
     return this.memberInformationsRepository.findOneBy({ uuid });
   }
 
-  update(uuid: string, updateMemberInformationDto: UpdateMemberInformationsDto) {
-    return this.memberInformationsRepository.update(uuid, updateMemberInformationDto);
+  async update(uuid: string, updateMemberInformationDto: UpdateMemberInformationsDto) {
+    const memberInfo = await this.memberInformationsRepository.findOneBy({ uuid });
+    if (!memberInfo) {
+      return null;
+    }
+    
+    // Mise à jour des champs autorisés uniquement
+    const { firstName, lastName, email } = updateMemberInformationDto;
+    if (firstName !== undefined) memberInfo.firstName = firstName;
+    if (lastName !== undefined) memberInfo.lastName = lastName;
+    if (email !== undefined) memberInfo.email = email;
+    
+    memberInfo.updatedAt = new Date();
+    return this.memberInformationsRepository.save(memberInfo);
   }
 
   remove(uuid: string) {
