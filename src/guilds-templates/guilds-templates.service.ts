@@ -30,7 +30,14 @@ export class GuildsTemplatesService {
     if (!guildTemplate) {
       return null;
     }
-    Object.assign(guildTemplate, updateGuildTemplateDto);
+    
+    // Mise à jour des champs autorisés uniquement
+    const { name, description, configuration } = updateGuildTemplateDto;
+    if (name !== undefined) guildTemplate.name = name;
+    if (description !== undefined) guildTemplate.description = description;
+    if (configuration !== undefined) guildTemplate.configuration = configuration;
+    
+    guildTemplate.updatedAt = new Date();
     return this.guildTemplateRepository.save(guildTemplate);
   }
 
