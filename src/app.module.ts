@@ -23,6 +23,7 @@ import { DashboardAccountModule } from './dashboard-accounts/dashboard-accounts.
 import { VotesModule } from './votes/votes.module';
 import { CommentsModule } from './comments/comments.module';
 import { DiscordUsersModule } from './discord-users/discord-users.module';
+import { CoursesModule } from './courses/courses.module';
 
 /**
  * Module principal de l'application
@@ -55,7 +56,10 @@ import { DiscordUsersModule } from './discord-users/discord-users.module';
     VotesModule,
     ReportsModule,
     CommentsModule,
-    DiscordUsersModule
+    DiscordUsersModule,
+    CommentsModule,
+    ReportsModule,
+    CoursesModule,
   ],
   controllers: [],
   providers: [],
