@@ -19,6 +19,7 @@ import { QuestionsModule } from './questions/questions.module';
 import { IdentificationRequestsModule } from './identification-requests/identification-requests.module';
 import { DashboardAccountModule } from './dashboard-accounts/dashboard-accounts.module';
 import { VotesModule } from './votes/votes.module';
+import { CommentsModule } from './comments/comments.module';
 
 /**
  * Module principal de l'application
@@ -47,7 +48,8 @@ import { VotesModule } from './votes/votes.module';
     IdentificationRequestsModule,
     DashboardAccountModule,
     VotesModule,
-    ReportsModule
+    ReportsModule,
+    CommentsModule
   ],
   controllers: [],
   providers: [],
