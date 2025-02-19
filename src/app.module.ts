@@ -18,6 +18,9 @@ import { XpTransactionsModule } from './xp-transactions/xp-transactions.module';
 import { QuestionsModule } from './questions/questions.module';
 import { PromotionsModule } from './promotions/promotions.module';
 import { ChannelsModule } from './channels/channels.module';
+import { IdentificationRequestsModule } from './identification-requests/identification-requests.module';
+import { DashboardAccountModule } from './dashboard-accounts/dashboard-accounts.module';
+import { VotesModule } from './votes/votes.module';
 
 /**
  * Module principal de l'application
@@ -45,6 +48,9 @@ import { ChannelsModule } from './channels/channels.module';
     QuestionsModule,
     PromotionsModule,
     ChannelsModule,
+    IdentificationRequestsModule,
+    DashboardAccountModule,
+    VotesModule,
     ReportsModule
   ],
   controllers: [],

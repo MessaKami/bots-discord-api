@@ -373,6 +373,42 @@ Note:
 - For Guild endpoints, the `uuid` must be a valid Discord server ID (17-20 digits)
 - For Campus endpoints, the `uuid` is automatically generated
 
+### Identification Requests Endpoints
+
+#### Create identification request
+
+- **POST** `/identification-requests`
+```json
+{
+  "uuid_member": "57bb2c9b-a472-408d-9b90-4a834da929d0",
+  "firstname": "Hidetaka",
+  "lastname": "Miyazaki",
+  "email": "hidetaka.miyazaki@from-software.com"
+}
+```
+
+#### Get All identification requests 
+- **GET** `/identification-requests`
+
+#### Get One identification request
+- **GET** `/identification-requests/:uuid`  
+Example: `/identification-requests/57bb2c9b-a472-408d-9b90-4a834da929d0`
+
+#### Update identification request
+- **PUT** `/identification-requests/:uuid`
+```json
+{
+  "uuid_member": "57bb2c9b-a472-408d-9b90-4a834da929d0",
+  "firstname": "Hidetaka",
+  "lastname": "Miyazaki",
+  "email": "hidetaka.miyazaki@from-software.jp"
+}
+```
+
+#### Delete identification request
+- **DELETE** `/identification-requests/:uuid`  
+Example: `/identification-requests/57bb2c9b-a472-408d-9b90-4a834da929d0`
+
 ### Members Informations Endpoints
 
 #### Create member informations
