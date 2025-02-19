@@ -4,30 +4,16 @@ import { Repository } from 'typeorm';
 import { CreateAnswerDto } from './dto/create-answer.dto';
 import { UpdateAnswerDto } from './dto/update-answer.dto';
 import { Answer } from './entities/answer.entity';
-import { Question } from 'src/questions/entities/question.entity';
 
 @Injectable()
 export class AnswersService {
   constructor(
     @InjectRepository(Answer)
     private answersRepository: Repository<Answer>,
-    @InjectRepository(Question)
-    private questionsRepository: Repository<Question>,
   ) {}
 
-  async create(createAnswerDto: CreateAnswerDto) {
-    const question = await this.questionsRepository.findOneBy({ 
-      uuid: createAnswerDto.questionUuid 
-    });
-
-    if (!question) {
-      return null;
-    }
-    
-    const answer = this.answersRepository.create({
-      ...createAnswerDto,
-      question
-    });
+  create(createAnswerDto: CreateAnswerDto) {
+    const answer = this.answersRepository.create(createAnswerDto);
     return this.answersRepository.save(answer);
   }
 

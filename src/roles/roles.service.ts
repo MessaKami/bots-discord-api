@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateRoleDto } from './dto/create-role.dto';
@@ -14,36 +14,68 @@ export class RolesService {
 
   // Créer un nouveau rôle
   async create(createRoleDto: CreateRoleDto): Promise<Role> {
-    const role = this.roleRepository.create(createRoleDto);
-    return await this.roleRepository.save(role);
+    try {
+      const role = this.roleRepository.create(createRoleDto);
+      return await this.roleRepository.save(role);
+    } catch (error) {
+      if (error.code === '23505') { // Code PostgreSQL pour violation de contrainte unique
+        throw new BadRequestException('Un rôle avec cet UUID existe déjà');
+      }
+      throw new BadRequestException('Erreur lors de la création du rôle: ' + error.message);
+    }
   }
 
   // Récupérer tous les rôles
   async findAll(): Promise<Role[]> {
-    return await this.roleRepository.find();
+    try {
+      return await this.roleRepository.find();
+    } catch (error) {
+      throw new BadRequestException('Erreur lors de la récupération des rôles: ' + error.message);
+    }
   }
 
   // Récupérer un rôle par son uuid
   async findOne(uuid: string): Promise<Role> {
-    const role = await this.roleRepository.findOneBy({ uuid });
-    if (!role) {
-      throw new NotFoundException(`Role with UUID ${uuid} not found`);
+    try {
+      const role = await this.roleRepository.findOneBy({ uuid });
+      if (!role) {
+        throw new NotFoundException(`Rôle avec l'UUID ${uuid} non trouvé`);
+      }
+      return role;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      throw new BadRequestException('Erreur lors de la récupération du rôle: ' + error.message);
     }
-    return role;
   }
 
   // Mettre à jour un rôle
   async update(uuid: string, updateRoleDto: UpdateRoleDto): Promise<Role> {
-    const role = await this.findOne(uuid);
-    Object.assign(role, updateRoleDto);
-    return await this.roleRepository.save(role);
+    try {
+      const role = await this.findOne(uuid);
+      Object.assign(role, updateRoleDto);
+      return await this.roleRepository.save(role);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      throw new BadRequestException('Erreur lors de la mise à jour du rôle: ' + error.message);
+    }
   }
 
   // Supprimer un rôle
   async remove(uuid: string): Promise<void> {
-    const result = await this.roleRepository.delete({ uuid });
-    if (result.affected === 0) {
-      throw new NotFoundException(`Role with UUID ${uuid} not found`);
+    try {
+      const result = await this.roleRepository.delete({ uuid });
+      if (result.affected === 0) {
+        throw new NotFoundException(`Rôle avec l'UUID ${uuid} non trouvé`);
+      }
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      throw new BadRequestException('Erreur lors de la suppression du rôle: ' + error.message);
     }
   }
 }
