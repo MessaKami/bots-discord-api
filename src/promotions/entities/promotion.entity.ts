@@ -22,22 +22,27 @@ export class Promotion {
     description: 'Date de début de la promotion',
     example: '2024-01-01T00:00:00Z'
   })
-  @Column({ name: 'start_date' })
+  @Column({ name: 'start_date', type: 'timestamp with time zone' })
   startDate: Date;
 
   @ApiProperty({
     description: 'Date de fin de la promotion',
     example: '2024-12-31T23:59:59Z'
   })
-  @Column({ name: 'end_date' })
+  @Column({ name: 'end_date', type: 'timestamp with time zone' })
   endDate: Date;
 
   @ApiProperty({
     description: 'Statut de la promotion',
     example: 'active',
-    enum: ['active', 'completed', 'cancelled']
+    enum: ['active', 'completed', 'cancelled'],
+    default: 'active'
   })
-  @Column({ type: 'varchar', length: 20 })
+  @Column({ 
+    type: 'varchar', 
+    length: 20, 
+    default: 'active'
+  })
   status: string;
 
   @ApiProperty({
