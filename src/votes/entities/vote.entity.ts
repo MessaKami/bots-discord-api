@@ -8,6 +8,12 @@ export class Vote {
   @PrimaryGeneratedColumn('uuid', { name: 'vote_uuid' })
   voteUuid: string;
 
+  @Column({ name: 'user_id', type: 'uuid' })
+  userId: string;
+
+  @Column({ name: 'item_id', type: 'uuid' })
+  itemId: string;
+
   @Column({ 
     name: 'vote_type',
     type: 'enum',

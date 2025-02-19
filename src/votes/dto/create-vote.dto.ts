@@ -2,7 +2,7 @@ import { ApiProperty, OmitType } from '@nestjs/swagger';
 import { IsEnum, IsNotEmpty, IsUUID } from 'class-validator';
 import { Vote } from '../entities/vote.entity';
 
-export class CreateVoteDto extends OmitType(Vote, ['voteUuid', 'voteCreatedAt', 'voteUpdatedAt'] as const) {
+export class CreateVoteDto extends OmitType(Vote, ['voteUuid', 'voteCreatedAt', 'voteUpdatedAt', 'voteIsActive'] as const) {
   @ApiProperty({
     description: 'ID de l\'utilisateur qui vote',
     example: '123e4567-e89b-12d3-a456-426614174000'
