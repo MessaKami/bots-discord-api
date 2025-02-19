@@ -1,19 +1,18 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, Column, PrimaryColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 
 @Entity('GuildTemplates')
 export class GuildTemplate {
   @ApiProperty({
-    description: 'UUID unique du template',
-    example: '123e4567-e89b-12d3-a456-426614174000'
+    description: 'ID Discord du template',
+    example: '123456789012345678'
   })
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryColumn({ type: 'varchar', length: 19 })
   uuid: string;
 
   @ApiProperty({
-    description: 'Le nom du template',
-    example: 'Template Serveur Formation',
-    maxLength: 100
+    description: 'Nom du template',
+    example: 'Template Serveur Formation'
   })
   @Column({ type: 'varchar', length: 100 })
   name: string;
@@ -32,21 +31,28 @@ export class GuildTemplate {
       channels: ['général', 'annonces'],
       roles: ['admin', 'formateur', 'apprenant'],
       permissions: { default: ['READ_MESSAGES'] }
+    },
+    required: false
+  })
+  @Column({ 
+    type: 'jsonb', 
+    nullable: true,
+    default: {
+      channels: [],
+      roles: [],
+      permissions: {}
     }
   })
-  @Column({ type: 'jsonb' })
   configuration: Record<string, any>;
 
   @ApiProperty({
-    description: 'Date de création',
-    example: '2024-02-17T12:00:00Z'
+    description: 'Date de création'
   })
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
   @ApiProperty({
-    description: 'Date de dernière mise à jour',
-    example: '2024-02-17T12:00:00Z'
+    description: 'Date de dernière mise à jour'
   })
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
