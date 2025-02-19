@@ -77,10 +77,10 @@ export class Role {
   @JoinColumn({ name: 'uuid_guild' })
   guild: Guild;
 
-  @ApiProperty({
-    description: 'Membres ayant ce rôle',
-    type: () => [Member]
-  })
-  @ManyToMany(() => Member, member => member.roles)
-  members: Member[];
+  //@ApiProperty({
+  //  description: 'Membres ayant ce rôle',
+  //  type: () => [Member]
+  //})
+  //@ManyToMany(() => Member, member => member.roles)
+  //members: Member[];
 }
