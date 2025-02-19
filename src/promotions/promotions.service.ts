@@ -30,7 +30,14 @@ export class PromotionsService {
     if (!promotion) {
       return null;
     }
-    Object.assign(promotion, updatePromotionDto);
+    
+    // Mise à jour des champs autorisés uniquement
+    const { name, startDate, endDate } = updatePromotionDto;
+    if (name !== undefined) promotion.name = name;
+    if (startDate !== undefined) promotion.startDate = startDate;
+    if (endDate !== undefined) promotion.endDate = endDate;
+    
+    promotion.updatedAt = new Date();
     return this.promotionRepository.save(promotion);
   }
 
