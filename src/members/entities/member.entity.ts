@@ -1,5 +1,6 @@
 import { Entity, Column, PrimaryColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { Guild } from '../../guilds/entities/guild.entity'
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity('members')
 export class Member {
