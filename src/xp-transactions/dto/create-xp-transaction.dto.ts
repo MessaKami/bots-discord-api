@@ -1,4 +1,6 @@
 import { IsString, IsNumber, Length, MaxLength, Min, Max, IsOptional } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+
 
 /**
  * Data Transfer Object pour la création d'une transaction XP
@@ -21,6 +23,10 @@ import { IsString, IsNumber, Length, MaxLength, Min, Max, IsOptional } from 'cla
  * @see XpTransactionsController
  */
 export class CreateXpTransactionDto {
+  @ApiProperty({
+    description: 'UUID du membre concerné par la transaction (UUID v4 valide)',
+    example: '123e4567-e89b-12d3-a456-426614174000'
+  })
   /**
    * Identifiant unique de l'utilisateur concerné par la transaction
    * 
@@ -39,6 +45,12 @@ export class CreateXpTransactionDto {
   @Length(36)
   userId: string;
 
+  @ApiProperty({
+    description: 'Montant de points d\'expérience (XP) à attribuer ou retirer (entre -1000 et 1000)',
+    example: 100,
+    minimum: -1000,
+    maximum: 1000
+  })
   /**
    * Montant de points d'expérience (XP) à attribuer ou retirer
    * 
@@ -59,6 +71,11 @@ export class CreateXpTransactionDto {
   @Max(1000)
   amount: number;
 
+  @ApiProperty({
+    description: 'Raison justifiant la transaction XP (max 200 caractères)',
+    example: 'Participation active dans le salon d\'entraide',
+    maxLength: 200
+  })
   /**
    * Raison justifiant la transaction XP
    * 
@@ -77,6 +94,12 @@ export class CreateXpTransactionDto {
   @MaxLength(200)
   reason: string;
 
+  @ApiProperty({
+    description: 'Notes additionnelles sur la transaction (optionnel, max 500 caractères)',
+    example: 'Aide exceptionnelle sur un projet complexe',
+    required: false,
+    maxLength: 500
+  })
   /**
    * Notes additionnelles sur la transaction (optionnel)
    * 

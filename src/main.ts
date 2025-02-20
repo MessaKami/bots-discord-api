@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import * as dotenv from 'dotenv';
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+// import { init } from 'response-normalizer';
 
 dotenv.config();
 async function bootstrap() {
@@ -10,6 +11,9 @@ async function bootstrap() {
     AppModule,
     new FastifyAdapter(),
   );
+
+ 
+// init(app);
 
   const config = new DocumentBuilder()
     .setTitle('Discord Bot API')

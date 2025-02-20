@@ -1,21 +1,36 @@
-import { IsString, Length, MaxLength, IsInt, Min } from 'class-validator';
+import { IsString, IsInt, MaxLength, Min, Length } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateCategoryDto {
-
+    @ApiProperty({
+        description: 'ID Discord de la catégorie',
+        example: '123456789012345678'
+    })
     @IsString()
-    @Length(18, 19)
-    uuidSF: string;
+    @Length(17, 19)
+    uuid: string;
 
+    @ApiProperty({
+        description: 'ID Discord du serveur',
+        example: '123456789012345678'
+    })
     @IsString()
-    @Length(18, 19)
-    uuid_guild: string;
+    @Length(17, 19)
+    guildId: string;
 
+    @ApiProperty({
+        description: 'Nom de la catégorie',
+        example: 'Général'
+    })
     @IsString()
     @MaxLength(50)
     name: string;
 
+    @ApiProperty({
+        description: 'Position de la catégorie dans le serveur',
+        example: 0
+    })
     @IsInt()
     @Min(0)
     position: number;
-
 }

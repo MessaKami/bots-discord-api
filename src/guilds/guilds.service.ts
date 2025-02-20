@@ -6,7 +6,7 @@ import { UpdateGuildDto } from './dto/update-guild.dto';
 import { Guild } from './entities/guild.entity';
 
 @Injectable()
-export class GuildService {
+export class GuildsService {
   constructor(
     @InjectRepository(Guild)
     private guildRepository: Repository<Guild>,
@@ -34,7 +34,13 @@ export class GuildService {
     if (!guild) {
       return null;
     }
-    Object.assign(guild, updateGuildDto);
+    
+    // Mise à jour des champs autorisés uniquement
+    const { name, memberCount, configuration } = updateGuildDto;
+    if (name !== undefined) guild.name = name;
+    if (memberCount !== undefined) guild.memberCount = memberCount;
+    if (configuration !== undefined) guild.configuration = configuration;
+    
     guild.updatedAt = new Date();
     return this.guildRepository.save(guild);
   }
