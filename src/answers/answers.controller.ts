@@ -92,6 +92,10 @@ export class AnswersController {
     type: String,
     required: true
   })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'La réponse a été supprimée avec succès.'
+  })
   remove(@Param('uuid') uuid: string) {
     return this.answersService.remove(uuid);
   }
