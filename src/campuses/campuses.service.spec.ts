@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { CampusService } from './campuses.service';
+import { CampusesService as CampusesService } from './campuses.service';
 import { Repository } from 'typeorm';
 import { Campus } from './entities/campus.entity';
 import { CreateCampusDto } from './dto/create-campus.dto';
@@ -13,11 +13,11 @@ const mockRepository = {
   delete: vi.fn(),
 };
 
-describe('CampusService', () => {
-  let service: CampusService;
+describe('CampusesService', () => {
+  let service: CampusesService;
 
   beforeEach(() => {
-    service = new CampusService(mockRepository as unknown as Repository<Campus>);
+    service = new CampusesService(mockRepository as unknown as Repository<Campus>);
   });
 
   it('should be defined', () => {

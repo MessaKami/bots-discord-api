@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PromotionService } from './promotions.service';
-import { PromotionController } from './promotions.controller';
+import { PromotionsService } from './promotions.service';
+import { PromotionsController } from './promotions.controller';
 import { Promotion } from './entities/promotion.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Promotion])],
-  controllers: [PromotionController],
-  providers: [PromotionService],
-  exports: [PromotionService]
+  controllers: [PromotionsController],
+  providers: [PromotionsService],
+  exports: [PromotionsService]
 })
-export class PromotionModule {} 
+export class PromotionsModule {} 
