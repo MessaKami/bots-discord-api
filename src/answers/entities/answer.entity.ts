@@ -33,6 +33,10 @@ export class Answer {
   })
   isMultipleAnswer: boolean;
 
+  @ApiProperty({
+    description: 'La question associée à cette réponse',
+    type: () => Question
+  })
   @ManyToOne(() => Question, (question) => question.answers)
   question: Question;
 
