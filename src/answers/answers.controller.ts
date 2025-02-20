@@ -59,6 +59,7 @@ export class AnswersController {
     type: String,
     required: true
   })
+  @ApiBody({ type: UpdateAnswerDto })
   async update(@Param('uuid') uuid: string, @Body() updateAnswerDto: UpdateAnswerDto) {
     const answer = await this.answersService.update(uuid, updateAnswerDto);
     if (!answer) {
