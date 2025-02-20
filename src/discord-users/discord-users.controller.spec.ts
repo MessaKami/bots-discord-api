@@ -48,4 +48,19 @@ describe('DiscordUsersController', () => {
     expect(await controller.findOne('123456789012345678')).toEqual(result);
     expect(mockDiscordUsersService.findOne).toHaveBeenCalledWith('123456789012345678');
   });
+
+  it('should update a discord user', async () => {
+    const dto: UpdateDiscordUserDto = {
+      discordUsername: 'UpdatedJohnDoe#1234',
+      discriminator: '4321',
+    };
+    const result = {
+      uuidDiscord: '123456789012345678',
+      ...dto,
+    };
+    mockDiscordUsersService.update.mockResolvedValue(result);
+    expect(await controller.update('123456789012345678', dto)).toEqual(result);
+    expect(mockDiscordUsersService.update).toHaveBeenCalledWith('123456789012345678', dto);
+  });
+
 }); 
