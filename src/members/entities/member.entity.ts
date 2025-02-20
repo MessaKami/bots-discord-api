@@ -2,6 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateCol
 import { Guild } from '../../guilds/entities/guild.entity'
 import { MemberInformation } from '../../members-informations/entities/member-information.entity';
 import { ApiProperty } from '@nestjs/swagger';
+import { IdentificationRequest } from 'src/identification-requests/entities/identification-request.entity';
 
 @Entity('members')
 export class Member {
@@ -81,5 +82,8 @@ export class Member {
 
   @OneToOne(() => MemberInformation, (memberInformation) => memberInformation.member)
   memberInformations: MemberInformation;
+
+  @OneToOne(() => IdentificationRequest, (identificationRequest) => identificationRequest.member)
+  identificationRequest: IdentificationRequest;
 
 }
