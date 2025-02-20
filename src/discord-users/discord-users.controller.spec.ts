@@ -34,4 +34,12 @@ describe('DiscordUsersController', () => {
     expect(await controller.create(dto)).toEqual(dto);
     expect(mockDiscordUsersService.create).toHaveBeenCalledWith(dto);
   });
+
+  it('should return an array of discord users', async () => {
+    const result = [{ uuidDiscord: '123456789012345678', discordUsername: 'JohnDoe#1234', discriminator: '1234' }];
+    mockDiscordUsersService.findAll.mockResolvedValue(result);
+    expect(await controller.findAll()).toEqual(result);
+    expect(mockDiscordUsersService.findAll).toHaveBeenCalled();
+  });
+
 }); 
