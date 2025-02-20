@@ -24,6 +24,7 @@ import { VotesModule } from './votes/votes.module';
 import { CommentsModule } from './comments/comments.module';
 import { DiscordUsersModule } from './discord-users/discord-users.module';
 import { CoursesModule } from './courses/courses.module';
+import { DiscordUsersModule } from './discord-users/discord-users.module';
 
 /**
  * Module principal de l'application
@@ -60,6 +61,8 @@ import { CoursesModule } from './courses/courses.module';
     CommentsModule,
     ReportsModule,
     CoursesModule,
+    CommentsModule,
+    DiscordUsersModule
   ],
   controllers: [],
   providers: [],
