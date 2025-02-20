@@ -44,7 +44,7 @@ export class Guild {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
-  @OneToOne(() => Course, course => course.guild)
-  @JoinColumn({ name: 'uuid_course' })
-  course: Course;
+  //@OneToOne(() => Course, course => course.guild)
+  //@JoinColumn({ name: 'uuid_course' })
+  //course: Course;
 }

@@ -20,7 +20,7 @@ describe('MembersController', () => {
   };
 
   const mockMember: Member = {
-    uuid: '123e4567-e89b-12d3-a456-426614174000',
+    uuid_member: '123e4567-e89b-12d3-a456-426614174000',
     guild_username: 'TestUser',
     xp: '100.00',
     level: 1,
@@ -28,7 +28,6 @@ describe('MembersController', () => {
     status: 'Active',
     createdAt: new Date(),
     updatedAt: new Date(),
-    uuid_guild: '123e4567-e89b-12d3-a456-426614174001',
     uuid_discord: '123e4567-e89b-12d3-a456-426614174002',
     guild: mockGuild
   };
@@ -48,7 +47,6 @@ describe('MembersController', () => {
   describe('create', () => {
     it('devrait créer un nouveau membre', async () => {
       const createMemberDto: CreateMemberDto = {
-        uuid: '123e4567-e89b-12d3-a456-426614174000',
         guild_username: 'TestUser',
         xp: '100.00',
         level: 1,
@@ -83,10 +81,10 @@ describe('MembersController', () => {
     it('devrait retourner un membre par son uuid', async () => {
       vi.mocked(membersService.findOne).mockResolvedValue(mockMember);
 
-      const result = await controller.findOne(mockMember.uuid);
+      const result = await controller.findOne(mockMember.uuid_member);
 
       expect(result).toEqual(mockMember);
-      expect(membersService.findOne).toHaveBeenCalledWith(mockMember.uuid);
+      expect(membersService.findOne).toHaveBeenCalledWith(mockMember.uuid_member);
     });
   });
 
@@ -100,10 +98,10 @@ describe('MembersController', () => {
 
       vi.mocked(membersService.update).mockResolvedValue(updatedMember);
 
-      const result = await controller.update(mockMember.uuid, updateMemberDto);
+      const result = await controller.update(mockMember.uuid_member, updateMemberDto);
 
       expect(result).toEqual(updatedMember);
-      expect(membersService.update).toHaveBeenCalledWith(mockMember.uuid, updateMemberDto);
+      expect(membersService.update).toHaveBeenCalledWith(mockMember.uuid_member, updateMemberDto);
     });
   });
 
@@ -111,10 +109,10 @@ describe('MembersController', () => {
     it('devrait supprimer un membre', async () => {
       vi.mocked(membersService.remove).mockResolvedValue(undefined);
 
-      const result = await controller.remove(mockMember.uuid);
+      const result = await controller.remove(mockMember.uuid_member);
 
       expect(result).toBeUndefined();
-      expect(membersService.remove).toHaveBeenCalledWith(mockMember.uuid);
+      expect(membersService.remove).toHaveBeenCalledWith(mockMember.uuid_member);
     });
   });
 });
