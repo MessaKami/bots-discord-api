@@ -65,6 +65,10 @@ export class AnswersController {
     description: 'La réponse a été mise à jour avec succès.',
     type: Answer
   })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: 'La réponse avec l\'UUID spécifié n\'a pas été trouvée.'
+  })
   async update(@Param('uuid') uuid: string, @Body() updateAnswerDto: UpdateAnswerDto) {
     const answer = await this.answersService.update(uuid, updateAnswerDto);
     if (!answer) {
