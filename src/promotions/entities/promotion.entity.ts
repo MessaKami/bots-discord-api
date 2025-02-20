@@ -60,6 +60,9 @@ export class Promotion {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
+  @Column({ name: 'uuid_course', type: 'uuid' })
+  uuidCourse: string;
+
   @ManyToOne(() => Course, course => course.promotions)
   @JoinColumn({ name: 'uuid_course' })
   course: Course;

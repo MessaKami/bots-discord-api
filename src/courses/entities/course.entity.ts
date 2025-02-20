@@ -5,7 +5,7 @@ import { Role } from '../../roles/entities/role.entity';
 import { Promotion } from '../../promotions/entities/promotion.entity';
 import { Channel } from '../../channels/entities/channel.entity';
 
-@Entity('course')
+@Entity('courses')
 export class Course {
     @PrimaryGeneratedColumn('uuid')
     uuidCourse: string;
@@ -30,38 +30,29 @@ export class Course {
       })
     updatedAt: Date;
 
-    @OneToOne(() => Category, Category => Category.course)
+    @OneToOne(() => Category, category => category.course)
     @JoinColumn({ name: 'uuiCategory' })
     category: Category;
 
     @Column({ name: 'uuid_category', type: 'varchar', length: 19 })
     uuidCategory: string;
 
-    @OneToOne(() => Guild, Guild => Guild.course)
+    @OneToOne(() => Guild, guild => guild.course)
     @JoinColumn({ name: 'uuidGuild' })
     guild: Guild;
 
     @Column({ name: 'uuid_guild', type: 'varchar', length: 19})
     uuidGuild: string;
 
-    @OneToMany(() => Role, Role => Role.course)
+    @OneToMany(() => Role, role => role.course)
     @JoinColumn({ name: 'uuidRole' })
-    roles: Role;
+    roles: Role[];
 
-    @Column({ name: 'uuid_role', type: 'varchar', length: 19 })
-    uuidRole: string;
-
-    @OneToMany(() => Promotion, Promotion => Promotion.course)
+    @OneToMany(() => Promotion, promotion => promotion.course)
     @JoinColumn({ name: 'uuidPromotion' })
-    promotions: Promotion;
+    promotions: Promotion[];
 
-    @Column({ name: 'uuid_promotion', type:'uuid' })
-    uuidPromotion: string;
-
-    @OneToMany(() => Channel, Channel => Channel.course)
+    @OneToMany(() => Channel, channel => channel.course)
     @JoinColumn({ name: 'uuidChannel' })
-    channels: Channel;
-
-    @Column({ name: 'uuid_channel', type: 'varchar', length: 19 })
-    uuidChannel: string;
+    channels: Channel[];
 }
