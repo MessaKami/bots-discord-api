@@ -63,4 +63,15 @@ describe('DiscordUsersController', () => {
     expect(mockDiscordUsersService.update).toHaveBeenCalledWith('123456789012345678', dto);
   });
 
+  it('should throw NotFoundException when updating non-existent user', async () => {
+    const dto: UpdateDiscordUserDto = {
+      discordUsername: 'UpdatedJohnDoe#1234',
+      discriminator: '4321',
+    };
+    mockDiscordUsersService.update.mockResolvedValue(null);
+    
+    await expect(controller.update('123456789012345678', dto)).rejects.toThrow(NotFoundException);
+    expect(mockDiscordUsersService.update).toHaveBeenCalledWith('123456789012345678', dto);
+  });
+
 }); 
