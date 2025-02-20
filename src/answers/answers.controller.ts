@@ -86,6 +86,12 @@ export class AnswersController {
     summary: 'Supprimer une réponse',
     description: 'Supprime une réponse existante en fonction de son UUID.'
   })
+  @ApiParam({
+    name: 'uuid',
+    description: 'UUID de la réponse à supprimer',
+    type: String,
+    required: true
+  })
   remove(@Param('uuid') uuid: string) {
     return this.answersService.remove(uuid);
   }
