@@ -15,7 +15,7 @@ export class PickableDiscordUUIDFields {
   uuid_guild: string;
 
   @ApiProperty({
-    description: 'Identifiant unique du serveur (Snowflake)',
+    description: 'Identifiant unique de l\'utilisateur discord (Snowflake)',
     minLength: 17,
     maxLength: 19,
     example: '726798891974243359',

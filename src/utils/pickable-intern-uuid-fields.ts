@@ -109,21 +109,21 @@ export class PickableInternUUIDFields {
   uuid_question: string;
 
   @ApiProperty({
-    description: 'Identifiant unique de la question',
+    description: 'Identifiant unique de la résponse',
     example: '123e4567-e89b-12d3-a456-426614174000',
   })
   @IsUUID()
   uuid_answer: string;
 
   @ApiProperty({
-    description: 'Identifiant unique de la poll',
+    description: 'Identifiant unique du sondage',
     example: '123e4567-e89b-12d3-a456-426614174000',
   })
   @IsUUID()
   uuid_poll: string;
 
   @ApiProperty({
-    description: 'Identifiant unique du template de poll',
+    description: 'Identifiant unique du template du sondage',
     example: '123e4567-e89b-12d3-a456-426614174000',
   })
   @IsUUID()
