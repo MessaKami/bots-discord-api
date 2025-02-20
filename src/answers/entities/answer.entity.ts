@@ -13,6 +13,12 @@ export class Answer {
   @PrimaryGeneratedColumn('uuid', { name: 'uuid_answer' })
   uuid: string;
 
+  @ApiProperty({
+    description: 'Le contenu de la réponse',
+    example: 'Paris',
+    maxLength: 50,
+    type: String
+  })
   @Column({ type: 'varchar', length: 50 })
   content: string;
 
