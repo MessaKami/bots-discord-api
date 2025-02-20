@@ -3,6 +3,7 @@ import { Guild } from '../../guilds/entities/guild.entity'
 import { MemberInformation } from '../../members-informations/entities/member-information.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { IdentificationRequest } from 'src/identification-requests/entities/identification-request.entity';
+import { DiscordUser } from 'src/discord-users/entities/discord-user.entity';
 
 @Entity('members')
 export class Member {
@@ -66,19 +67,16 @@ export class Member {
   updatedAt: Date;
 
   @ApiProperty({
-    description: 'UUID Discord du membre',
-    example: '123e4567-e89b-12d3-a456-426614174002'
-  })
-  @Column('uuid')
-  uuid_discord: string;
-
-  @ApiProperty({
     description: 'Relation avec la guilde',
     type: () => Guild
   })
   @ManyToOne(() => Guild)
   @JoinColumn({ name: 'uuid_guild' })
   guild: Guild;  
+
+  @OneToOne(() => DiscordUser, (discordUser) => discordUser.member)
+  @JoinColumn({ name: 'uuid_discord' })
+  discordUser: DiscordUser;
 
   @OneToOne(() => MemberInformation, (memberInformation) => memberInformation.member)
   memberInformations: MemberInformation;

@@ -1,14 +1,16 @@
-import { Entity, Column, PrimaryColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, Column, PrimaryColumn, CreateDateColumn, UpdateDateColumn, OneToOne } from 'typeorm';
+import { Member } from 'src/members/entities/member.entity';
 import { ApiProperty } from '@nestjs/swagger';
 
 @Entity('Discord_users')
 export class DiscordUser {
+
   @ApiProperty({
     description: 'ID Discord de l\'utilisateur',
     example: '123456789012345678'
   })
   @PrimaryColumn({ type: 'varchar', length: 19, name: 'uuid_discord' })
-  uuidDiscord: string;
+  uuid_dicord: string;
 
   @ApiProperty({
     description: 'Nom d\'utilisateur Discord',
@@ -35,4 +37,8 @@ export class DiscordUser {
   })
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
+
+  @OneToOne(() => Member, member => member.discordUser)
+  member: Member;
+
 } 
