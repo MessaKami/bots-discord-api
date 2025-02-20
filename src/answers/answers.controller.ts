@@ -69,6 +69,10 @@ export class AnswersController {
     status: HttpStatus.NOT_FOUND,
     description: 'La réponse avec l\'UUID spécifié n\'a pas été trouvée.'
   })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: 'Données invalides fournies dans la requête.'
+  })
   async update(@Param('uuid') uuid: string, @Body() updateAnswerDto: UpdateAnswerDto) {
     const answer = await this.answersService.update(uuid, updateAnswerDto);
     if (!answer) {
