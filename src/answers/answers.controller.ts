@@ -49,6 +49,10 @@ export class AnswersController {
   }
 
   @Put(':uuid')
+  @ApiOperation({
+    summary: 'Mettre à jour une réponse',
+    description: 'Met à jour une réponse existante en fonction de son UUID avec les nouvelles informations fournies.'
+  })
   async update(@Param('uuid') uuid: string, @Body() updateAnswerDto: UpdateAnswerDto) {
     const answer = await this.answersService.update(uuid, updateAnswerDto);
     if (!answer) {
