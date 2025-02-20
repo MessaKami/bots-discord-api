@@ -34,25 +34,22 @@ export class Course {
     @JoinColumn({ name: 'uuiCategory' })
     category: Category;
 
-    @Column({ name: 'uuid_category', type: 'varchar', length: 19 })
+    @Column({ name: 'uuid_category', type: 'varchar', length: 19, nullable: true })
     uuidCategory: string;
 
     @OneToOne(() => Guild, guild => guild.course)
     @JoinColumn({ name: 'uuidGuild' })
     guild: Guild;
 
-    @Column({ name: 'uuid_guild', type: 'varchar', length: 19})
+    @Column({ name: 'uuid_guild', type: 'varchar', length: 19, nullable: true})
     uuidGuild: string;
 
     @OneToMany(() => Role, role => role.course)
-    @JoinColumn({ name: 'uuidRole' })
     roles: Role[];
 
     @OneToMany(() => Promotion, promotion => promotion.course)
-    @JoinColumn({ name: 'uuidPromotion' })
     promotions: Promotion[];
 
     @OneToMany(() => Channel, channel => channel.course)
-    @JoinColumn({ name: 'uuidChannel' })
     channels: Channel[];
 }
