@@ -3,7 +3,8 @@ import { AppModule } from './app.module';
 import * as dotenv from 'dotenv';
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-// import { init } from 'response-normalizer';
+import { EmptyResponseInterceptor } from './common/interceptors/empty-response.interceptor';
+import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 
 dotenv.config();
 async function bootstrap() {
@@ -12,8 +13,8 @@ async function bootstrap() {
     new FastifyAdapter(),
   );
 
- 
-// init(app);
+  app.useGlobalInterceptors(new EmptyResponseInterceptor());
+  app.useGlobalFilters(new HttpExceptionFilter());
 
   const config = new DocumentBuilder()
     .setTitle('Discord Bot API')
