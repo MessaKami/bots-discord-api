@@ -42,4 +42,10 @@ describe('DiscordUsersController', () => {
     expect(mockDiscordUsersService.findAll).toHaveBeenCalled();
   });
 
+  it('should return a single discord user', async () => {
+    const result = { uuidDiscord: '123456789012345678', discordUsername: 'JohnDoe#1234', discriminator: '1234' };
+    mockDiscordUsersService.findOne.mockResolvedValue(result);
+    expect(await controller.findOne('123456789012345678')).toEqual(result);
+    expect(mockDiscordUsersService.findOne).toHaveBeenCalledWith('123456789012345678');
+  });
 }); 
