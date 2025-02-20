@@ -24,5 +24,14 @@ describe('DiscordUsersController', () => {
     expect(controller).toBeDefined();
   });
 
- 
+  it('should create a new discord user', async () => {
+    const dto: CreateDiscordUserDto = {
+      uuidDiscord: '123456789012345678',
+      discordUsername: 'JohnDoe#1234',
+      discriminator: '1234',
+    };
+    mockDiscordUsersService.create.mockResolvedValue(dto);
+    expect(await controller.create(dto)).toEqual(dto);
+    expect(mockDiscordUsersService.create).toHaveBeenCalledWith(dto);
+  });
 }); 
