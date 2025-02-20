@@ -24,8 +24,6 @@ import { VotesModule } from './votes/votes.module';
 import { CommentsModule } from './comments/comments.module';
 import { DiscordUsersModule } from './discord-users/discord-users.module';
 import { CoursesModule } from './courses/courses.module';
-import { PromotionModule } from './promotions/promotions.module';
-import { ChannelModule } from './channels/channels.module';
 
 /**
  * Module principal de l'application
@@ -61,9 +59,7 @@ import { ChannelModule } from './channels/channels.module';
     DiscordUsersModule,
     CommentsModule,
     ReportsModule,
-    PromotionModule,
     CoursesModule,
-    ChannelModule,
   ],
   controllers: [],
   providers: [],
