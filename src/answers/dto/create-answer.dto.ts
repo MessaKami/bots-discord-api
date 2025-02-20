@@ -12,6 +12,11 @@ export class CreateAnswerDto {
   @MaxLength(50, {message: 'Le contenu de la réponse ne doit pas dépasser 50 caractères'})
   content: string;
 
+  @ApiProperty({
+    description: 'Indique si la réponse fait partie d\'une question à choix multiples',
+    example: true,
+    type: Boolean
+  })
   @IsBoolean({message: 'La réponse doit être un boolean'})
   isMultipleAnswer: boolean;
 
