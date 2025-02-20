@@ -22,6 +22,7 @@ import { IdentificationRequestsModule } from './identification-requests/identifi
 import { DashboardAccountModule } from './dashboard-accounts/dashboard-accounts.module';
 import { VotesModule } from './votes/votes.module';
 import { CommentsModule } from './comments/comments.module';
+import { DiscordUsersModule } from './discord-users/discord-users.module';
 
 /**
  * Module principal de l'application
@@ -53,7 +54,8 @@ import { CommentsModule } from './comments/comments.module';
     DashboardAccountModule,
     VotesModule,
     ReportsModule,
-    CommentsModule
+    CommentsModule,
+    DiscordUsersModule
   ],
   controllers: [],
   providers: [],
