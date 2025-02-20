@@ -20,7 +20,11 @@ export class CoursesService {
             throw new ConflictException(`Course with name ${createCourseDto.name} already exists`);
         }
 
-        const course = this.courseRepository.create(createCourseDto);
+        const course = this.courseRepository.create({
+            name: createCourseDto.name,
+            isCertified: createCourseDto.isCertified,
+        });
+
         return await this.courseRepository.save(course);
     }
 

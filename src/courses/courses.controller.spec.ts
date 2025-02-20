@@ -42,16 +42,22 @@ describe('CoursesController', () => {
   describe('create', () => {
     it('should create a course', async () => {
       const dto: CreateCourseDto = {
-        uuidCourse: '123e4567-e89b-12d3-a456-426614174000',
         name: 'cda-vals-p4',
         isCertified: true
       };
 
-      mockService.create.mockResolvedValue(mockCourse);
+      mockService.create.mockResolvedValue({
+        uuidCourse: '123e4567-e89b-12d3-a456-426614174000',
+        ...dto,
+        createdAt: expect.any(Date),
+        updatedAt: null
+    });
 
       const result = await controller.create(dto);
 
-      expect(result).toEqual(mockCourse);
+      expect(result).toHaveProperty('uuidCourse');
+      expect(result.name).toBe(dto.name);
+      expect(result.isCertified).toBe(dto.isCertified);
       expect(mockService.create).toHaveBeenCalledWith(dto);
     });
   });
