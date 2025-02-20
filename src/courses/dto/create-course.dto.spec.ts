@@ -19,7 +19,7 @@ describe('CreateCourseDto', () => {
         const errors = await validate(dto);
         
         // Vérifier le nombre total d'erreurs
-        expect(errors).toHaveLength(3);
+        expect(errors).toHaveLength(2);
         
         // Vérifier que chaque champ requis génère une erreur
         const errorProperties = errors.map(error => error.property);

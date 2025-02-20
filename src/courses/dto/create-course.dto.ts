@@ -6,6 +6,7 @@ export class CreateCourseDto {
         description: 'Le nom de la formation',
         type: String,
         example: 'cda-vals-p4',
+        minLength: 3
     })
     @IsNotEmpty()
     @IsString()
