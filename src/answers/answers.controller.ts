@@ -82,6 +82,10 @@ export class AnswersController {
   }
 
   @Delete(':uuid')
+  @ApiOperation({
+    summary: 'Supprimer une réponse',
+    description: 'Supprime une réponse existante en fonction de son UUID.'
+  })
   remove(@Param('uuid') uuid: string) {
     return this.answersService.remove(uuid);
   }
