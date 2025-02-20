@@ -1,16 +1,16 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PromotionService } from './promotions.service';
+import { PromotionsService } from './promotions.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Promotion } from './entities/promotion.entity';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 
-describe('PromotionService', () => {
-  let service: PromotionService;
+describe('PromotionsService', () => {
+  let service: PromotionsService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        PromotionService,
+        PromotionsService,
         {
           provide: getRepositoryToken(Promotion),
           useValue: {
@@ -24,7 +24,7 @@ describe('PromotionService', () => {
       ],
     }).compile();
 
-    service = module.get<PromotionService>(PromotionService);
+    service = module.get<PromotionsService>(PromotionsService);
   });
 
   it('should be defined', () => {

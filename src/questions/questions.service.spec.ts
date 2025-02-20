@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { QuestionsService } from './questions.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Questions } from './entities/question.entity';
+import { Question } from './entities/question.entity';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 
 describe('QuestionsService', () => {
@@ -12,7 +12,7 @@ describe('QuestionsService', () => {
       providers: [
         QuestionsService,
         {
-          provide: getRepositoryToken(Questions),
+          provide: getRepositoryToken(Question),
           useValue: {
             create: vi.fn(),
             save: vi.fn(),

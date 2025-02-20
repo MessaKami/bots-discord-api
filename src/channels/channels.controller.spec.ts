@@ -1,17 +1,17 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ChannelController } from './channels.controller';
-import { ChannelService } from './channels.service';
+import { ChannelsController } from './channels.controller';
+import { ChannelsService } from './channels.service';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 
-describe('ChannelController', () => {
-  let controller: ChannelController;
+describe('ChannelsController', () => {
+  let controller: ChannelsController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [ChannelController],
+      controllers: [ChannelsController],
       providers: [
         {
-          provide: ChannelService,
+          provide: ChannelsService,
           useValue: {
             create: vi.fn(),
             findAll: vi.fn(),
@@ -23,7 +23,7 @@ describe('ChannelController', () => {
       ],
     }).compile();
 
-    controller = module.get<ChannelController>(ChannelController);
+    controller = module.get<ChannelsController>(ChannelsController);
   });
 
   it('should be defined', () => {

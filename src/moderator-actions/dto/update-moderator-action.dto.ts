@@ -11,6 +11,7 @@ import {
   ValidateIf 
 } from 'class-validator';
 import { Transform } from 'class-transformer';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 /**
  * DTO pour la mise à jour d'une action de modération
@@ -19,28 +20,32 @@ import { Transform } from 'class-transformer';
  * pour permettre des mises à jour partielles.
  */
 export class UpdateModeratorActionDto extends PartialType(CreateModeratorActionDto) {
-  /**
-   * ID de l'utilisateur ciblé par l'action
-   * @example "123e4567-e89b-12d3-a456-426614174000"
-   */
+  @ApiPropertyOptional({
+    description: 'ID de l\'utilisateur ciblé par l\'action',
+    example: '123e4567-e89b-12d3-a456-426614174000',
+    format: 'uuid'
+  })
   @IsOptional()
   @IsUUID('4', { message: 'L\'ID de l\'utilisateur doit être un UUID valide' })
   userId?: string;
 
-  /**
-   * Type d'action de modération
-   * @example "ban"
-   */
+  @ApiPropertyOptional({
+    description: 'Type d\'action de modération',
+    enum: ActionType,
+    example: ActionType.BAN
+  })
   @IsOptional()
   @IsEnum(ActionType, { 
     message: `Le type d'action doit être l'un des suivants: ${Object.values(ActionType).join(', ')}`
   })
   actionType?: ActionType;
 
-  /**
-   * Raison de l'action de modération
-   * @example "Violation des règles de la communauté"
-   */
+  @ApiPropertyOptional({
+    description: 'Raison de l\'action de modération',
+    example: 'Violation des règles de la communauté',
+    minLength: 10,
+    maxLength: 500
+  })
   @IsOptional()
   @IsString({ message: 'La raison doit être une chaîne de caractères' })
   @Length(10, 500, { 
@@ -49,11 +54,11 @@ export class UpdateModeratorActionDto extends PartialType(CreateModeratorActionD
   @Transform(({ value }) => value?.trim())
   reason?: string;
 
-  /**
-   * Durée de la sanction
-   * Format: 1d, 2h, 30m, etc.
-   * @example "24h"
-   */
+  @ApiPropertyOptional({
+    description: 'Durée de la sanction (format: 1d, 2h, 30m, etc.)',
+    example: '24h',
+    pattern: '^(\\d+)[mhdw]$'
+  })
   @IsOptional()
   @ValidateIf((o) => o.actionType === ActionType.BAN || o.actionType === ActionType.MUTE)
   @IsString({ message: 'La durée doit être une chaîne de caractères' })
@@ -62,10 +67,11 @@ export class UpdateModeratorActionDto extends PartialType(CreateModeratorActionD
   })
   duration?: string;
 
-  /**
-   * Date d'expiration de la sanction
-   * @example "2024-12-31T23:59:59Z"
-   */
+  @ApiPropertyOptional({
+    description: 'Date d\'expiration de la sanction',
+    example: '2024-12-31T23:59:59Z',
+    format: 'date-time'
+  })
   @IsOptional()
   @ValidateIf((o) => o.actionType === ActionType.BAN || o.actionType === ActionType.MUTE)
   @IsISO8601({ strict: true }, { 
@@ -73,10 +79,11 @@ export class UpdateModeratorActionDto extends PartialType(CreateModeratorActionD
   })
   expiresAt?: string;
 
-  /**
-   * Notes additionnelles
-   * @example "Récidive après deux avertissements"
-   */
+  @ApiPropertyOptional({
+    description: 'Notes additionnelles',
+    example: 'Récidive après deux avertissements',
+    maxLength: 1000
+  })
   @IsOptional()
   @IsString({ message: 'Les notes doivent être une chaîne de caractères' })
   @Length(0, 1000, { 

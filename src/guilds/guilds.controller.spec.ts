@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { GuildController } from './guilds.controller';
-import { GuildService } from './guilds.service';
+import { GuildsController } from './guilds.controller';
+import { GuildsService } from './guilds.service';
 import { CreateGuildDto } from './dto/create-guild.dto';
 import { UpdateGuildDto } from './dto/update-guild.dto';
 
@@ -13,10 +13,10 @@ const mockGuildService = {
 };
 
 describe('GuildController', () => {
-  let controller: GuildController;
+  let controller: GuildsController;
 
   beforeEach(() => {
-    controller = new GuildController(mockGuildService as unknown as GuildService);
+    controller = new GuildsController(mockGuildService as unknown as GuildsService);
   });
 
   it('should be defined', () => {

@@ -1,17 +1,17 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PromotionController } from './promotions.controller';
-import { PromotionService } from './promotions.service';
+import { PromotionsController } from './promotions.controller';
+import { PromotionsService } from './promotions.service';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 
-describe('PromotionController', () => {
-  let controller: PromotionController;
+describe('PromotionsController', () => {
+  let controller: PromotionsController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [PromotionController],
+      controllers: [PromotionsController],
       providers: [
         {
-          provide: PromotionService,
+          provide: PromotionsService,
           useValue: {
             create: vi.fn(),
             findAll: vi.fn(),
@@ -23,7 +23,7 @@ describe('PromotionController', () => {
       ],
     }).compile();
 
-    controller = module.get<PromotionController>(PromotionController);
+    controller = module.get<PromotionsController>(PromotionsController);
   });
 
   it('should be defined', () => {
