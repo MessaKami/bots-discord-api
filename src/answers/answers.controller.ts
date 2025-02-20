@@ -30,6 +30,15 @@ export class AnswersController {
   }
 
   @Get()
+  @ApiOperation({ 
+    summary: 'Récupérer toutes les réponses',
+    description: 'Retourne la liste de toutes les réponses enregistrées dans la base de données.'
+  })
+  @ApiResponse({ 
+    status: HttpStatus.OK, 
+    description: 'Liste de toutes les réponses récupérée avec succès.',
+    type: [Answer] 
+  })
   findAll() {
     return this.answersService.findAll();
   }
