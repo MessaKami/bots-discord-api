@@ -3,15 +3,6 @@ import { ApiProperty } from "@nestjs/swagger";
 
 export class CreateCourseDto {
     @ApiProperty({
-        description: 'Identifiant unique de la formation',
-        type: String,
-        example: '123e4567-e89b-12d3-a456-426614174000',
-    })
-    @IsNotEmpty()
-    @IsUUID()
-    uuidCourse: string;
-
-    @ApiProperty({
         description: 'Le nom de la formation',
         type: String,
         example: 'cda-vals-p4',
