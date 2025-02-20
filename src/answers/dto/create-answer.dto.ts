@@ -20,6 +20,13 @@ export class CreateAnswerDto {
   @IsBoolean({message: 'La réponse doit être un boolean'})
   isMultipleAnswer: boolean;
 
+  @ApiProperty({
+    description: 'UUID de la question associée à cette réponse',
+    example: '123e4567-e89b-12d3-a456-426614174000',
+    minLength: 36,
+    maxLength: 36,
+    type: String
+  })
   @IsString()
   @Length(36, 36, {message: "L'UUID de la question doit être une chaîne de 36 caractères"})
   questionUuid: string;
