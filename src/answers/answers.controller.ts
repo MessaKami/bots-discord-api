@@ -10,6 +10,10 @@ export class AnswersController {
   constructor(private readonly answersService: AnswersService) {}
 
   @Post()
+  @ApiOperation({ 
+    summary: 'Créer une nouvelle réponse',
+    description: 'Crée une nouvelle réponse dans la base de données avec les informations fournies.'
+  })
   create(@Body() createAnswerDto: CreateAnswerDto) {
     return this.answersService.create(createAnswerDto);
   }
