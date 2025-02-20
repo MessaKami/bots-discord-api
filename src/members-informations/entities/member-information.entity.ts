@@ -1,5 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToOne, JoinColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
+
+import { Member } from 'src/members/entities/member.entity';
 
 @Entity('MembersInformations')
 export class MemberInformation {
@@ -7,8 +9,8 @@ export class MemberInformation {
     description: 'UUID unique des informations du membre',
     example: '123e4567-e89b-12d3-a456-426614174000'
   })
-  @PrimaryGeneratedColumn('uuid')
-  uuid: string;
+  @PrimaryGeneratedColumn('uuid', { name: 'uuid_member_infos' })
+  uuid_member_infos: string;
 
   @ApiProperty({
     description: 'Prénom du membre',
@@ -42,4 +44,9 @@ export class MemberInformation {
   })
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
+
+  @OneToOne(() => Member, (member) => member.memberInformations)
+  @JoinColumn({ name: 'uuid_member' })
+  member: Member;
+
 } 
