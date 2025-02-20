@@ -26,11 +26,33 @@ export class VotesController {
   @ApiResponse({ 
     status: 201, 
     description: 'Le vote a été créé avec succès',
-    type: Vote 
+    type: Vote,
+    content: {
+      'application/json': {
+        example: {
+          voteUuid: '123e4567-e89b-12d3-a456-426614174000',
+          userId: '123e4567-e89b-12d3-a456-426614174001',
+          itemId: '123e4567-e89b-12d3-a456-426614174002',
+          voteType: 'upvote',
+          voteCreatedAt: '2024-01-01T00:00:00Z',
+          voteUpdatedAt: '2024-01-01T00:00:00Z',
+          voteIsActive: true
+        }
+      }
+    }
   })
   @ApiResponse({ 
     status: 400, 
-    description: 'Requête invalide' 
+    description: 'Requête invalide',
+    content: {
+      'application/json': {
+        example: {
+          statusCode: 400,
+          message: 'Erreur lors de la création du vote',
+          error: 'Bad Request'
+        }
+      }
+    }
   })
   async create(@Body() createVoteDto: CreateVoteDto): Promise<Vote> {
     try {
@@ -48,7 +70,33 @@ export class VotesController {
   @ApiResponse({ 
     status: 200, 
     description: 'Liste des votes récupérée avec succès',
-    type: [Vote] 
+    type: [Vote],
+    content: {
+      'application/json': {
+        example: [{
+          voteUuid: '123e4567-e89b-12d3-a456-426614174000',
+          userId: '123e4567-e89b-12d3-a456-426614174001',
+          itemId: '123e4567-e89b-12d3-a456-426614174002',
+          voteType: 'upvote',
+          voteCreatedAt: '2024-01-01T00:00:00Z',
+          voteUpdatedAt: '2024-01-01T00:00:00Z',
+          voteIsActive: true
+        }]
+      }
+    }
+  })
+  @ApiResponse({
+    status: 500,
+    description: 'Erreur serveur',
+    content: {
+      'application/json': {
+        example: {
+          statusCode: 500,
+          message: 'Erreur lors de la récupération des votes',
+          error: 'Internal Server Error'
+        }
+      }
+    }
   })
   async findAll(): Promise<Vote[]> {
     try {
@@ -67,11 +115,46 @@ export class VotesController {
   @ApiResponse({ 
     status: 200, 
     description: 'Vote trouvé avec succès',
-    type: Vote 
+    type: Vote,
+    content: {
+      'application/json': {
+        example: {
+          voteUuid: '123e4567-e89b-12d3-a456-426614174000',
+          userId: '123e4567-e89b-12d3-a456-426614174001',
+          itemId: '123e4567-e89b-12d3-a456-426614174002',
+          voteType: 'upvote',
+          voteCreatedAt: '2024-01-01T00:00:00Z',
+          voteUpdatedAt: '2024-01-01T00:00:00Z',
+          voteIsActive: true
+        }
+      }
+    }
   })
   @ApiResponse({ 
     status: 404, 
-    description: 'Vote non trouvé' 
+    description: 'Vote non trouvé',
+    content: {
+      'application/json': {
+        example: {
+          statusCode: 404,
+          message: 'Vote non trouvé',
+          error: 'Not Found'
+        }
+      }
+    }
+  })
+  @ApiResponse({
+    status: 500,
+    description: 'Erreur serveur',
+    content: {
+      'application/json': {
+        example: {
+          statusCode: 500,
+          message: 'Erreur lors de la récupération du vote',
+          error: 'Internal Server Error'
+        }
+      }
+    }
   })
   async findOne(@Param('id', ParseUUIDPipe) id: string): Promise<Vote> {
     try {
@@ -97,11 +180,46 @@ export class VotesController {
   @ApiResponse({ 
     status: 200, 
     description: 'Vote mis à jour avec succès',
-    type: Vote 
+    type: Vote,
+    content: {
+      'application/json': {
+        example: {
+          voteUuid: '123e4567-e89b-12d3-a456-426614174000',
+          userId: '123e4567-e89b-12d3-a456-426614174001',
+          itemId: '123e4567-e89b-12d3-a456-426614174002',
+          voteType: 'downvote',
+          voteCreatedAt: '2024-01-01T00:00:00Z',
+          voteUpdatedAt: '2024-01-01T00:00:00Z',
+          voteIsActive: true
+        }
+      }
+    }
   })
   @ApiResponse({ 
     status: 404, 
-    description: 'Vote non trouvé' 
+    description: 'Vote non trouvé',
+    content: {
+      'application/json': {
+        example: {
+          statusCode: 404,
+          message: 'Vote non trouvé',
+          error: 'Not Found'
+        }
+      }
+    }
+  })
+  @ApiResponse({
+    status: 500,
+    description: 'Erreur serveur',
+    content: {
+      'application/json': {
+        example: {
+          statusCode: 500,
+          message: 'Erreur lors de la mise à jour du vote',
+          error: 'Internal Server Error'
+        }
+      }
+    }
   })
   async update(
     @Param('id', ParseUUIDPipe) id: string, 
@@ -129,11 +247,41 @@ export class VotesController {
   @ApiParam({ name: 'id', description: 'ID du vote', type: 'string' })
   @ApiResponse({ 
     status: 200, 
-    description: 'Vote supprimé avec succès' 
+    description: 'Vote supprimé avec succès',
+    content: {
+      'application/json': {
+        example: {
+          statusCode: 200,
+          message: 'Vote supprimé avec succès'
+        }
+      }
+    }
   })
   @ApiResponse({ 
     status: 404, 
-    description: 'Vote non trouvé' 
+    description: 'Vote non trouvé',
+    content: {
+      'application/json': {
+        example: {
+          statusCode: 404,
+          message: 'Vote non trouvé',
+          error: 'Not Found'
+        }
+      }
+    }
+  })
+  @ApiResponse({
+    status: 500,
+    description: 'Erreur serveur',
+    content: {
+      'application/json': {
+        example: {
+          statusCode: 500,
+          message: 'Erreur lors de la suppression du vote',
+          error: 'Internal Server Error'
+        }
+      }
+    }
   })
   async remove(@Param('id', ParseUUIDPipe) id: string): Promise<void> {
     try {
