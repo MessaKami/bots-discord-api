@@ -60,6 +60,11 @@ export class AnswersController {
     required: true
   })
   @ApiBody({ type: UpdateAnswerDto })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'La réponse a été mise à jour avec succès.',
+    type: Answer
+  })
   async update(@Param('uuid') uuid: string, @Body() updateAnswerDto: UpdateAnswerDto) {
     const answer = await this.answersService.update(uuid, updateAnswerDto);
     if (!answer) {
