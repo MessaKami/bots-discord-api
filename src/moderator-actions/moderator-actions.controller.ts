@@ -14,7 +14,10 @@ import {
 import { ModeratorActionsService } from './moderator-actions.service';
 import { CreateModeratorActionDto } from './dto/create-moderator-action.dto';
 import { UpdateModeratorActionDto } from './dto/update-moderator-action.dto';
+import { ApiTags, ApiOperation, ApiResponse, ApiParam, ApiBody } from '@nestjs/swagger';
+import { ModeratorAction } from './entities/moderator-action.entity';
 
+@ApiTags('Modération')
 @Controller('moderator-actions')
 export class ModeratorActionsController {
   constructor(private readonly moderatorActionsService: ModeratorActionsService) {}
@@ -25,6 +28,17 @@ export class ModeratorActionsController {
    */
   @Post()
   @HttpCode(HttpStatus.CREATED)
+  @ApiOperation({ summary: 'Créer une nouvelle action de modération' })
+  @ApiBody({ type: CreateModeratorActionDto })
+  @ApiResponse({ 
+    status: HttpStatus.CREATED, 
+    description: 'Action de modération créée avec succès',
+    type: ModeratorAction 
+  })
+  @ApiResponse({ 
+    status: HttpStatus.BAD_REQUEST, 
+    description: 'Données invalides' 
+  })
   async create(
     @Body(new ValidationPipe({ transform: true }))
     createDto: CreateModeratorActionDto,
@@ -43,6 +57,12 @@ export class ModeratorActionsController {
    */
   @Get()
   @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Récupérer toutes les actions de modération' })
+  @ApiResponse({ 
+    status: HttpStatus.OK, 
+    description: 'Liste des actions de modération',
+    type: [ModeratorAction]
+  })
   async findAll() {
     const actions = await this.moderatorActionsService.findAll();
     return {
@@ -58,6 +78,17 @@ export class ModeratorActionsController {
    */
   @Get(':id')
   @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Récupérer une action de modération par son ID' })
+  @ApiParam({ name: 'id', description: 'ID de l\'action de modération', type: 'string' })
+  @ApiResponse({ 
+    status: HttpStatus.OK, 
+    description: 'Action de modération trouvée',
+    type: ModeratorAction
+  })
+  @ApiResponse({ 
+    status: HttpStatus.NOT_FOUND, 
+    description: 'Action de modération non trouvée' 
+  })
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     const action = await this.moderatorActionsService.findOne(id);
     return {
@@ -73,6 +104,22 @@ export class ModeratorActionsController {
    */
   @Put(':id')
   @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Mettre à jour une action de modération' })
+  @ApiParam({ name: 'id', description: 'ID de l\'action de modération', type: 'string' })
+  @ApiBody({ type: UpdateModeratorActionDto })
+  @ApiResponse({ 
+    status: HttpStatus.OK, 
+    description: 'Action de modération mise à jour avec succès',
+    type: ModeratorAction
+  })
+  @ApiResponse({ 
+    status: HttpStatus.NOT_FOUND, 
+    description: 'Action de modération non trouvée' 
+  })
+  @ApiResponse({ 
+    status: HttpStatus.BAD_REQUEST, 
+    description: 'Données invalides' 
+  })
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body(new ValidationPipe({ transform: true }))
@@ -93,6 +140,16 @@ export class ModeratorActionsController {
    */
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Supprimer une action de modération' })
+  @ApiParam({ name: 'id', description: 'ID de l\'action de modération', type: 'string' })
+  @ApiResponse({ 
+    status: HttpStatus.OK, 
+    description: 'Action de modération supprimée avec succès' 
+  })
+  @ApiResponse({ 
+    status: HttpStatus.NOT_FOUND, 
+    description: 'Action de modération non trouvée' 
+  })
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     await this.moderatorActionsService.remove(id);
     return {
