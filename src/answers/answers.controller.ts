@@ -15,6 +15,7 @@ export class AnswersController {
     summary: 'Créer une nouvelle réponse',
     description: 'Crée une nouvelle réponse dans la base de données avec les informations fournies.'
   })
+  @ApiBody({ type: CreateAnswerDto })
   @ApiResponse({ 
     status: HttpStatus.CREATED, 
     description: 'La réponse a été créée avec succès.',
