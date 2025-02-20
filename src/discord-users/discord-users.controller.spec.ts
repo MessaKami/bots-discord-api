@@ -74,4 +74,10 @@ describe('DiscordUsersController', () => {
     expect(mockDiscordUsersService.update).toHaveBeenCalledWith('123456789012345678', dto);
   });
 
+  it('should delete a discord user', async () => {
+    const result = { affected: 1 };
+    mockDiscordUsersService.remove.mockResolvedValue(result);
+    expect(await controller.remove('123456789012345678')).toEqual(result);
+    expect(mockDiscordUsersService.remove).toHaveBeenCalledWith('123456789012345678');
+  });
 }); 
