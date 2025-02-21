@@ -1,4 +1,4 @@
-import { IsEnum, IsNotEmpty, IsString, MaxLength } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsString, IsUUID, MaxLength } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateResourceDto {
@@ -33,7 +33,21 @@ export class CreateResourceDto {
     enum: ['active', 'inactive'],
     example: 'active'
   })
-  @IsEnum(['active', 'inactive'])
+  @IsEnum(['active', 'inactive'], {
+    message: 'Le statut doit être soit "active" soit "inactive"'
+  })
   @IsNotEmpty()
   status: string;
+
+  @ApiProperty({
+    description: 'UUID du membre qui crée la ressource',
+    example: '123e4567-e89b-12d3-a456-426614174000'
+  })
+  @IsUUID('4', {
+    message: 'Le creator doit être un UUID v4 valide'
+  })
+  @IsNotEmpty({
+    message: 'Le creator est obligatoire'
+  })
+  creator: string;
 } 
