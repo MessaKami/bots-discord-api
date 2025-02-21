@@ -1,21 +1,143 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AnswersController } from './answers.controller';
 import { AnswersService } from './answers.service';
-import { describe, it, expect, beforeEach } from 'vitest';
+import { CreateAnswerDto } from './dto/create-answer.dto';
+import { UpdateAnswerDto } from './dto/update-answer.dto';
+import { NotFoundException } from '@nestjs/common';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 
 describe('AnswersController', () => {
   let controller: AnswersController;
+  let service: AnswersService;
+
+  const mockAnswersService = {
+    create: vi.fn(),
+    findAll: vi.fn(),
+    findOne: vi.fn(),
+    update: vi.fn(),
+    remove: vi.fn(),
+  };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [AnswersController],
-      providers: [AnswersService],
+      providers: [
+        {
+          provide: AnswersService,
+          useValue: mockAnswersService,
+        },
+      ],
     }).compile();
 
     controller = module.get<AnswersController>(AnswersController);
+    service = module.get<AnswersService>(AnswersService);
   });
 
   it('should be defined', () => {
     expect(controller).toBeDefined();
+  });
+
+  describe('create', () => {
+    it('should create a new answer', async () => {
+      const createAnswerDto: CreateAnswerDto = {
+        content: 'Test answer',
+        questionUuid: 'test-question-uuid',
+        isMultipleAnswer: false,
+      };
+      const expectedResult = { uuid: 'test-uuid', ...createAnswerDto };
+
+      mockAnswersService.create.mockResolvedValue(expectedResult);
+
+      const result = await controller.create(createAnswerDto);
+
+      expect(result).toEqual(expectedResult);
+      expect(service.create).toHaveBeenCalledWith(createAnswerDto);
+    });
+  });
+
+  describe('findAll', () => {
+    it('should return an array of answers', async () => {
+      const expectedResult = [
+        { uuid: 'uuid1', content: 'Answer 1', questionUuid: 'q-uuid1', isMultipleAnswer: false },
+        { uuid: 'uuid2', content: 'Answer 2', questionUuid: 'q-uuid2', isMultipleAnswer: true },
+      ];
+
+      mockAnswersService.findAll.mockResolvedValue(expectedResult);
+
+      const result = await controller.findAll();
+
+      expect(result).toEqual(expectedResult);
+      expect(service.findAll).toHaveBeenCalled();
+    });
+  });
+
+  describe('findOne', () => {
+    it('should return a single answer', async () => {
+      const uuid = 'test-uuid';
+      const expectedResult = {
+        uuid,
+        content: 'Test answer',
+        questionUuid: 'q-uuid',
+        isMultipleAnswer: false,
+      };
+
+      mockAnswersService.findOne.mockResolvedValue(expectedResult);
+
+      const result = await controller.findOne(uuid);
+
+      expect(result).toEqual(expectedResult);
+      expect(service.findOne).toHaveBeenCalledWith(uuid);
+    });
+  });
+
+  describe('update', () => {
+    it('should update an answer', async () => {
+      const uuid = 'test-uuid';
+      const updateAnswerDto: UpdateAnswerDto = {
+        content: 'Updated answer',
+        isMultipleAnswer: true,
+      };
+      const expectedResult = {
+        uuid,
+        ...updateAnswerDto,
+        questionUuid: 'q-uuid',
+      };
+
+      mockAnswersService.update.mockResolvedValue(expectedResult);
+
+      const result = await controller.update(uuid, updateAnswerDto);
+
+      expect(result).toEqual(expectedResult);
+      expect(service.update).toHaveBeenCalledWith(uuid, updateAnswerDto);
+    });
+
+    it('should throw NotFoundException when answer not found', async () => {
+      const uuid = 'non-existent-uuid';
+      const updateAnswerDto: UpdateAnswerDto = {
+        content: 'Updated answer',
+        isMultipleAnswer: false,
+      };
+
+      mockAnswersService.update.mockResolvedValue(null);
+
+      await expect(controller.update(uuid, updateAnswerDto)).rejects.toThrow(
+        NotFoundException,
+      );
+      expect(service.update).toHaveBeenCalledWith(uuid, updateAnswerDto);
+    });
+  });
+
+  describe('remove', () => {
+    it('should remove an answer', async () => {
+      const uuid = 'test-uuid';
+      const expectedResult = { deleted: true };
+
+      mockAnswersService.remove.mockResolvedValue(expectedResult);
+
+      const result = await controller.remove(uuid);
+
+      expect(result).toEqual(expectedResult);
+      expect(service.remove).toHaveBeenCalledWith(uuid);
+    });
   });
 });
