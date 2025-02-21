@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { CreateMemberDto } from './dto/create-member.dto';
 import { UpdateMemberDto } from './dto/update-member.dto';
 import { Member } from './entities/member.entity';
@@ -40,10 +40,11 @@ export class MembersService {
   }
 
   // Supprimer un membre
-  async remove(uuid_member: string): Promise<void> {
+  async remove(uuid_member: string): Promise<DeleteResult> {
     const result = await this.membersRepository.delete({ uuid_member });
     if (result.affected === 0) {
       throw new NotFoundException(`Member with UUID ${uuid_member} not found`);
     }
+    return result;
   }
 }
