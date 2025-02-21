@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { ResourcesService } from './resources.service';
 import { CreateResourceDto } from './dto/create-resource.dto';
 import { UpdateResourceDto } from './dto/update-resource.dto';
@@ -34,7 +34,7 @@ export class ResourcesController {
     return this.resourcesService.findOne(uuid);
   }
 
-  @Put(':uuid')
+  @Patch(':uuid')
   @ApiOperation({ summary: 'Mettre à jour une ressource' })
   @ApiParam({ name: 'uuid', description: 'UUID de la ressource' })
   @ApiResponse({ status: 200, description: 'La ressource a été mise à jour.', type: Resource })
