@@ -1,9 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToOne, OneToMany } from 'typeorm';
 import { Guild } from '../../guilds/entities/guild.entity'
 import { MemberInformation } from '../../members-informations/entities/member-information.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { IdentificationRequest } from 'src/identification-requests/entities/identification-request.entity';
 import { DiscordUser } from 'src/discord-users/entities/discord-user.entity';
+import { Resource } from '../../resources/entities/resource.entity';
 
 @Entity('members')
 export class Member {
@@ -90,4 +91,10 @@ export class Member {
   @OneToOne(() => IdentificationRequest, (identificationRequest) => identificationRequest.member)
   identificationRequest: IdentificationRequest;
 
+  @ApiProperty({
+    description: 'Les ressources créées par ce membre',
+    type: () => [Resource]
+  })
+  @OneToMany(() => Resource, resource => resource.creator)
+  resources: Resource[];
 }
