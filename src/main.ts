@@ -5,6 +5,7 @@ import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { EmptyResponseInterceptor } from './common/interceptors/empty-response.interceptor';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
+import { ValidationPipe } from '@nestjs/common';
 
 dotenv.config();
 async function bootstrap() {
@@ -15,6 +16,7 @@ async function bootstrap() {
 
   app.useGlobalInterceptors(new EmptyResponseInterceptor());
   app.useGlobalFilters(new HttpExceptionFilter());
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
 
   const config = new DocumentBuilder()
     .setTitle('Discord Bot API')
