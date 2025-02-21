@@ -1,5 +1,6 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
+import { Member } from '../../members/entities/member.entity';
 
 @Entity('Resources')
 export class Resource {
@@ -39,6 +40,14 @@ export class Resource {
   })
   @Column({ type: 'enum', enum: ['active', 'inactive'] })
   status: string;
+
+  @ApiProperty({
+    description: 'Le membre qui a créé cette ressource',
+    type: () => Member
+  })
+  @ManyToOne(() => Member, member => member.resources)
+  @JoinColumn({ name: 'creator_uuid' })
+  creator: Member;
 
   @ApiProperty({
     description: 'Date de dernière mise à jour',
