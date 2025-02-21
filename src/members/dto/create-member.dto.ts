@@ -1,13 +1,12 @@
 import { IsString, IsUUID, MaxLength, IsInt, Min, Matches, IsIn } from 'class-validator';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, PickType, IntersectionType } from '@nestjs/swagger';
 
-export class CreateMemberDto {
-  @ApiProperty({
-    description: 'UUID unique du membre',
-    example: '123e4567-e89b-12d3-a456-426614174000'
-  })
-  @IsUUID()
-  uuid: string;
+import { PickableDiscordUUIDFields } from 'src/utils/pickable-discord-uuid-fields';
+
+export class CreateMemberDto extends PickType(PickableDiscordUUIDFields, [
+  'uuid_discord', 
+  'uuid_guild',
+]) {
 
   @ApiProperty({
     description: 'Nom d\'utilisateur du membre dans la guilde',
@@ -54,17 +53,6 @@ export class CreateMemberDto {
   @IsIn(['Active', 'Inactive', 'Banned'], { message: 'status doit être Active, Inactive ou Banned' })
   status: string;
 
-  @ApiProperty({
-    description: 'UUID de la guilde à laquelle appartient le membre',
-    example: '123e4567-e89b-12d3-a456-426614174001'
-  })
-  @IsUUID()
   uuid_guild: string;
-
-  @ApiProperty({
-    description: 'UUID Discord du membre',
-    example: '123e4567-e89b-12d3-a456-426614174002'
-  })
-  @IsUUID()
   uuid_discord: string;
 }

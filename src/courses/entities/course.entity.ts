@@ -37,9 +37,9 @@ export class Course {
     @Column({ name: 'uuid_category', type: 'varchar', length: 19, nullable: true })
     uuidCategory: string;
 
-    @OneToOne(() => Guild, guild => guild.course)
-    @JoinColumn({ name: 'uuidGuild' })
-    guild: Guild;
+    //@OneToOne(() => Guild, guild => guild.course)
+    //@JoinColumn({ name: 'uuidGuild' })
+    //guild: Guild;
 
     @Column({ name: 'uuid_guild', type: 'varchar', length: 19, nullable: true})
     uuidGuild: string;

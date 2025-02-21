@@ -1,15 +1,16 @@
-import { Entity, Column, PrimaryColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { Guild } from '../../guilds/entities/guild.entity'
 import { ApiProperty } from '@nestjs/swagger';
 
 @Entity('members')
 export class Member {
+
   @ApiProperty({
     description: 'UUID unique du membre',
     example: '123e4567-e89b-12d3-a456-426614174000'
   })
-  @PrimaryColumn('uuid', { name: 'uuid_member' })
-  uuid: string;
+  @PrimaryGeneratedColumn('uuid', { name: 'uuid_member' })
+  uuid_member: string;
 
   @ApiProperty({
     description: 'Nom d\'utilisateur du membre dans la guilde',
@@ -61,13 +62,6 @@ export class Member {
   })
   @UpdateDateColumn({ type: 'timestamp', name: 'updated_at' })
   updatedAt: Date;
-
-  @ApiProperty({
-    description: 'UUID de la guilde à laquelle appartient le membre',
-    example: '123e4567-e89b-12d3-a456-426614174001'
-  })
-  @Column('uuid')
-  uuid_guild: string;
 
   @ApiProperty({
     description: 'UUID Discord du membre',
