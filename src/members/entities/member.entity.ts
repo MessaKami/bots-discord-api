@@ -66,6 +66,9 @@ export class Member {
   @UpdateDateColumn({ type: 'timestamp', name: 'updated_at' })
   updatedAt: Date;
 
+  @Column({ type: 'uuid', name: 'uuid_guild' })
+  uuid_guild: string;
+
   @ApiProperty({
     description: 'Relation avec la guilde',
     type: () => Guild
@@ -73,6 +76,9 @@ export class Member {
   @ManyToOne(() => Guild)
   @JoinColumn({ name: 'uuid_guild' })
   guild: Guild;  
+
+  @Column({ type: 'uuid', name: 'uuid_discord' }) 
+  uuid_discord: string;
 
   @OneToOne(() => DiscordUser, (discordUser) => discordUser.member)
   @JoinColumn({ name: 'uuid_discord' })
