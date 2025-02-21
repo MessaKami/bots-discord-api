@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToMany } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Course } from '../../courses/entities/course.entity';
 
@@ -63,7 +63,7 @@ export class Promotion {
   @Column({ name: 'uuid_course', type: 'uuid' })
   uuidCourse: string;
 
-  @ManyToOne(() => Course, course => course.promotions)
+  @ManyToMany(() => Course, course => course.promotions)
   @JoinColumn({ name: 'uuid_course' })
   course: Course;
 }

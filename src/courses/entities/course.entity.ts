@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, OneToMany, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, ManyToMany, JoinColumn, OneToMany } from 'typeorm';
 import { Category } from '../../categories/entities/category.entity';
 import { Guild } from '../../guilds/entities/guild.entity';
 import { Role } from '../../roles/entities/role.entity';
@@ -79,7 +79,7 @@ export class Course {
       type: () => [Channel],
       isArray: true
     })
-    @OneToMany(() => Role, role => role.course)
+    @ManyToMany(() => Role, role => role.course)
     roles: Role[];
 
     @ApiProperty({
