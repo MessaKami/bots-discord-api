@@ -1,7 +1,11 @@
 import { IsString, IsEmail, MaxLength } from 'class-validator';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, PickType } from '@nestjs/swagger';
+import { PickableInternUUIDFields } from 'src/utils/pickable-intern-uuid-fields';
 
-export class CreateMemberInformationsDto {
+export class CreateMemberInformationsDto extends PickType(PickableInternUUIDFields, [
+    'uuid_member'
+]) {
+
     @ApiProperty({
         description: 'Prénom du membre',
         example: 'Jean'
@@ -25,4 +29,6 @@ export class CreateMemberInformationsDto {
     @IsEmail()
     @MaxLength(100)
     email: string;
+
+    uuid_member: string;
 }

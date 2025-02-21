@@ -11,7 +11,7 @@ describe('DashboardAccountService', () => {
   let repository: Repository<DashboardAccount>;
 
   const mockDashboardAccount = {
-    uuidDashboardAccount: '123e4567-e89b-12d3-a456-426614174000',
+    uuid_dashboard_account: '123e4567-e89b-12d3-a456-426614174000',
     email: 'test@example.com',
     password: 'hashedPassword123'
   };
@@ -50,7 +50,7 @@ describe('DashboardAccountService', () => {
 
       const createDtoWithUUID = {
         ...createDto,
-        uuidDashboardAccount: mockDashboardAccount.uuidDashboardAccount
+        uuid_dashboard_account: mockDashboardAccount.uuid_dashboard_account
       };
 
       const result = await service.create(createDtoWithUUID);
@@ -70,7 +70,7 @@ describe('DashboardAccountService', () => {
 
       expect(result).toEqual(mockDashboardAccount);
       expect(mockRepository.findOne).toHaveBeenCalledWith({
-        where: { uuidDashboardAccount: uuid }
+        where: { uuid_dashboard_account: uuid }
       });
     });
 
@@ -91,9 +91,9 @@ describe('DashboardAccountService', () => {
       await service.deleteByUUID(uuid);
 
       expect(mockRepository.findOne).toHaveBeenCalledWith({
-        where: { uuidDashboardAccount: uuid }
+        where: { uuid_dashboard_account: uuid }
       });
-      expect(mockRepository.delete).toHaveBeenCalledWith({ uuidDashboardAccount: uuid });
+      expect(mockRepository.delete).toHaveBeenCalledWith({ uuid_dashboard_account: uuid });
     });
 
     it('should throw NotFoundException when account not found', async () => {

@@ -22,8 +22,8 @@ export class IdentificationRequest {
     @Column({ type: 'uuid', name: 'uuid_member' })
     uuid_member: string;
 
-    //@OneToOne(() => Member, (member) => member.identificationRequest)
-    //@JoinColumn({ name: 'uuid_member' })
-    //member: Member
+    @OneToOne(() => Member, (member) => member.identificationRequest)
+    @JoinColumn({ name: 'uuid_member' })
+    member: Member
 
 }
