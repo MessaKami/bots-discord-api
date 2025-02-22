@@ -5,6 +5,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IdentificationRequest } from 'src/identification-requests/entities/identification-request.entity';
 import { DiscordUser } from 'src/discord-users/entities/discord-user.entity';
 import { Resource } from '../../resources/entities/resource.entity';
+import { XpTransaction } from '../../xp-transactions/entities/xp-transaction.entity';
 
 @Entity('members')
 export class Member {
@@ -97,4 +98,11 @@ export class Member {
   })
   @OneToMany(() => Resource, resource => resource.creator)
   resources: Resource[];
+
+  @ApiProperty({
+    description: 'Historique des transactions XP du membre',
+    type: () => [XpTransaction]
+  })
+  @OneToMany(() => XpTransaction, transaction => transaction.member)
+  xp_transactions: XpTransaction[];
 }
