@@ -1,6 +1,7 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Member } from '../../members/entities/member.entity';
+import { Report } from '../../reports/entities/report.entity';
 
 @Entity('Resources')
 export class Resource {
@@ -62,4 +63,14 @@ export class Resource {
   })
   @CreateDateColumn()
   created_at: Date;
+
+  @ApiProperty({
+    description: 'Les signalements liés à cette ressource',
+    type: () => [Report]
+  })
+  @OneToMany(() => Report, report => report.resource, { 
+    cascade: true,
+    onDelete: 'CASCADE'
+  })
+  reports: Report[];
 } 
