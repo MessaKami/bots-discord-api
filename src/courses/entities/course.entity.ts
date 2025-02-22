@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, ManyToMany, JoinColumn, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, ManyToMany, JoinColumn, OneToMany, ManyToOne, JoinTable } from 'typeorm';
 import { Category } from '../../categories/entities/category.entity';
 import { Guild } from '../../guilds/entities/guild.entity';
 import { Role } from '../../roles/entities/role.entity';
@@ -53,33 +53,51 @@ export class Course {
     updatedAt: Date;
 
     @ApiProperty({
-      description: 'UUID unique de la catégorie',
+      description: 'Catégorie associée à la formation',
       example: '563p6455-e89b-56i8-h284-4266141740052'
     })
     @OneToOne(() => Category, category => category.course)
     @JoinColumn({ name: 'uuiCategory' })
     category: Category;
 
+    @ApiProperty({
+      description: 'UUID unique de la catégorie',
+      example: '563p6455-e89b-56i8-h284-4266141740052'
+    })
     @Column({ name: 'uuid_category', type: 'varchar', length: 19 })
     uuidCategory: string;
+
+    @ApiProperty({
+      description: 'Guilde associée aux formations',
+      example: '264l6455-j43g-28k4-s567-6543298236052'
+    })
+    @ManyToOne(() => Guild, guild => guild.course)
+    @JoinColumn({ name: 'uuidGuild' })
+    guild: Guild;
 
     @ApiProperty({
       description: 'UUID unique de la guilde',
       example: '264l6455-j43g-28k4-s567-6543298236052'
     })
-    @OneToOne(() => Guild, guild => guild.course)
-    @JoinColumn({ name: 'uuidGuild' })
-    guild: Guild;
-
     @Column({ name: 'uuid_guild', type: 'varchar', length: 19})
     uuidGuild: string;
 
     @ApiProperty({
-      description: 'Rôles associés à la formation',
-      type: () => [Channel],
+      description: 'Rôles associés aux formations',
+      type: () => [Role],
       isArray: true
     })
     @ManyToMany(() => Role, role => role.course)
+    @JoinTable({
+      name: 'courses_roles',
+      joinColumn: {
+          name: 'uuid_course',
+          referencedColumnName: 'uuidCourse'
+      },
+      inverseJoinColumn: {
+          name: 'uuid_role',
+          referencedColumnName: 'uuidRole'
+      }})
     roles: Role[];
 
     @ApiProperty({
