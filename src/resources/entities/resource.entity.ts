@@ -45,7 +45,7 @@ export class Resource {
     description: 'Le membre qui a créé cette ressource',
     type: () => Member
   })
-  @ManyToOne(() => Member, member => member.resources)
+  @ManyToOne(() => Member, member => member.resources, { onDelete: 'SET NULL' })
   @JoinColumn({ name: 'creator_uuid' })
   creator: Member;
 
