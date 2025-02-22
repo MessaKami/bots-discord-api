@@ -10,14 +10,14 @@ import { ApiProperty } from '@nestjs/swagger';
 export class Course {
     @ApiProperty({
       description: 'UUID unique de la formation',
-      example: '635e4527-a79x-15c8-g416-426514174780'
+      example: '123e4567-e89b-12d3-a456-426614174000'
     })
     @PrimaryGeneratedColumn('uuid')
-    uuidCourse: string;
+    uuid: string;
 
     @ApiProperty({
       description: 'Nom de la formation',
-      example: 'Développeur Web',
+      example: 'Développeur web',
       maxLength: 50
     })
     @Column({ type: 'varchar', length: 50 })
@@ -53,57 +53,69 @@ export class Course {
     updatedAt: Date;
 
     @ApiProperty({
-      description: 'Catégorie associée à la formation',
-      example: '563p6455-e89b-56i8-h284-4266141740052'
-    })
-    @OneToOne(() => Category, category => category.course)
-    @JoinColumn({ name: 'uuiCategory' })
-    category: Category;
-
-    @ApiProperty({
-      description: 'UUID unique de la catégorie',
-      example: '563p6455-e89b-56i8-h284-4266141740052'
-    })
-    @Column({ name: 'uuid_category', type: 'varchar', length: 19 })
-    uuidCategory: string;
-
-    @ApiProperty({
       description: 'Guilde associée aux formations',
-      example: '264l6455-j43g-28k4-s567-6543298236052'
+      type: () => Guild
     })
     @ManyToOne(() => Guild, guild => guild.course)
-    @JoinColumn({ name: 'uuidGuild' })
+    @JoinColumn({ name: 'uuid_guild' })
     guild: Guild;
 
     @ApiProperty({
       description: 'UUID unique de la guilde',
-      example: '264l6455-j43g-28k4-s567-6543298236052'
+      example: '123456789012345678'
     })
     @Column({ name: 'uuid_guild', type: 'varchar', length: 19})
     uuidGuild: string;
 
     @ApiProperty({
+      description: 'Catégorie associée à la formation',
+      example: {
+        uuid: '123456789012345678',
+        name: 'Développement Web'
+      }
+    })
+    @OneToOne(() => Category, category => category.course)
+    @JoinColumn({ name: 'uuid_category' })
+    category: Category;
+
+    @ApiProperty({
+      description: 'UUID unique de la catégorie',
+      example: '123456789012345678',
+      nullable: true
+    })
+    @Column({ 
+      name: 'uuid_category', 
+      type: 'varchar', 
+      length: 19,
+      nullable: true 
+    })
+    uuidCategory: string;
+
+    @ApiProperty({
       description: 'Rôles associés aux formations',
       type: () => [Role],
-      isArray: true
+      isArray: true,
+      nullable: true
     })
     @ManyToMany(() => Role, role => role.course)
     @JoinTable({
       name: 'courses_roles',
-      joinColumn: {
+      joinColumns: [{
           name: 'uuid_course',
-          referencedColumnName: 'uuidCourse'
-      },
-      inverseJoinColumn: {
+          referencedColumnName: 'uuid'
+      }],
+      inverseJoinColumns: [{
           name: 'uuid_role',
-          referencedColumnName: 'uuidRole'
-      }})
+          referencedColumnName: 'uuid'
+      }]
+    })
     roles: Role[];
 
     @ApiProperty({
       description: 'Promotions associées à la formation',
       type: () => [Promotion],
-      isArray: true
+      isArray: true,
+      nullable: true,
     })
     @OneToMany(() => Promotion, promotion => promotion.course)
     promotions: Promotion[];
@@ -111,7 +123,8 @@ export class Course {
     @ApiProperty({
       description: 'Chaînes associées à la formation',
       type: () => [Channel],
-      isArray: true
+      isArray: true,
+      nullable: true,
     })
     @OneToMany(() => Channel, channel => channel.course)
     channels: Channel[];
