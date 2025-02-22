@@ -85,7 +85,12 @@ export class Role {
   //@ManyToMany(() => Member, member => member.roles)
   //members: Member[];
 
-  @ManyToOne(() => Course, course => course.roles)
+  @ApiProperty({
+    description: 'Formations associées aux rôles',
+    type: () => [Course],
+    isArray: true
+  })
+  @ManyToMany(() => Course, course => course.roles)
   @JoinColumn({ name: 'uuid_course' })
-  course: Course;
+  course: Course[];
 }

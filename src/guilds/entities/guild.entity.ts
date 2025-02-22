@@ -48,7 +48,12 @@ export class Guild {
   @ManyToOne(() => Member, (member) => member.guild)
   members: Member[];
 
-  @OneToOne(() => Course, course => course.guild)
+  @ApiProperty({
+    description: 'Formations associées à la guilde',
+    type: () => [Course],
+    isArray: true
+  })
+  @OneToMany(() => Course, course => course.guild)
   @JoinColumn({ name: 'uuid_course' })
-  course: Course;
+  course: Course[];
 }
