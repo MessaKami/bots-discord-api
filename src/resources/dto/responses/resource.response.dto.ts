@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude, Expose, Type } from 'class-transformer';
-import { ReportResponseDto } from '../../../reports/dto/responses/report.response.dto';
+import { ReportType, ReportCategory } from '../../../reports/entities/report.entity';
 
 export class ResourceCreatorResponseDto {
   @ApiProperty({
@@ -45,6 +45,60 @@ export class ResourceCreatorResponseDto {
 
   @Exclude()
   xp: string;
+}
+
+export class ResourceReportResponseDto {
+  @ApiProperty({
+    description: 'UUID du signalement',
+    example: '123e4567-e89b-12d3-a456-426614174000'
+  })
+  @Expose()
+  uuid_report: string;
+
+  @ApiProperty({
+    description: 'Type de signalement',
+    enum: ReportType,
+    example: ReportType.RESOURCE
+  })
+  @Expose()
+  type: ReportType;
+
+  @ApiProperty({
+    description: 'Catégorie du signalement',
+    enum: ReportCategory,
+    example: ReportCategory.INAPPROPRIATE
+  })
+  @Expose()
+  category: ReportCategory;
+
+  @ApiProperty({
+    description: 'Raison détaillée du signalement',
+    example: 'Contenu offensant envers la communauté'
+  })
+  @Expose()
+  reason: string;
+
+  @ApiProperty({
+    description: 'Statut du signalement',
+    example: 'pending'
+  })
+  @Expose()
+  status: string;
+
+  @ApiProperty({
+    description: 'Date de création',
+    example: '2024-02-22T12:00:00Z'
+  })
+  @Expose()
+  created_at: Date;
+
+  @ApiProperty({
+    description: 'Membre qui a fait le signalement',
+    type: () => ResourceCreatorResponseDto
+  })
+  @Expose()
+  @Type(() => ResourceCreatorResponseDto)
+  reporter: ResourceCreatorResponseDto;
 }
 
 export class ResourceResponseDto {
@@ -100,11 +154,11 @@ export class ResourceResponseDto {
 
   @ApiProperty({
     description: 'Signalements de la ressource',
-    type: () => [ReportResponseDto]
+    type: () => [ResourceReportResponseDto]
   })
   @Expose()
-  @Type(() => ReportResponseDto)
-  reports: ReportResponseDto[];
+  @Type(() => ResourceReportResponseDto)
+  reports: ResourceReportResponseDto[];
 
   // On exclut les champs non nécessaires
   @Exclude()
