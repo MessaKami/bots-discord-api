@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, MinLength, IsUUID, IsBoolean, Matches } from "class-validator";
+import { IsString, IsNotEmpty, MinLength, IsBoolean, Matches, Length } from "class-validator";
 import { ApiProperty } from "@nestjs/swagger";
 
 export class CreateCourseDto {
@@ -22,4 +22,21 @@ export class CreateCourseDto {
     @IsNotEmpty()
     @IsBoolean()
     isCertified: boolean;
+
+    @ApiProperty({
+        description: 'UUID de la guilde',
+        example: '123456789012345678'
+    })
+    @IsString()
+    @Length(17, 19)
+    @IsNotEmpty()
+    uuidGuild: string;
+
+    @ApiProperty({
+        description: 'UUID de la catégorie',
+        example: '123456789012345678'
+    })
+    @IsString()
+    @Length(17, 19)
+    uuidCategory: string;
 }
