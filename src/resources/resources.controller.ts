@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseUUIDPipe } from '@nestjs/common';
 import { ResourcesService } from './resources.service';
 import { CreateResourceDto } from './dto/create-resource.dto';
 import { UpdateResourceDto } from './dto/update-resource.dto';
@@ -30,7 +30,7 @@ export class ResourcesController {
   @ApiParam({ name: 'uuid', description: 'UUID de la ressource' })
   @ApiResponse({ status: 200, description: 'La ressource a été trouvée.', type: Resource })
   @ApiResponse({ status: 404, description: 'Ressource non trouvée' })
-  findOne(@Param('uuid') uuid: string): Promise<Resource> {
+  findOne(@Param('uuid', ParseUUIDPipe) uuid: string): Promise<Resource> {
     return this.resourcesService.findOne(uuid);
   }
 
@@ -41,7 +41,7 @@ export class ResourcesController {
   @ApiResponse({ status: 404, description: 'Ressource non trouvée' })
   @ApiResponse({ status: 400, description: 'Requête invalide' })
   update(
-    @Param('uuid') uuid: string,
+    @Param('uuid', ParseUUIDPipe) uuid: string,
     @Body() updateResourceDto: UpdateResourceDto,
   ): Promise<Resource> {
     return this.resourcesService.update(uuid, updateResourceDto);
@@ -52,7 +52,7 @@ export class ResourcesController {
   @ApiParam({ name: 'uuid', description: 'UUID de la ressource' })
   @ApiResponse({ status: 200, description: 'La ressource a été supprimée.' })
   @ApiResponse({ status: 404, description: 'Ressource non trouvée' })
-  remove(@Param('uuid') uuid: string): Promise<void> {
+  remove(@Param('uuid', ParseUUIDPipe) uuid: string): Promise<void> {
     return this.resourcesService.remove(uuid);
   }
 } 
