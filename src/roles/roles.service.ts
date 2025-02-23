@@ -35,11 +35,11 @@ export class RolesService {
   }
 
   // Récupérer un rôle par son uuid
-  async findOne(uuid: string): Promise<Role> {
+  async findOne(uuid_role: string): Promise<Role> {
     try {
-      const role = await this.roleRepository.findOneBy({ uuid });
+      const role = await this.roleRepository.findOneBy({ uuid_role });
       if (!role) {
-        throw new NotFoundException(`Rôle avec l'UUID ${uuid} non trouvé`);
+        throw new NotFoundException(`Rôle avec l'UUID ${uuid_role} non trouvé`);
       }
       return role;
     } catch (error) {
@@ -51,9 +51,9 @@ export class RolesService {
   }
 
   // Mettre à jour un rôle
-  async update(uuid: string, updateRoleDto: UpdateRoleDto): Promise<Role> {
+  async update(uuid_role: string, updateRoleDto: UpdateRoleDto): Promise<Role> {
     try {
-      const role = await this.findOne(uuid);
+      const role = await this.findOne(uuid_role);
       Object.assign(role, updateRoleDto);
       return await this.roleRepository.save(role);
     } catch (error) {
@@ -65,11 +65,11 @@ export class RolesService {
   }
 
   // Supprimer un rôle
-  async remove(uuid: string): Promise<void> {
+  async remove(uuid_role: string): Promise<void> {
     try {
-      const result = await this.roleRepository.delete({ uuid });
+      const result = await this.roleRepository.delete({ uuid_role });
       if (result.affected === 0) {
-        throw new NotFoundException(`Rôle avec l'UUID ${uuid} non trouvé`);
+        throw new NotFoundException(`Rôle avec l'UUID ${uuid_role} non trouvé`);
       }
     } catch (error) {
       if (error instanceof NotFoundException) {
