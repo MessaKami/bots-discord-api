@@ -1,7 +1,8 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Course } from './entities/course.entity';
+import { Role } from 'src/roles/entities/role.entity';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
 
@@ -10,23 +11,45 @@ export class CoursesService {
     constructor(
         @InjectRepository(Course)
         private readonly courseRepository: Repository<Course>,
+
+        @InjectRepository(Role)
+        private readonly roleRepository: Repository<Role>,
     ) {}
 
     async create(createCourseDto: CreateCourseDto): Promise<Course> {
-        const existingCourse = await this.courseRepository.findOne({
-            where: { name: createCourseDto.name }
-        });
-        if (existingCourse) {
+        try {
+          // Vérifier si un cours existe déjà avec le même nom
+          const existingCourse = await this.courseRepository.findOne({
+            where: { name: createCourseDto.name },
+          });
+          if (existingCourse) {
             throw new ConflictException(`Course with name ${createCourseDto.name} already exists`);
+          }
+    
+          // Créer un rôle associé au cours
+          const newRole = this.roleRepository.create({
+            uuid_role: createCourseDto.uuid_role, // Attendu dans DTO ou généré manuellement
+            uuid_guild: createCourseDto.uuid_guild, // Association à une guilde (si applicable)
+            name: createCourseDto.name, // Nom du rôle = Nom du cours
+            member_count: "0",
+            role_position: "0",
+            hoist: false,
+            color: "#000000",
+          });
+    
+          const savedRole = await this.roleRepository.save(newRole);
+    
+          // Créer le cours en liant le rôle créé
+          const newCourse = this.courseRepository.create({
+            ...createCourseDto,
+            uuid_role: savedRole.uuid_role, // Associer le rôle au cours
+          });
+    
+          return await this.courseRepository.save(newCourse);
+        } catch (error) {
+          throw new BadRequestException('Erreur lors de la création du cours: ' + error.message);
         }
-
-        const course = this.courseRepository.create({
-            name: createCourseDto.name,
-            isCertified: createCourseDto.isCertified,
-        });
-
-        return await this.courseRepository.save(course);
-    }
+      }
 
     async getByUUID(uuid_course: string): Promise<Course> {
         const course = await this.courseRepository.findOne({
