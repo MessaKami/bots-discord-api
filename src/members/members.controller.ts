@@ -22,6 +22,7 @@ import {
   ApiBody,
 } from '@nestjs/swagger';
 import { Member } from './entities/member.entity';
+import { Role } from '../roles/entities/role.entity';
 
 @ApiTags('members')
 @Controller('members')
@@ -140,6 +141,22 @@ export class MembersController {
   })
   remove(@Param('uuid') uuid: string) {
     return this.membersService.remove(uuid);
+  }
+
+  @Get(':uuid_member/roles')
+  @ApiOperation({ summary: 'Récupérer tous les rôles liés à un membre' })
+  @ApiParam({ name: 'uuid_member', description: 'UUID du membre' })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Liste des rôles du membre',
+    type: [Role],
+  })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: 'Membre non trouvé',
+  })
+  getMemberRoles(@Param('uuid_member') uuid_member: string) {
+    return this.membersService.getMemberRoles(uuid_member);
   }
 
   @Put(':uuid_member/assign-role/:uuid_role')

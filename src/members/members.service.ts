@@ -54,6 +54,19 @@ export class MembersService {
     return result;
   }
 
+  async getMemberRoles(uuid_member: string): Promise<Role[]> {
+    const member = await this.membersRepository.findOne({
+        where: { uuid_member },
+        relations: ['roles'],
+    });
+
+    if (!member) {
+        throw new NotFoundException(`Member with UUID ${uuid_member} not found`);
+    }
+
+    return member.roles;
+}
+
   async assignRoleToMember(uuid_member: string, uuid_role: string): Promise<Member> {
     const member = await this.membersRepository.findOne({
         where: { uuid_member },
