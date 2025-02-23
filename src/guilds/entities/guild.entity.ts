@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  ManyToOne,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Course } from '../../courses/entities/course.entity';
@@ -59,7 +60,6 @@ export class Guild {
   @OneToMany(() => Campus, (campus) => campus.guild)
   campuses: Campus[];
 
-  //@OneToOne(() => Course, course => course.guild)
-  //@JoinColumn({ name: 'uuid_course' })
-  //course: Course;
+  @OneToMany(() => Course, course => course.guild)
+  courses: Course[];
 }
