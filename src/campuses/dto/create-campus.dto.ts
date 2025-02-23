@@ -5,5 +5,6 @@ import { PickableDiscordUUIDFields } from 'src/utils/pickable-discord-uuid-field
 
 export class CreateCampusDto extends PickType(IntersectionType(PickableDtoFields, PickableDiscordUUIDFields), [
   'name',
-  'uuid_role'
+  'uuid_role',
+  'uuid_guild'
 ]) { }
