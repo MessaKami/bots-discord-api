@@ -1,5 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToOne, JoinColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
+
+import { Role } from 'src/roles/entities/role.entity';
 
 @Entity('Campuses')
 export class Campus {
@@ -31,4 +33,12 @@ export class Campus {
   })
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
+
+  @Column({ type: 'varchar', name: 'uuid_role' })
+  uuid_role: string;
+
+  @OneToOne(() => Role, role => role.campus)
+  @JoinColumn({ name: 'uuid_role' })
+  role: Role
+
 }
