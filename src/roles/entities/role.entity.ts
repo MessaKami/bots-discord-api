@@ -5,6 +5,7 @@ import { Guild } from '../../guilds/entities/guild.entity';
 import { Member } from '../../members/entities/member.entity';
 import { Course } from '../../courses/entities/course.entity';
 import { Campus } from '../../campuses/entities/campus.entity';
+import { Promotion } from 'src/promotions/entities/promotion.entity';
 
 @Entity('roles')
 export class Role {
@@ -93,5 +94,8 @@ export class Role {
 
   @OneToOne(() => Campus, campus => campus.role)
   campus: Campus;
+
+  @OneToOne(() => Promotion, promotion => promotion.role)
+  promotion: Promotion;
 
 }
