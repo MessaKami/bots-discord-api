@@ -8,10 +8,10 @@ import { Course } from '../../courses/entities/course.entity';
 export class Role {
   @ApiProperty({
     description: 'UUID unique du rôle',
-    example: '123e4567-e89b-12d3-a456-426614174000'
+    example: '172653890987364567'
   })
-  @PrimaryColumn('uuid', { name: 'uuid_role' })
-  uuid: string;
+  @PrimaryColumn('varchar', { name: 'uuid_role' })
+  uuid_role: string;
 
   @ApiProperty({
     description: 'Nom du rôle',
@@ -65,9 +65,9 @@ export class Role {
 
   @ApiProperty({
     description: 'UUID de la guilde à laquelle appartient le rôle',
-    example: '123e4567-e89b-12d3-a456-426614174001'
+    example: '123456789012345678'
   })
-  @Column('uuid', { nullable: false })
+  @Column('varchar', { nullable: false })
   uuid_guild: string;
 
   @ApiProperty({
@@ -78,12 +78,12 @@ export class Role {
   @JoinColumn({ name: 'uuid_guild' })
   guild: Guild;
 
-  //@ApiProperty({
-  //  description: 'Membres ayant ce rôle',
-  //  type: () => [Member]
-  //})
-  //@ManyToMany(() => Member, member => member.roles)
-  //members: Member[];
+  @ApiProperty({
+    description: 'Membres ayant ce rôle',
+    type: () => [Member]
+  })
+  @ManyToMany(() => Member, member => member.roles)
+  members: Member[];
 
   @ManyToOne(() => Course, course => course.roles)
   @JoinColumn({ name: 'uuid_course' })
