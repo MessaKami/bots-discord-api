@@ -63,7 +63,7 @@ export class Promotion {
   updatedAt: Date;
 
   @Column({ name: 'uuid_course', type: 'uuid' })
-  uuidCourse: string;
+  uuid_course: string;
 
   @ManyToOne(() => Course, course => course.promotions)
   @JoinColumn({ name: 'uuid_course' })
@@ -75,6 +75,9 @@ export class Promotion {
   @ManyToOne(() => Guild, guild => guild.promotions)
   @JoinColumn({ name: 'uuid_guild' })
   guild: Guild;
+
+  @Column({ name: 'uuid_role', type: 'varchar', length: 19, nullable: true })
+  uuid_role: string;
 
   @OneToOne(() => Role, role => role.promotion)
   @JoinColumn({ name: 'uuid_role' })
