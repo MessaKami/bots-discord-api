@@ -3,11 +3,13 @@ import { ApiProperty, IntersectionType, PickType } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { PickableDtoFields } from 'src/utils/pickable-dto-fields';
 import { PickableDiscordUUIDFields } from 'src/utils/pickable-discord-uuid-fields';
+import { PickableInternUUIDFields } from 'src/utils/pickable-intern-uuid-fields';
 
-export class CreatePromotionDto extends PickType(IntersectionType(PickableDtoFields, PickableDiscordUUIDFields), [
+export class CreatePromotionDto extends PickType(IntersectionType(PickableDtoFields, PickableDiscordUUIDFields, PickableInternUUIDFields), [
   'name',
   'uuid_role',
-  'uuid_guild'
+  'uuid_guild',
+  'uuid_course'
 ]) {
 
   @ApiProperty({
