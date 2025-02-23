@@ -7,8 +7,8 @@ import { Channel } from '../../channels/entities/channel.entity';
 
 @Entity('courses')
 export class Course {
-    @PrimaryGeneratedColumn('uuid')
-    uuidCourse: string;
+    @PrimaryGeneratedColumn('uuid', { name: 'uuid_course' })
+    uuid_course: string;
 
     @Column({ type: 'varchar' })
     name: string;
@@ -37,12 +37,12 @@ export class Course {
     @Column({ name: 'uuid_category', type: 'varchar', length: 19, nullable: true })
     uuidCategory: string;
 
-    //@OneToOne(() => Guild, guild => guild.course)
-    //@JoinColumn({ name: 'uuidGuild' })
-    //guild: Guild;
-
     @Column({ name: 'uuid_guild', type: 'varchar', length: 19, nullable: true})
-    uuidGuild: string;
+    uuid_uuild: string;
+
+    @OneToMany(() => Guild, guild => guild.course)
+    @JoinColumn({ name: 'uuid_guild' })
+    guild: Guild;
 
     @OneToMany(() => Role, role => role.course)
     roles: Role[];

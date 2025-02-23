@@ -1,18 +1,12 @@
-import { IsString, IsNotEmpty, MinLength, IsUUID, IsBoolean, Matches } from "class-validator";
-import { ApiProperty } from "@nestjs/swagger";
+import { IsNotEmpty, IsBoolean } from "class-validator";
+import { ApiProperty, IntersectionType, PickType } from "@nestjs/swagger";
+import { PickableDiscordUUIDFields } from "src/utils/pickable-discord-uuid-fields";
+import { PickableDtoFields } from "src/utils/pickable-dto-fields";
 
-export class CreateCourseDto {
-    @ApiProperty({
-        description: 'Le nom de la formation',
-        type: String,
-        example: 'cda-vals-p4',
-        minLength: 3
-    })
-    @IsNotEmpty()
-    @IsString()
-    @Matches(/^[a-z0-9-]+$/) 
-    @MinLength(3)
-    name: string;
+export class CreateCourseDto extends PickType(IntersectionType(PickableDiscordUUIDFields, PickableDtoFields), [
+    'name', 
+    'uuid_guild', 
+    'uuid_role']) {
 
     @ApiProperty({
         description: 'Si la formation est certifiante',
