@@ -11,6 +11,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Course } from '../../courses/entities/course.entity';
 import { Member } from '../../members/entities/member.entity';
 import { Campus } from 'src/campuses/entities/campus.entity';
+import { Promotion } from 'src/promotions/entities/promotion.entity';
 
 @Entity('Guilds')
 export class Guild {
@@ -62,4 +63,7 @@ export class Guild {
 
   @OneToMany(() => Course, course => course.guild)
   courses: Course[];
+
+  @OneToMany(() => Promotion, promotion => promotion.guild)
+  promotions: Promotion[];
 }
