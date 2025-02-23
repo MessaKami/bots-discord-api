@@ -1,6 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToOne } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Course } from '../../courses/entities/course.entity';
+import { Guild } from '../../guilds/entities/guild.entity';
 
 @Entity('Promotions')
 export class Promotion {
@@ -75,4 +76,12 @@ export class Promotion {
   @ManyToOne(() => Course, course => course.promotions)
   @JoinColumn({ name: 'uuid_course' })
   course: Course;
+
+  @Column({ name: 'uuid_guild', type: 'varchar', length: 19, nullable: true })
+  uuid_guild: string;
+
+  @ManyToOne(() => Guild, guild => guild.promotions)
+  @JoinColumn({ name: 'uuid_guild' })
+  guild: Guild;
+
 }
