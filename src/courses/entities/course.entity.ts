@@ -44,6 +44,9 @@ export class Course {
     @JoinColumn({ name: 'uuid_guild' })
     guild: Guild;
 
+    @Column({ name: 'uuid_role', type: 'varchar', length: 19, nullable: true })
+    uuid_role: string;
+
     @OneToMany(() => Role, role => role.course)
     roles: Role[];
 
