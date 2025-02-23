@@ -29,13 +29,13 @@ export class CoursesController {
         return this.courseService.create(createCourseDto);
     }
 
-    @Get(':uuidCourse')
+    @Get(':uuid_course')
     @ApiOperation({ 
         summary: 'Récupérer une formation par son UUID',
         description: 'Retourne les détails d\'une formation spécifique'
     })
     @ApiParam({ 
-        name: 'uuidCourse', 
+        name: 'uuid_course', 
         description: 'UUID de la formation',
         example: '123e4567-e89b-12d3-a456-426614174000'
     })
@@ -48,17 +48,17 @@ export class CoursesController {
         status: 404, 
         description: 'Formation non trouvée.'
     })
-    async getByUUID(@Param('uuidCourse') uuidCourse: string): Promise<Course> {
-        return this.courseService.getByUUID(uuidCourse);
+    async getByUUID(@Param('uuid_course') uuid_course: string): Promise<Course> {
+        return this.courseService.getByUUID(uuid_course);
     }
 
-    @Put(':uuidCourse')
+    @Put(':uuid_course')
     @ApiOperation({ 
         summary: 'Mettre à jour une formation',
         description: 'Met à jour les informations d\'une formation existante'
     })
     @ApiParam({ 
-        name: 'uuidCourse', 
+        name: 'uuid_course', 
         description: 'UUID de la formation',
         example: '123e4567-e89b-12d3-a456-426614174000'
     })
@@ -80,19 +80,19 @@ export class CoursesController {
         description: 'Le nouveau nom est déjà utilisé par une autre formation.'
     })
     async updateByUUID(
-        @Param('uuidCourse') uuidCourse: string,
+        @Param('uuid_course') uuid_course: string,
         @Body() updateCourseDto: UpdateCourseDto,
     ): Promise<Course> {
-        return this.courseService.updateByUUID(uuidCourse, updateCourseDto);
+        return this.courseService.updateByUUID(uuid_course, updateCourseDto);
     }
 
-    @Delete(':uuidCourse')
+    @Delete(':uuid_course')
     @ApiOperation({ 
         summary: 'Supprimer une formation',
         description: 'Supprime une formation existante'
     })
     @ApiParam({ 
-        name: 'uuidCourse', 
+        name: 'uuid_course', 
         description: 'UUID de la formation',
         example: '123e4567-e89b-12d3-a456-426614174000'
     })
@@ -108,8 +108,8 @@ export class CoursesController {
         status: 400, 
         description: 'Erreur lors de la suppression de la formation.'
     })
-    async deleteByUUID(@Param('uuidCourse') uuidCourse: string): Promise<void> {
-        return this.courseService.deleteByUUID(uuidCourse);
+    async deleteByUUID(@Param('uuid_course') uuid_course: string): Promise<void> {
+        return this.courseService.deleteByUUID(uuid_course);
     }
 }
 
