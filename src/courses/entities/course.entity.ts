@@ -99,6 +99,7 @@ export class Course {
   })
   uuidCategory: string;
 
+
   @ApiProperty({
     description: 'Rôles associés aux formations',
     type: () => [Role],
