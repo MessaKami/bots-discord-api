@@ -99,6 +99,8 @@ export class Course {
   })
   uuidCategory: string;
 
+  @Column({ name: 'uuid_role', type: 'varchar', length: 19, nullable: true })
+  uuid_role: string;
 
   @ApiProperty({
     description: 'Rôles associés aux formations',
