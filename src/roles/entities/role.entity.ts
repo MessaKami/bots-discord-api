@@ -1,8 +1,10 @@
-import { Entity, Column, PrimaryColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, ManyToMany } from 'typeorm';
+import { Entity, Column, PrimaryColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, OneToOne, JoinColumn, ManyToMany } from 'typeorm';
+import { ApiProperty } from '@nestjs/swagger';
+
 import { Guild } from '../../guilds/entities/guild.entity';
 import { Member } from '../../members/entities/member.entity';
-import { ApiProperty } from '@nestjs/swagger';
 import { Course } from '../../courses/entities/course.entity';
+import { Campus } from '../../campuses/entities/campus.entity';
 
 @Entity('roles')
 export class Role {
@@ -84,13 +86,16 @@ export class Role {
   })
   @ManyToMany(() => Member, member => member.roles)
   members: Member[];
-
+  
   @ApiProperty({
     description: 'Formations associées aux rôles',
     type: () => [Course],
     isArray: true
   })
-  @ManyToMany(() => Course, course => course.roles)
+  @ManyToOne(() => Course, course => course.roles)
   @JoinColumn({ name: 'uuid_course' })
-  course: Course[];
+  course: Course;
+
+  @OneToOne(() => Campus, campus => campus.role)
+  campus: Campus;
 }
