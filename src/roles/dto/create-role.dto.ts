@@ -1,13 +1,16 @@
-import { IsString, IsUUID, MaxLength, IsBoolean, Matches } from 'class-validator';
-import { ApiProperty } from '@nestjs/swagger';
+import { IsString, IsInt, IsBoolean, IsUUID, Min, MaxLength } from 'class-validator';
+import { ApiProperty, PickType } from '@nestjs/swagger';
+import { PickableDiscordUUIDFields } from 'src/utils/pickable-discord-uuid-fields';
 
-export class CreateRoleDto {
+export class CreateRoleDto extends PickType(PickableDiscordUUIDFields, [
+  'uuidGuild'
+]) {
     @ApiProperty({
         description: 'UUID unique du rôle',
         example: '123e4567-e89b-12d3-a456-426614174000'
     })
     @IsUUID()
-    uuid_role: string;
+    uuid: string;
 
     @ApiProperty({
         description: 'Nom du rôle',
@@ -20,24 +23,22 @@ export class CreateRoleDto {
 
     @ApiProperty({
         description: 'Nombre de membres ayant ce rôle',
-        example: '10'
+        example: 10
     })
-    @IsString()
-    @MaxLength(50)
-    @Matches(/^\d+$/, { message: 'member_count doit être une chaîne numérique' })
-    member_count: string;
+    @IsInt()
+    @Min(0)
+    member_count: number;
 
     @ApiProperty({
         description: 'Position du rôle dans la hiérarchie',
-        example: '1'
+        example: 1
     })
-    @IsString()
-    @MaxLength(50)
-    @Matches(/^\d+$/, { message: 'role_position doit être une chaîne numérique' })
-    role_position: string;
+    @IsInt()
+    @Min(0)
+    role_position: number;
 
     @ApiProperty({
-        description: 'Indique si le rôle est affiché séparément dans la liste des membres',
+        description: 'Indique si le rôle est affiché séparément',
         example: true
     })
     @IsBoolean()
@@ -45,18 +46,16 @@ export class CreateRoleDto {
 
     @ApiProperty({
         description: 'Couleur du rôle en format hexadécimal',
-        example: '#FF0000',
-        pattern: '^#[0-9A-Fa-f]{6}$'
+        example: '#FF0000'
     })
     @IsString()
-    @MaxLength(50)
-    @Matches(/^#[0-9A-Fa-f]{6}$/, { message: 'color doit être un code hexadécimal valide (ex: #FF0000)' })
+    @MaxLength(7)
     color: string;
 
     @ApiProperty({
-        description: 'UUID de la guilde à laquelle appartient le rôle',
+        description: 'UUID de la guilde associée',
         example: '123e4567-e89b-12d3-a456-426614174001'
     })
-    @IsUUID()
-    uuid_guild: string;
+
+    uuidGuild: string;
 }

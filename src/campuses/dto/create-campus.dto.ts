@@ -1,8 +1,10 @@
 import { IsString, MaxLength } from 'class-validator';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, PickType } from '@nestjs/swagger';
+import { PickableDiscordUUIDFields } from 'src/utils/pickable-discord-uuid-fields';
 
-export class CreateCampusDto {
-
+export class CreateCampusDto extends PickType(PickableDiscordUUIDFields, [
+  'uuidGuild'
+]) {
   @ApiProperty({
     description: 'Nom du campus',
     example: 'Simplon Paris',
@@ -11,4 +13,6 @@ export class CreateCampusDto {
   @IsString()
   @MaxLength(50)
   name: string;
+
+  uuidGuild: string;
 }

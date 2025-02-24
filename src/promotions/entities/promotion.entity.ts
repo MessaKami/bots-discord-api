@@ -1,14 +1,14 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Course } from '../../courses/entities/course.entity';
-
+import { Guild } from '../../guilds/entities/guild.entity';
 @Entity('Promotions')
 export class Promotion {
   @ApiProperty({
     description: 'UUID unique de la promotion',
     example: '123e4567-e89b-12d3-a456-426614174000'
   })
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn('uuid', { name: 'uuid_promotion' })
   uuid: string;
 
   @ApiProperty({
@@ -60,10 +60,17 @@ export class Promotion {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
-  @Column({ name: 'uuid_course', type: 'uuid' })
+  @Column({ name: 'uuidCourse', type: 'uuid' })
   uuidCourse: string;
 
+  @Column({ type: 'uuid', name: 'uuidGuild' })
+  uuidGuild: string;
+
   @ManyToOne(() => Course, course => course.promotions)
-  @JoinColumn({ name: 'uuid_course' })
+  @JoinColumn({ name: 'uuidCourse' })
   course: Course;
+
+  @ManyToOne(() => Guild, guild => guild.promotions)
+  @JoinColumn({ name: 'uuidGuild' })
+  guild: Guild;
 }

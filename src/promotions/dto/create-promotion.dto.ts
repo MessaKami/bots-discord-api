@@ -1,8 +1,14 @@
 import { IsString, IsDate, MaxLength } from 'class-validator';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, PickType, IntersectionType } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
+import { PickableDiscordUUIDFields } from 'src/utils/pickable-discord-uuid-fields';
+import { PickableInternUUIDFields } from 'src/utils/pickable-intern-uuid-fields';
 
-export class CreatePromotionDto {
+export class CreatePromotionDto extends PickType(IntersectionType(PickableDiscordUUIDFields, PickableInternUUIDFields), [
+  'uuidGuild',
+  'uuidCourse'
+]) {
+
   @ApiProperty({
     description: 'Nom de la promotion',
     example: 'Développeur Web 2024',
@@ -27,4 +33,7 @@ export class CreatePromotionDto {
   @IsDate()
   @Type(() => Date)
   endDate: Date;
+
+  uuidGuild: string;
+  uuidCourse: string;
 } 

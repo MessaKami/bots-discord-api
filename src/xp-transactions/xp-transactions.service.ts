@@ -16,7 +16,7 @@ export class XpTransactionsService {
     const xpTransaction = this.xpTransactionRepository.create({
       transaction_type: createXpTransactionDto.amount >= 0 ? 'GAIN' : 'LOSS',
       transaction_value: Math.abs(createXpTransactionDto.amount),
-      uuid_member: createXpTransactionDto.userId,
+      uuidMember: createXpTransactionDto.userId,
       reason: createXpTransactionDto.reason,
       notes: createXpTransactionDto.notes
     });
@@ -44,7 +44,7 @@ export class XpTransactionsService {
     const xpTransaction = await this.findOne(id);
     
     if (updateXpTransactionDto.userId) {
-      xpTransaction.uuid_member = updateXpTransactionDto.userId;
+      xpTransaction.uuidMember = updateXpTransactionDto.userId;
     }
     
     if (updateXpTransactionDto.amount !== undefined) {
