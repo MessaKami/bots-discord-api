@@ -18,12 +18,12 @@ export class AnswersController {
   @ApiBody({ type: CreateAnswerDto })
   @ApiResponse({ 
     status: HttpStatus.CREATED, 
-    description: 'La réponse a été créée avec succès.',
+    description: 'Answer successfully created.',
     type: Answer 
   })
   @ApiResponse({ 
     status: HttpStatus.BAD_REQUEST, 
-    description: 'Données invalides fournies dans la requête.' 
+    description: 'Invalid data provided in the request.' 
   })
   create(@Body() createAnswerDto: CreateAnswerDto) {
     return this.answersService.create(createAnswerDto);
