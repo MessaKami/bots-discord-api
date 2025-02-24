@@ -44,6 +44,7 @@ Cette API est conçue pour gérer des bots Discord en utilisant le framework Nes
   - [Answers Endpoints](#answers-endpoints)
   - [Comments Endpoints](#comments-endpoints)
   - [Courses Endpoints](#courses-endpoints)
+  - [Dashboard Accounts Endpoints](#dashboard-accounts-endpoints)
 
 
 # Normes pour les commits et les pull requests ✍️
@@ -628,5 +629,34 @@ Example: `/courses/123e4567-e89b-12d3-a456-426614174000`
 #### Delete a Course
 - **DELETE** `/courses/:uuid`
 Example: `/courses/123e4567-e89b-12d3-a456-426614174000`
+
+### Dashboard Accounts Endpoints
+
+#### Create a Dashboard Account
+- **POST** `/dashboardAccounts`
+```json
+{
+  "email": "test@example.com",
+  "password": "password123",
+  "uuid_discord": "123456789012345678"
+}
+```
+
+#### Get One Dashboard Account
+- **GET** `/dashboardAccounts/:uuid_dashboard_account`
+Example: `/dashboardAccounts/123e4567-e89b-12d3-a456-426614174000`
+
+#### Update a Dashboard Account
+- **PUT** `/dashboardAccounts/:uuid_dashboard_account`
+```json
+{
+  "email": "updated@example.com",
+  "password": "newpassword123"
+}
+```
+
+#### Delete a Dashboard Account
+- **DELETE** `/dashboardAccounts/:uuid_dashboard_account`
+Example: `/dashboardAccounts/123e4567-e89b-12d3-a456-426614174000`
 
 
