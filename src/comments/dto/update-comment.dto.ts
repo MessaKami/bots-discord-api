@@ -1,7 +1,8 @@
-import { PartialType } from '@nestjs/mapped-types';
+import { PartialType } from '@nestjs/swagger';
 import { CreateCommentDto } from './create-comment.dto';
 import { IsString, IsOptional, Length, IsIn, IsUUID } from 'class-validator';
 import { Transform } from 'class-transformer';
+import { ApiPropertyOptional } from '@nestjs/swagger';
 
 /**
  * DTO pour la mise à jour d'un commentaire
@@ -10,10 +11,12 @@ import { Transform } from 'class-transformer';
  * pour permettre des mises à jour partielles.
  */
 export class UpdateCommentDto extends PartialType(CreateCommentDto) {
-  /**
-   * Nouveau contenu du commentaire
-   * @example "Mise à jour : Excellent travail sur ce projet !"
-   */
+  @ApiPropertyOptional({
+    description: 'Nouveau contenu du commentaire',
+    example: 'Contenu mis à jour',
+    minLength: 1,
+    maxLength: 1000
+  })
   @IsOptional()
   @IsString({ message: 'Le contenu doit être une chaîne de caractères' })
   @Length(1, 1000, { 
@@ -22,10 +25,11 @@ export class UpdateCommentDto extends PartialType(CreateCommentDto) {
   @Transform(({ value }) => value?.trim())
   content?: string;
 
-  /**
-   * Nouveau statut du commentaire
-   * @example "inactive"
-   */
+  @ApiPropertyOptional({
+    description: 'Nouveau statut du commentaire',
+    example: 'inactive',
+    enum: ['active', 'inactive', 'deleted']
+  })
   @IsOptional()
   @IsString({ message: 'Le statut doit être une chaîne de caractères' })
   @IsIn(['active', 'inactive', 'deleted'], { 
