@@ -50,6 +50,7 @@ Cette API est conçue pour gérer des bots Discord en utilisant le framework Nes
   - [Resources Endpoints](#resources-endpoints)
   - [Reports Endpoints](#reports-endpoints)
   - [Questions Endpoints](#questions-endpoints)
+  - [Votes Endpoints](#votes-endpoints)
 
 
 # Normes pour les commits et les pull requests ✍️
@@ -838,5 +839,37 @@ Example: `/questions/123e4567-e89b-12d3-a456-426614174000`
 #### Delete a Question
 - **DELETE** `/questions/:uuid`
 Example: `/questions/123e4567-e89b-12d3-a456-426614174000`
+
+### Votes Endpoints
+
+#### Create a Vote
+- **POST** `/votes`
+```json
+{
+  "userId": "123e4567-e89b-12d3-a456-426614174000",
+  "itemId": "123e4567-e89b-12d3-a456-426614174000",
+  "voteType": "upvote"
+}
+```
+
+#### Get All Votes
+- **GET** `/votes`
+
+#### Get One Vote
+- **GET** `/votes/:id`
+Example: `/votes/123e4567-e89b-12d3-a456-426614174000`
+
+#### Update a Vote
+- **PUT** `/votes/:id`
+```json
+{
+  "voteType": "downvote",
+  "voteIsActive": true
+}
+```
+
+#### Delete a Vote
+- **DELETE** `/votes/:id`
+Example: `/votes/123e4567-e89b-12d3-a456-426614174000`
 
 
