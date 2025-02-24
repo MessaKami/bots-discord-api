@@ -102,22 +102,22 @@ export class AnswersController {
 
   @Delete(':uuid')
   @ApiOperation({
-    summary: 'Supprimer une réponse',
-    description: 'Supprime une réponse existante en fonction de son UUID.'
+    summary: 'Delete an answer',
+    description: 'Deletes an existing answer based on its UUID.'
   })
   @ApiParam({
     name: 'uuid',
-    description: 'UUID de la réponse à supprimer',
+    description: 'UUID of the answer to delete',
     type: String,
     required: true
   })
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'La réponse a été supprimée avec succès.'
+    description: 'Answer successfully deleted.'
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,
-    description: 'La réponse avec l\'UUID spécifié n\'a pas été trouvée.'
+    description: 'Answer with the specified UUID was not found.'
   })
   remove(@Param('uuid') uuid: string) {
     return this.answersService.remove(uuid);
