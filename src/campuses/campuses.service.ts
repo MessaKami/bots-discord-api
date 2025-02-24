@@ -1,4 +1,4 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateCampusDto } from './dto/create-campus.dto';
@@ -46,19 +46,25 @@ export class CampusesService {
   }
 
   findOne(uuid_campus: string) {
+    if (!uuid_campus) {
+      throw new NotFoundException('UUID du campus manquant');
+    }
     return this.campusRepository.findOneBy({ uuid_campus });
   }
 
-  async update(uuid: string, updateCampusDto: UpdateCampusDto) {
-    const campus = await this.campusRepository.findOneBy({ uuid_campus : uuid });
+  async update(uuid_campus: string, updateCampusDto: UpdateCampusDto) {
+    const campus = await this.campusRepository.findOneBy({ uuid_campus : uuid_campus });
     if (!campus) {
-      return null;
+      throw new NotFoundException(`Campus with UUID "${uuid_campus}" not found`);
     }
     Object.assign(campus, updateCampusDto);
     return this.campusRepository.save(campus);
   }
 
   remove(uuid_campus: string) {
+    if (!uuid_campus) {
+      throw new NotFoundException(`Campus with UUID "${uuid_campus}" not found`);
+    }
     return this.campusRepository.delete({ uuid_campus });
   }
 }
