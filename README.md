@@ -39,6 +39,7 @@ Cette API est conçue pour gérer des bots Discord en utilisant le framework Nes
   - [Campus Endpoints](#campus-endpoints)
   - [Channel Endpoints](#channel-endpoints)
   - [Promotion Endpoints](#promotion-endpoints)
+  - [Roles Endpoints](#roles-endpoints)
 - [Support](#support)
 - [Contact](#contact)
 
@@ -372,6 +373,43 @@ Note:
 - All timestamps (`createdAt`, `updatedAt`) are managed automatically
 - For Guild endpoints, the `uuid` must be a valid Discord server ID (17-20 digits)
 - For Campus endpoints, the `uuid` is automatically generated
+
+### Roles Endpoints
+
+#### Create a Role
+- **POST** `/roles`
+```json
+{
+  "uuid": "123456789012345678",
+  "name": "Administrateur",
+  "color": "#FF0000",
+  "permissions": ["MANAGE_CHANNELS", "MANAGE_ROLES"],
+  "position": 1,
+  "uuid_guild": "987654321098765432"
+}
+```
+
+#### Get All Roles
+- **GET** `/roles`
+
+#### Get One Role
+- **GET** `/roles/:uuid`
+Example: `/roles/123456789012345678`
+
+#### Update a Role
+- **PUT** `/roles/:uuid`
+```json
+{
+  "name": "Super Admin",
+  "color": "#0000FF",
+  "permissions": ["ADMINISTRATOR"],
+  "position": 2
+}
+```
+
+#### Delete a Role
+- **DELETE** `/roles/:uuid`
+Example: `/roles/123456789012345678`
 
 ### Identification Requests Endpoints
 
