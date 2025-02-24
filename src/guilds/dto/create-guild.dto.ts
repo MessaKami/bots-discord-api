@@ -1,4 +1,4 @@
-import { IsString, IsInt, MaxLength, IsJSON, Min, Length } from 'class-validator';
+import { IsString, IsInt, MaxLength, IsObject, Min, Length } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateGuildDto {
@@ -27,10 +27,10 @@ export class CreateGuildDto {
   memberCount: number;
 
   @ApiProperty({
-    description: 'Configuration JSON du serveur',
+    description: 'Configuration du serveur',
     example: { welcomeChannel: '123456789012345678', prefix: '!' },
     required: false
   })
-  @IsJSON()
+  @IsObject()
   configuration?: Record<string, any>;
 }

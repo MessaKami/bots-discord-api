@@ -1,7 +1,13 @@
-import { Entity, Column, PrimaryColumn, CreateDateColumn, UpdateDateColumn, OneToMany} from 'typeorm';
+import { Entity, Column, PrimaryColumn, CreateDateColumn, UpdateDateColumn, OneToMany, OneToOne, JoinColumn} from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Course } from '../../courses/entities/course.entity';
 import { Member } from '../../members/entities/member.entity';
+import { Promotion } from '../../promotions/entities/promotion.entity';
+import { Role } from '../../roles/entities/role.entity';
+import { GuildTemplate } from '../../guilds-templates/entities/guild-template.entity';
+import { Channel } from '../../channels/entities/channel.entity';
+import { Category } from '../../categories/entities/category.entity';
+import { Campus } from '../../campuses/entities/campus.entity';
 
 @Entity('Guilds')
 export class Guild {
@@ -9,7 +15,7 @@ export class Guild {
     description: 'ID Discord du serveur',
     example: '123456789012345678'
   })
-  @PrimaryColumn({ type: 'varchar', length: 19 })
+  @PrimaryColumn({ type: 'varchar', length: 19, name: 'uuid_guild' })
   uuid: string;
 
   @ApiProperty({
@@ -48,7 +54,25 @@ export class Guild {
   @OneToMany(() => Member, (member) => member.guild)
   members: Member[];
 
-  //@OneToOne(() => Course, course => course.guild)
-  //@JoinColumn({ name: 'uuid_course' })
-  //course: Course;
+  @OneToMany(() => Promotion, (promotion) => promotion.guild)
+  promotions: Promotion[];
+
+  @OneToOne(() => Course, course => course.guild)
+  @JoinColumn({ name: 'uuidCourse' })
+  course: Course;
+
+  @OneToMany(() => Role, role => role.guild)
+  roles: Role[];
+
+  @OneToOne(() => GuildTemplate, template => template.guild)
+  template: GuildTemplate;
+
+  @OneToMany(() => Channel, channel => channel.guild)
+  channels: Channel[];
+
+  @OneToMany(() => Category, category => category.guild)
+  categories: Category[];
+
+  @OneToMany(() => Campus, campus => campus.guild)
+  campuses: Campus[];
 }
