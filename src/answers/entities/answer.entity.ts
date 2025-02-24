@@ -22,11 +22,6 @@ export class Answer {
   @Column({ type: 'varchar', length: 50 })
   content: string;
 
-  @ApiProperty({
-    description: 'Indique si la réponse fait partie d\'une question à choix multiples',
-    example: true,
-    type: Boolean
-  })
   @Column({
     name: 'is_multiple_answer',
     type: 'boolean',
