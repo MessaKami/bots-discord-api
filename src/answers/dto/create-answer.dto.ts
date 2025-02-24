@@ -6,12 +6,12 @@ export class CreateAnswerDto extends PickType(PickableInternUUIDFields, [
   'uuidQuestion'
 ]) {
   @ApiProperty({
-    description: 'Le contenu de la réponse',
+    description: 'The content of the answer',
     example: 'Paris',
     maxLength: 50,
     type: String
   })
-  @IsString({message: 'Le contenu de la réponse doit être une chaîne de caractères'})
-  @MaxLength(50, {message: 'Le contenu de la réponse ne doit pas dépasser 50 caractères'})
+  @IsString({message: 'Answer content must be a string'})
+  @MaxLength(50, {message: 'Answer content must not exceed 50 characters'})
   content: string;
 }
