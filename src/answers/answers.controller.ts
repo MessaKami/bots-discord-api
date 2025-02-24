@@ -12,8 +12,8 @@ export class AnswersController {
 
   @Post()
   @ApiOperation({ 
-    summary: 'Créer une nouvelle réponse',
-    description: 'Crée une nouvelle réponse dans la base de données avec les informations fournies.'
+    summary: 'Create a new answer',
+    description: 'Creates a new answer in the database with the provided information.'
   })
   @ApiBody({ type: CreateAnswerDto })
   @ApiResponse({ 
@@ -31,12 +31,12 @@ export class AnswersController {
 
   @Get()
   @ApiOperation({ 
-    summary: 'Récupérer toutes les réponses',
-    description: 'Retourne la liste de toutes les réponses enregistrées dans la base de données.'
+    summary: 'Get all answers',
+    description: 'Returns the list of all answers stored in the database.'
   })
   @ApiResponse({ 
     status: HttpStatus.OK, 
-    description: 'Liste de toutes les réponses récupérée avec succès.',
+    description: 'List of all answers successfully retrieved.',
     type: [Answer] 
   })
   findAll() {
@@ -44,6 +44,25 @@ export class AnswersController {
   }
 
   @Get(':uuid')
+  @ApiOperation({
+    summary: 'Get an answer by UUID',
+    description: 'Returns a single answer based on its UUID.'
+  })
+  @ApiParam({
+    name: 'uuid',
+    description: 'UUID of the answer to retrieve',
+    type: String,
+    required: true
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Answer successfully retrieved.',
+    type: Answer
+  })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: 'Answer with the specified UUID was not found.'
+  })
   findOne(@Param('uuid') uuid: string) {
     return this.answersService.findOne(uuid);
   }
