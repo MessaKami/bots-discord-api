@@ -52,6 +52,11 @@ Cette API est conçue pour gérer des bots Discord en utilisant le framework Nes
   - [Questions Endpoints](#questions-endpoints)
   - [Votes Endpoints](#votes-endpoints)
   - [XP Transactions Endpoints](#xp-transactions-endpoints)
+  - [Guilds-Templates Endpoints](#guilds-templates-endpoints)
+  - [Categories Endpoints](#categories-endpoints)
+  - [Identification Requests Endpoints](#identification-requests-endpoints)
+  - [Members Informations Endpoints](#members-informations-endpoints)
+  - [Moderator Actions Endpoints](#moderator-actions-endpoints)
 
 
 # Normes pour les commits et les pull requests ✍️
