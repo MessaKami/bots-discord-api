@@ -73,7 +73,7 @@ export class Course {
     example: '123456789012345678',
   })
   @Column({ name: 'uuid_guild', type: 'varchar', length: 19 })
-  uuidGuild: string;
+  uuid_guild: string;
 
   @ApiProperty({
     description: 'Catégorie associée à la formation',
@@ -99,17 +99,19 @@ export class Course {
   })
   uuidCategory: string;
 
+  @ApiProperty({
+    description: 'Rôle associé à la formation',
+    example: {
+      uuid: '809809876543210987',
+      name: 'CDA',
+    },
+  })
   @Column({ name: 'uuid_role', type: 'varchar', length: 19, nullable: true })
   uuid_role: string;
 
-  @ApiProperty({
-    description: 'Rôles associés aux formations',
-    type: () => [Role],
-    isArray: true,
-    nullable: true,
-  })
-  @OneToMany(() => Role, (role) => role.course)
-  roles: Role[];
+  @OneToOne(() => Role, (role) => role.course)
+  @JoinColumn({ name: 'uuid_role' })
+  role: Role;
 
   @ApiProperty({
     description: 'Promotions associées à la formation',
