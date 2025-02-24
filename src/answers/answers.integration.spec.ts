@@ -14,7 +14,6 @@ describe('Answers Integration Tests', () => {
 
   const testAnswer = {
     content: 'Test answer',
-    isMultipleAnswer: false,
     questionUuid: '123e4567-e89b-12d3-a456-426614174000'
   };
 
@@ -56,7 +55,6 @@ describe('Answers Integration Tests', () => {
         .post('/answers')
         .send({
           content: '',
-          isMultipleAnswer: 'invalid',
           questionUuid: 'invalid-uuid'
         })
         .expect(400);
