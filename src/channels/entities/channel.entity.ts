@@ -2,6 +2,7 @@ import { Entity, Column, PrimaryColumn, CreateDateColumn, UpdateDateColumn, Many
 import { ApiProperty } from '@nestjs/swagger';
 import { Category } from '../../categories/entities/category.entity';
 import { Course } from '../../courses/entities/course.entity';
+import { Guild } from '../../guilds/entities/guild.entity';
 
 @Entity('Channels')
 export class Channel {
@@ -36,23 +37,19 @@ export class Channel {
   channelPosition: number;
 
   @ApiProperty({
-    description: 'La catégorie du channel',
-    type: () => Category
-  })
-  @ManyToOne(() => Category, category => category.channels, {
-    onDelete: 'SET NULL',
-    nullable: true
-  })
-  @JoinColumn({ name: 'category_id' })
-  category: Category;
-
-  @ApiProperty({
     description: 'ID Discord de la catégorie associée',
     example: '123456789012345678',
     required: false
   })
-  @Column({ name: 'category_id', type: 'varchar', length: 19, nullable: true })
-  categoryId: string;
+  @Column({ name: 'uuidCategory', type: 'varchar', length: 19, nullable: true })
+  uuidCategory: string;
+
+  @ApiProperty({
+    description: 'ID Discord du serveur associé',
+    example: '123456789012345678'
+  })
+  @Column({ name: 'uuidGuild', type: 'varchar', length: 19 })
+  uuidGuild: string;
 
   @ApiProperty({
     description: 'Date de création'
@@ -66,7 +63,31 @@ export class Channel {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
+  @ApiProperty({
+    description: 'La catégorie à laquelle appartient le channel',
+    type: () => Category,
+    required: false
+  })
+  @ManyToOne(() => Category, category => category.channels, {
+    onDelete: 'SET NULL',
+    nullable: true
+  })
+  @JoinColumn({ name: 'uuidCategory' })
+  category: Category;
+
+  @ApiProperty({
+    description: 'Le cours associé au channel',
+    type: () => Course
+  })
   @ManyToOne(() => Course, course => course.channels)
-  @JoinColumn({ name: 'uuid_course' })
+  @JoinColumn({ name: 'uuidCourse' })
   course: Course;
+
+  @ApiProperty({
+    description: 'Le serveur Discord associé au channel',
+    type: () => Guild
+  })
+  @ManyToOne(() => Guild, guild => guild.channels)
+  @JoinColumn({ name: 'uuidGuild' })
+  guild: Guild;
 } 
