@@ -16,6 +16,7 @@ export class Role {
   @PrimaryColumn('varchar', { name: 'uuid_role' })
   uuid_role: string;
 
+
   @ApiProperty({
     description: 'Nom du rôle',
     example: 'Modérateur',
