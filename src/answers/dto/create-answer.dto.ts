@@ -1,7 +1,10 @@
 import { IsString, MaxLength, Length } from 'class-validator';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, PickType } from '@nestjs/swagger';
+import { PickableInternUUIDFields } from 'src/utils/pickable-intern-uuid-fields';
 
-export class CreateAnswerDto {
+export class CreateAnswerDto extends PickType(PickableInternUUIDFields, [
+  'uuidQuestion'
+]) {
   @ApiProperty({
     description: 'Le contenu de la réponse',
     example: 'Paris',
