@@ -22,7 +22,4 @@ export class CreateAnswerDto extends PickType(PickableInternUUIDFields, [
     maxLength: 36,
     type: String
   })
-  @IsString()
-  @Length(36, 36, {message: "L'UUID de la question doit être une chaîne de 36 caractères"})
-  questionUuid: string;
 }
