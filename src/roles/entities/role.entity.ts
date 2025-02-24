@@ -89,12 +89,11 @@ export class Role {
   members: Member[];
   
   @ApiProperty({
-    description: 'Formations associées aux rôles',
+    description: 'Formation associée à un role',
     type: () => [Course],
     isArray: true
   })
-  @ManyToOne(() => Course, course => course.roles)
-  @JoinColumn({ name: 'uuid_course' })
+  @OneToOne(() => Course, course => course.role)
   course: Course;
 
   @OneToOne(() => Campus, campus => campus.role)
