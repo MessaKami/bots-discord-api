@@ -18,15 +18,6 @@ export class CreateCourseDto extends PickType(IntersectionType(PickableDiscordUU
     isCertified: boolean;
 
     @ApiProperty({
-        description: 'UUID de la guilde',
-        example: '123456789012345678'
-    })
-    @IsString()
-    @Length(17, 19)
-    @IsNotEmpty()
-    uuidGuild: string;
-
-    @ApiProperty({
         description: 'UUID de la catégorie',
         example: '123456789012345678'
     })
