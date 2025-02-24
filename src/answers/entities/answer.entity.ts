@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryColumn, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
+import { Entity, Column, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
 import { Question } from 'src/questions/entities/question.entity';  
 import { ApiProperty } from '@nestjs/swagger';
 
