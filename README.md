@@ -39,8 +39,26 @@ Cette API est conçue pour gérer des bots Discord en utilisant le framework Nes
   - [Campus Endpoints](#campus-endpoints)
   - [Channel Endpoints](#channel-endpoints)
   - [Promotion Endpoints](#promotion-endpoints)
-- [Support](#support)
-- [Contact](#contact)
+  - [Roles Endpoints](#roles-endpoints)
+  - [Messages Endpoints](#messages-endpoints)
+  - [Answers Endpoints](#answers-endpoints)
+  - [Comments Endpoints](#comments-endpoints)
+  - [Courses Endpoints](#courses-endpoints)
+  - [Dashboard Accounts Endpoints](#dashboard-accounts-endpoints)
+  - [Discord Users Endpoints](#discord-users-endpoints)
+  - [Members Endpoints](#members-endpoints)
+  - [Resources Endpoints](#resources-endpoints)
+  - [Reports Endpoints](#reports-endpoints)
+  - [Questions Endpoints](#questions-endpoints)
+  - [Votes Endpoints](#votes-endpoints)
+  - [XP Transactions Endpoints](#xp-transactions-endpoints)
+  - [Guilds-Templates Endpoints](#guilds-templates-endpoints)
+  - [Categories Endpoints](#categories-endpoints)
+  - [Identification Requests Endpoints](#identification-requests-endpoints)
+  - [Members Informations Endpoints](#members-informations-endpoints)
+  - [Moderator Actions Endpoints](#moderator-actions-endpoints)
+  - [Tags](#tags)
+
 
 # Normes pour les commits et les pull requests ✍️
 
@@ -373,6 +391,44 @@ Note:
 - For Guild endpoints, the `uuid` must be a valid Discord server ID (17-20 digits)
 - For Campus endpoints, the `uuid` is automatically generated
 
+### Roles Endpoints
+
+#### Create a Role
+- **POST** `/roles`
+```json
+{
+  "uuid": "123456789012345678",
+  "name": "Administrateur",
+  "color": "#FF0000",
+  "permissions": ["MANAGE_CHANNELS", "MANAGE_ROLES"],
+  "position": 1,
+  "uuid_guild": "987654321098765432"
+}
+```
+
+#### Get All Roles
+- **GET** `/roles`
+
+#### Get One Role
+- **GET** `/roles/:uuid`
+Example: `/roles/123456789012345678`
+
+#### Update a Role
+- **PUT** `/roles/:uuid`
+```json
+{
+  "name": "Super Admin",
+  "color": "#0000FF",
+  "permissions": ["ADMINISTRATOR"],
+  "position": 2
+}
+```
+
+#### Delete a Role
+- **DELETE** `/roles/:uuid`
+Example: `/roles/123456789012345678`
+
+
 ### Identification Requests Endpoints
 
 #### Create identification request
@@ -487,3 +543,439 @@ Note:
 - All timestamps (`createdAt`, `updatedAt`) are managed automatically
 - For Guild endpoints, the `uuid` must be a valid Discord server ID (17-20 digits)
 - For Campus endpoints, the `uuid` is automatically generated
+
+### Answers Endpoints
+
+#### Create an Answer
+- **POST** `/answers`
+```json
+{
+  "content": "Paris",
+  "isMultipleAnswer": false,
+  "questionUuid": "123e4567-e89b-12d3-a456-426614174000"
+}
+```
+
+#### Get All Answers
+- **GET** `/answers`
+
+#### Get One Answer
+- **GET** `/answers/:uuid`
+Example: `/answers/123e4567-e89b-12d3-a456-426614174000`
+
+#### Update an Answer
+- **PUT** `/answers/:uuid`
+```json
+{
+  "content": "Updated answer",
+  "isMultipleAnswer": true
+}
+```
+
+#### Delete an Answer
+- **DELETE** `/answers/:uuid`
+Example: `/answers/123e4567-e89b-12d3-a456-426614174000`
+
+### Comments Endpoints
+
+#### Create a Comment
+- **POST** `/comments`
+```json
+{
+  "content": "Très bon travail sur ce projet !",
+  "comment_status": "active",
+  "uuid_member": "123e4567-e89b-12d3-a456-426614174000",
+  "resource_uuid": "123e4567-e89b-12d3-a456-426614174000",
+  "user_uuid": "123e4567-e89b-12d3-a456-426614174000"
+}
+```
+
+#### Get All Comments
+- **GET** `/comments`
+
+#### Get One Comment
+- **GET** `/comments/:uuid`
+Example: `/comments/123e4567-e89b-12d3-a456-426614174000`
+
+#### Update a Comment
+- **PATCH** `/comments/:uuid`
+```json
+{
+  "content": "Contenu mis à jour",
+  "comment_status": "inactive"
+}
+```
+
+#### Delete a Comment
+- **DELETE** `/comments/:uuid`
+Example: `/comments/123e4567-e89b-12d3-a456-426614174000`
+
+### Courses Endpoints
+
+#### Create a Course
+- **POST** `/courses`
+```json
+{
+  "name": "cda-vals-p4",
+  "isCertified": true,
+  "uuidGuild": "123456789012345678",
+  "uuidCategory": "123456789012345678"
+}
+```
+
+#### Get All Courses
+- **GET** `/courses`
+
+#### Get One Course
+- **GET** `/courses/:uuid`
+Example: `/courses/123e4567-e89b-12d3-a456-426614174000`
+
+#### Update a Course
+- **PUT** `/courses/:uuid`
+```json
+{
+  "name": "updated-course",
+  "isCertified": false
+}
+```
+
+#### Delete a Course
+- **DELETE** `/courses/:uuid`
+Example: `/courses/123e4567-e89b-12d3-a456-426614174000`
+
+### Dashboard Accounts Endpoints
+
+#### Create a Dashboard Account
+- **POST** `/dashboardAccounts`
+```json
+{
+  "email": "test@example.com",
+  "password": "password123",
+  "uuid_discord": "123456789012345678"
+}
+```
+
+#### Get One Dashboard Account
+- **GET** `/dashboardAccounts/:uuid_dashboard_account`
+Example: `/dashboardAccounts/123e4567-e89b-12d3-a456-426614174000`
+
+#### Update a Dashboard Account
+- **PUT** `/dashboardAccounts/:uuid_dashboard_account`
+```json
+{
+  "email": "updated@example.com",
+  "password": "newpassword123"
+}
+```
+
+#### Delete a Dashboard Account
+- **DELETE** `/dashboardAccounts/:uuid_dashboard_account`
+Example: `/dashboardAccounts/123e4567-e89b-12d3-a456-426614174000`
+
+### Discord Users Endpoints
+
+#### Create a Discord User
+- **POST** `/discord-users`
+```json
+{
+  "uuid_discord": "123456789012345678",
+  "discordUsername": "JohnDoe#1234",
+  "discriminator": "1234"
+}
+```
+
+#### Get All Discord Users
+- **GET** `/discord-users`
+
+#### Get One Discord User
+- **GET** `/discord-users/:uuid_discord`
+Example: `/discord-users/123456789012345678`
+
+#### Update a Discord User
+- **PUT** `/discord-users/:uuid_discord`
+```json
+{
+  "discordUsername": "UpdatedJohnDoe#1234",
+  "discriminator": "4321"
+}
+```
+
+#### Delete a Discord User
+- **DELETE** `/discord-users/:uuid_discord`
+Example: `/discord-users/123456789012345678`
+
+### Members Endpoints
+
+#### Create a Member
+- **POST** `/members`
+```json
+{
+  "guild_username": "JohnDoe",
+  "xp": "100.00",
+  "level": 1,
+  "community_role": "Member",
+  "status": "Active",
+  "uuid_guild": "123456789012345678",
+  "uuid_discord": "123456789012345678"
+}
+```
+
+#### Get All Members
+- **GET** `/members`
+
+#### Get One Member
+- **GET** `/members/:uuid`
+Example: `/members/123e4567-e89b-12d3-a456-426614174000`
+
+#### Update a Member
+- **PATCH** `/members/:uuid`
+```json
+{
+  "guild_username": "UpdatedUser",
+  "status": "Inactive",
+  "level": 2,
+  "xp": "200.00",
+  "community_role": "Moderator"
+}
+```
+
+#### Delete a Member
+- **DELETE** `/members/:uuid`
+Example: `/members/123e4567-e89b-12d3-a456-426614174000`
+
+### Resources Endpoints
+
+#### Create a Resource
+- **POST** `/resources`
+```json
+{
+  "title": "Guide de démarrage",
+  "description": "Un guide complet pour démarrer avec le bot",
+  "content": "Voici les étapes pour configurer le bot...",
+  "status": "active",
+  "uuid_member": "123e4567-e89b-12d3-a456-426614174000"
+}
+```
+
+#### Get All Resources
+- **GET** `/resources`
+
+#### Get One Resource
+- **GET** `/resources/:uuid`
+Example: `/resources/123e4567-e89b-12d3-a456-426614174000`
+
+#### Update a Resource
+- **PATCH** `/resources/:uuid`
+```json
+{
+  "title": "Guide de démarrage mis à jour",
+  "description": "Guide mis à jour avec les nouvelles fonctionnalités",
+  "content": "Nouvelles étapes de configuration...",
+  "status": "inactive"
+}
+```
+
+#### Delete a Resource
+- **DELETE** `/resources/:uuid`
+Example: `/resources/123e4567-e89b-12d3-a456-426614174000`
+
+### Reports Endpoints
+
+#### Create a Report
+- **POST** `/reports`
+```json
+{
+  "type": "resource",
+  "category": "inappropriate",
+  "reason": "Contenu offensant envers la communauté",
+  "uuid_resource": "123e4567-e89b-12d3-a456-426614174000",
+  "uuid_reporter": "323b07a1-7cea-4916-82a5-76ff201fa0e2"
+}
+```
+
+#### Get All Reports
+- **GET** `/reports`
+
+#### Get One Report
+- **GET** `/reports/:uuid_report`
+Example: `/reports/123e4567-e89b-12d3-a456-426614174000`
+
+#### Update a Report
+- **PATCH** `/reports/:uuid_report`
+```json
+{
+  "status": "resolved",
+  "reason": "Contenu mis à jour"
+}
+```
+Note: Seuls les modérateurs peuvent mettre à jour les signalements.
+
+#### Delete a Report
+- **DELETE** `/reports/:uuid_report`
+Example: `/reports/123e4567-e89b-12d3-a456-426614174000`
+Note: Un utilisateur ne peut supprimer que ses propres signalements.
+
+### Questions Endpoints
+
+#### Create a Question
+- **POST** `/questions`
+```json
+{
+  "content": "Quelle est la capitale de la France ?",
+  "isMultipleAnswer": false,
+  "uuidPoll": "123e4567-e89b-12d3-a456-426614174000"
+}
+```
+
+#### Get All Questions
+- **GET** `/questions`
+
+#### Get One Question
+- **GET** `/questions/:uuid`
+Example: `/questions/123e4567-e89b-12d3-a456-426614174000`
+
+#### Update a Question
+- **PUT** `/questions/:uuid`
+```json
+{
+  "content": "Quelle est la capitale de l'Italie ?",
+  "isMultipleAnswer": true
+}
+```
+
+#### Delete a Question
+- **DELETE** `/questions/:uuid`
+Example: `/questions/123e4567-e89b-12d3-a456-426614174000`
+
+### Votes Endpoints
+
+#### Create a Vote
+- **POST** `/votes`
+```json
+{
+  "userId": "123e4567-e89b-12d3-a456-426614174000",
+  "itemId": "123e4567-e89b-12d3-a456-426614174000",
+  "voteType": "upvote"
+}
+```
+
+#### Get All Votes
+- **GET** `/votes`
+
+#### Get One Vote
+- **GET** `/votes/:id`
+Example: `/votes/123e4567-e89b-12d3-a456-426614174000`
+
+#### Update a Vote
+- **PUT** `/votes/:id`
+```json
+{
+  "voteType": "downvote",
+  "voteIsActive": true
+}
+```
+
+#### Delete a Vote
+- **DELETE** `/votes/:id`
+Example: `/votes/123e4567-e89b-12d3-a456-426614174000`
+
+### XP Transactions Endpoints
+
+#### Create an XP Transaction
+- **POST** `/xp-transactions`
+```json
+{
+  "transaction_type": "GAIN",
+  "source": "VOTE",
+  "transaction_value": "100.00",
+  "reason": "Vote positif sur une ressource",
+  "notes": "Ressource particulièrement utile",
+  "reference_type": "RESOURCE",
+  "reference_uuid": "123e4567-e89b-12d3-a456-426614174000",
+  "uuid_member": "123e4567-e89b-12d3-a456-426614174000"
+}
+```
+
+#### Get All XP Transactions
+- **GET** `/xp-transactions`
+
+#### Get Member's XP Transactions
+- **GET** `/xp-transactions/member/:uuid_member`
+Example: `/xp-transactions/member/123e4567-e89b-12d3-a456-426614174000`
+
+#### Get One XP Transaction
+- **GET** `/xp-transactions/:uuid`
+Example: `/xp-transactions/123e4567-e89b-12d3-a456-426614174000`
+
+Note: Les transactions XP ne peuvent pas être modifiées ou supprimées une fois créées pour maintenir l'intégrité des données.
+
+### Moderator Actions Endpoints
+
+#### Créer une action de modération
+- **POST** `/moderator-actions`
+- **Corps de la requête** :
+```json
+{
+  "userId": "123e4567-e89b-12d3-a456-426614174001",
+  "actionType": "ban",
+  "reason": "Violation des règles de la communauté",
+  "duration": "24h",
+  "notes": "Récidive après deux avertissements"
+}
+```
+
+#### Récupérer toutes les actions de modération
+- **GET** `/moderator-actions`
+
+#### Récupérer une action de modération
+- **GET** `/moderator-actions/:id`
+- **Exemple** : `/moderator-actions/123e4567-e89b-12d3-a456-426614174000`
+
+#### Mettre à jour une action de modération
+- **PUT** `/moderator-actions/:id`
+- **Corps de la requête** :
+```json
+{
+  "reason": "Mise à jour de la raison",
+  "notes": "Notes additionnelles"
+}
+```
+
+#### Supprimer une action de modération
+- **DELETE** `/moderator-actions/:id`
+- **Exemple** : `/moderator-actions/123e4567-e89b-12d3-a456-426614174000`
+
+### Tags
+
+#### Créer un tag
+- **POST** `/tags`
+- **Corps de la requête** :
+```json
+{
+  "name": "JavaScript",
+  "description": "Langage de programmation pour le web"
+}
+```
+
+#### Récupérer tous les tags
+- **GET** `/tags`
+
+#### Récupérer un tag
+- **GET** `/tags/:id`
+- **Exemple** : `/tags/550e8400-e29b-41d4-a716-446655440000`
+
+#### Mettre à jour un tag
+- **PATCH** `/tags/:id`
+- **Corps de la requête** :
+```json
+{
+  "name": "JavaScript ES2022",
+  "description": "Dernière version du langage JavaScript"
+}
+```
+
+#### Supprimer un tag
+- **DELETE** `/tags/:id`
+- **Exemple** : `/tags/550e8400-e29b-41d4-a716-446655440000`
+
+
