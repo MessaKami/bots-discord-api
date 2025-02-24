@@ -1,6 +1,8 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToOne, ManyToOne, JoinColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Guild } from '../../guilds/entities/guild.entity';
+import { Role } from 'src/roles/entities/role.entity';
+
 
 @Entity('Campuses')
 export class Campus {
@@ -23,7 +25,7 @@ export class Campus {
     description: 'UUID Discord du serveur associé',
     example: '123456789012345678'
   })
-  @Column({ name: 'uuidGuild', type: 'varchar', length: 19 })
+  @Column({ name: 'uuid_guild', type: 'varchar', length: 19 })
   uuidGuild: string;
 
   @ApiProperty({
@@ -43,6 +45,13 @@ export class Campus {
     type: () => Guild
   })
   @ManyToOne(() => Guild, guild => guild.campuses)
-  @JoinColumn({ name: 'uuidGuild' })
+  @JoinColumn({ name: 'uuid_guild' })
   guild: Guild;
+
+  @Column({ type: 'varchar', name: 'uuid_role' })
+  uuidRole: string;
+
+  @OneToOne(() => Role, role => role.campus)
+  @JoinColumn({ name: 'uuid_role' })
+  role: Role
 }

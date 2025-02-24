@@ -10,7 +10,7 @@ export class Channel {
     description: 'ID Discord du channel',
     example: '123456789012345678'
   })
-  @PrimaryColumn({ type: 'varchar', length: 19 })
+  @PrimaryColumn({ type: 'varchar', length: 19 , name: 'uuid_channel' })
   uuid: string;
 
   @ApiProperty({
@@ -72,15 +72,16 @@ export class Channel {
     onDelete: 'SET NULL',
     nullable: true
   })
-  @JoinColumn({ name: 'uuidCategory' })
+  @JoinColumn({ name: 'uuid_category' })
   category: Category;
 
   @ApiProperty({
-    description: 'Le cours associé au channel',
-    type: () => Course
+    description: 'Formation associées aux channels',
+    type: () => [Course],
+    isArray: true
   })
   @ManyToOne(() => Course, course => course.channels)
-  @JoinColumn({ name: 'uuidCourse' })
+  @JoinColumn({ name: 'uuid_course' })
   course: Course;
 
   @ApiProperty({
@@ -88,6 +89,6 @@ export class Channel {
     type: () => Guild
   })
   @ManyToOne(() => Guild, guild => guild.channels)
-  @JoinColumn({ name: 'uuidGuild' })
+  @JoinColumn({ name: 'uuid_guild' })
   guild: Guild;
 } 

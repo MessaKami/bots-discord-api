@@ -1,9 +1,9 @@
-import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ForbiddenException } from '@nestjs/common';
 import { ReportsService } from './reports.service';
 import { CreateReportDto } from './dto/create-report.dto';
 import { UpdateReportDto } from './dto/update-report.dto';
-import { Report } from './entities/report.entity';
-import { ApiTags, ApiOperation, ApiResponse, ApiParam } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags, ApiParam } from '@nestjs/swagger';
+import { ReportResponseDto } from './dto/responses/report.response.dto';
 
 @ApiTags('reports')
 @Controller('reports')
@@ -11,48 +11,98 @@ export class ReportsController {
   constructor(private readonly reportsService: ReportsService) {}
 
   @Post()
-  @ApiOperation({ summary: 'Créer un nouveau signalement' })
-  @ApiResponse({ status: 201, description: 'Le signalement a été créé avec succès.', type: Report })
-  @ApiResponse({ status: 400, description: 'Requête invalide' })
-  create(@Body() createReportDto: CreateReportDto): Promise<Report> {
+  @ApiOperation({ 
+    summary: 'Créer un nouveau signalement',
+    description: 'Permet de signaler une ressource ou un membre pour un comportement inapproprié.'
+  })
+  @ApiResponse({ 
+    status: 201, 
+    description: 'Le signalement a été créé avec succès.',
+    type: ReportResponseDto 
+  })
+  @ApiResponse({ status: 400, description: 'Données invalides' })
+  @ApiResponse({ status: 404, description: 'Ressource ou membre non trouvé' })
+  create(@Body() createReportDto: CreateReportDto): Promise<ReportResponseDto> {
     return this.reportsService.create(createReportDto);
   }
 
   @Get()
-  @ApiOperation({ summary: 'Récupérer tous les signalements' })
-  @ApiResponse({ status: 200, description: 'Liste des signalements récupérée avec succès.', type: [Report] })
-  findAll(): Promise<Report[]> {
+  @ApiOperation({ 
+    summary: 'Récupérer tous les signalements',
+    description: 'Retourne la liste de tous les signalements avec leurs relations (reporter, resource, reported_member).'
+  })
+  @ApiResponse({ 
+    status: 200, 
+    description: 'Liste des signalements récupérée avec succès.',
+    type: [ReportResponseDto] 
+  })
+  findAll(): Promise<ReportResponseDto[]> {
     return this.reportsService.findAll();
   }
 
-  @Get(':uuid')
-  @ApiOperation({ summary: 'Récupérer un signalement par son UUID' })
-  @ApiParam({ name: 'uuid', description: 'UUID du signalement', type: 'string' })
-  @ApiResponse({ status: 200, description: 'Le signalement a été trouvé.', type: Report })
+  @Get(':uuid_report')
+  @ApiOperation({ 
+    summary: 'Récupérer un signalement par son UUID',
+    description: 'Retourne les détails d\'un signalement spécifique avec toutes ses relations.'
+  })
+  @ApiParam({ 
+    name: 'uuid_report',
+    description: 'UUID du signalement à récupérer',
+    example: '123e4567-e89b-12d3-a456-426614174000'
+  })
+  @ApiResponse({ 
+    status: 200, 
+    description: 'Le signalement a été trouvé.',
+    type: ReportResponseDto 
+  })
   @ApiResponse({ status: 404, description: 'Signalement non trouvé' })
-  findOne(@Param('uuid') uuid: string): Promise<Report> {
-    return this.reportsService.findOne(uuid);
+  findOne(@Param('uuid_report') uuid_report: string): Promise<ReportResponseDto> {
+    return this.reportsService.findOne(uuid_report);
   }
 
-  @Put(':uuid')
-  @ApiOperation({ summary: 'Mettre à jour un signalement' })
-  @ApiParam({ name: 'uuid', description: 'UUID du signalement', type: 'string' })
-  @ApiResponse({ status: 200, description: 'Le signalement a été mis à jour.', type: Report })
+  @Patch(':uuid_report')
+  @ApiOperation({ 
+    summary: 'Mettre à jour un signalement',
+    description: 'Cette fonctionnalité est réservée aux modérateurs.'
+  })
+  @ApiParam({ 
+    name: 'uuid_report',
+    description: 'UUID du signalement à mettre à jour',
+    example: '123e4567-e89b-12d3-a456-426614174000'
+  })
+  @ApiResponse({ 
+    status: 200, 
+    description: 'Le signalement a été mis à jour avec succès.',
+    type: ReportResponseDto 
+  })
+  @ApiResponse({ status: 400, description: 'Données invalides' })
+  @ApiResponse({ status: 403, description: 'Action non autorisée' })
   @ApiResponse({ status: 404, description: 'Signalement non trouvé' })
-  @ApiResponse({ status: 400, description: 'Requête invalide' })
-  update(
-    @Param('uuid') uuid: string,
-    @Body() updateReportDto: UpdateReportDto,
-  ): Promise<Report> {
-    return this.reportsService.update(uuid, updateReportDto);
+  update(@Param('uuid_report') uuid_report: string, @Body() updateReportDto: UpdateReportDto): Promise<ReportResponseDto> {
+    throw new ForbiddenException(
+      'Les utilisateurs ne peuvent pas modifier leurs signalements. Seuls les modérateurs peuvent mettre à jour le statut.'
+    );
   }
 
-  @Delete(':uuid')
-  @ApiOperation({ summary: 'Supprimer un signalement' })
-  @ApiParam({ name: 'uuid', description: 'UUID du signalement', type: 'string' })
-  @ApiResponse({ status: 200, description: 'Le signalement a été supprimé.' })
+  @Delete(':uuid_report')
+  @ApiOperation({ 
+    summary: 'Supprimer un signalement',
+    description: 'Un utilisateur ne peut supprimer que ses propres signalements.'
+  })
+  @ApiParam({ 
+    name: 'uuid_report',
+    description: 'UUID du signalement à supprimer',
+    example: '123e4567-e89b-12d3-a456-426614174000'
+  })
+  @ApiResponse({ 
+    status: 200, 
+    description: 'Le signalement a été supprimé avec succès.' 
+  })
+  @ApiResponse({ status: 403, description: 'Action non autorisée' })
   @ApiResponse({ status: 404, description: 'Signalement non trouvé' })
-  remove(@Param('uuid') uuid: string): Promise<void> {
-    return this.reportsService.remove(uuid);
+  remove(@Param('uuid_report') uuid_report: string): Promise<void> {
+    // Pour le test, on utilise un ID fixe, mais plus tard il viendra du token d'authentification
+    const currentUserId = "323b07a1-7cea-4916-82a5-76ff201fa0e2";
+    return this.reportsService.remove(uuid_report, currentUserId);
   }
 } 

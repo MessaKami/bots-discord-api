@@ -63,8 +63,9 @@ export class Category {
   channels: Channel[];
 
   @ApiProperty({
-    description: 'Le cours associé à cette catégorie',
-    type: () => Course
+    description: 'Formation associée à la catégorie',
+    type: () => [Course],
+    isArray: true
   })
   @OneToOne(() => Course, course => course.category)
   @JoinColumn({ name: 'uuidCourse' })

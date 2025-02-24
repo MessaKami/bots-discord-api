@@ -12,18 +12,18 @@ export class AnswersController {
 
   @Post()
   @ApiOperation({ 
-    summary: 'Créer une nouvelle réponse',
-    description: 'Crée une nouvelle réponse dans la base de données avec les informations fournies.'
+    summary: 'Create a new answer',
+    description: 'Creates a new answer in the database with the provided information.'
   })
   @ApiBody({ type: CreateAnswerDto })
   @ApiResponse({ 
     status: HttpStatus.CREATED, 
-    description: 'La réponse a été créée avec succès.',
+    description: 'Answer successfully created.',
     type: Answer 
   })
   @ApiResponse({ 
     status: HttpStatus.BAD_REQUEST, 
-    description: 'Données invalides fournies dans la requête.' 
+    description: 'Invalid data provided in the request.' 
   })
   create(@Body() createAnswerDto: CreateAnswerDto) {
     return this.answersService.create(createAnswerDto);
@@ -31,12 +31,12 @@ export class AnswersController {
 
   @Get()
   @ApiOperation({ 
-    summary: 'Récupérer toutes les réponses',
-    description: 'Retourne la liste de toutes les réponses enregistrées dans la base de données.'
+    summary: 'Get all answers',
+    description: 'Returns the list of all answers stored in the database.'
   })
   @ApiResponse({ 
     status: HttpStatus.OK, 
-    description: 'Liste de toutes les réponses récupérée avec succès.',
+    description: 'List of all answers successfully retrieved.',
     type: [Answer] 
   })
   findAll() {
@@ -44,34 +44,53 @@ export class AnswersController {
   }
 
   @Get(':uuid')
+  @ApiOperation({
+    summary: 'Get an answer by UUID',
+    description: 'Returns a single answer based on its UUID.'
+  })
+  @ApiParam({
+    name: 'uuid',
+    description: 'UUID of the answer to retrieve',
+    type: String,
+    required: true
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Answer successfully retrieved.',
+    type: Answer
+  })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: 'Answer with the specified UUID was not found.'
+  })
   findOne(@Param('uuid') uuid: string) {
     return this.answersService.findOne(uuid);
   }
 
   @Put(':uuid')
   @ApiOperation({
-    summary: 'Mettre à jour une réponse',
-    description: 'Met à jour une réponse existante en fonction de son UUID avec les nouvelles informations fournies.'
+    summary: 'Update an answer',
+    description: 'Updates an existing answer based on its UUID with the provided information.'
   })
   @ApiParam({
     name: 'uuid',
-    description: 'UUID de la réponse à mettre à jour',
+    description: 'UUID of the answer to update',
     type: String,
     required: true
   })
   @ApiBody({ type: UpdateAnswerDto })
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'La réponse a été mise à jour avec succès.',
+    description: 'Answer successfully updated.',
     type: Answer
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,
-    description: 'La réponse avec l\'UUID spécifié n\'a pas été trouvée.'
+    description: 'Answer with the specified UUID was not found.'
   })
   @ApiResponse({
     status: HttpStatus.BAD_REQUEST,
-    description: 'Données invalides fournies dans la requête.'
+    description: 'Invalid data provided in the request.'
   })
   async update(@Param('uuid') uuid: string, @Body() updateAnswerDto: UpdateAnswerDto) {
     const answer = await this.answersService.update(uuid, updateAnswerDto);
@@ -83,22 +102,22 @@ export class AnswersController {
 
   @Delete(':uuid')
   @ApiOperation({
-    summary: 'Supprimer une réponse',
-    description: 'Supprime une réponse existante en fonction de son UUID.'
+    summary: 'Delete an answer',
+    description: 'Deletes an existing answer based on its UUID.'
   })
   @ApiParam({
     name: 'uuid',
-    description: 'UUID de la réponse à supprimer',
+    description: 'UUID of the answer to delete',
     type: String,
     required: true
   })
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'La réponse a été supprimée avec succès.'
+    description: 'Answer successfully deleted.'
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,
-    description: 'La réponse avec l\'UUID spécifié n\'a pas été trouvée.'
+    description: 'Answer with the specified UUID was not found.'
   })
   remove(@Param('uuid') uuid: string) {
     return this.answersService.remove(uuid);

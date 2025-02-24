@@ -1,6 +1,7 @@
-import { IsString, IsNumber, Length, MaxLength, Min, Max, IsOptional } from 'class-validator';
-import { ApiProperty } from '@nestjs/swagger';
-
+import { IsString, MaxLength, IsEnum, IsOptional, IsDecimal, IsUUID } from 'class-validator';
+import { ApiProperty, PickType } from '@nestjs/swagger';
+import { XpTransactionType, XpTransactionSource, ReferenceType } from '../entities/xp-transaction.entity';
+import { PickableInternUUIDFields } from '../../utils/pickable-intern-uuid-fields';
 
 /**
  * Data Transfer Object pour la création d'une transaction XP
@@ -13,7 +14,7 @@ import { ApiProperty } from '@nestjs/swagger';
  * @example
  * ```typescript
  * const transaction = new CreateXpTransactionDto();
- * transaction.userId = "123e4567-e89b-12d3-a456-426614174000";
+ * transaction.uuid_member = "123e4567-e89b-12d3-a456-426614174000";
  * transaction.amount = 100;
  * transaction.reason = "Participation active";
  * transaction.notes = "Aide exceptionnelle"; // Optionnel
@@ -22,102 +23,68 @@ import { ApiProperty } from '@nestjs/swagger';
  * @see XpTransactionsService
  * @see XpTransactionsController
  */
-export class CreateXpTransactionDto {
+export class CreateXpTransactionDto extends PickType(PickableInternUUIDFields, [
+  'uuid_member'
+]) {
   @ApiProperty({
-    description: 'UUID du membre concerné par la transaction (UUID v4 valide)',
-    example: '123e4567-e89b-12d3-a456-426614174000'
+    description: 'Type de la transaction',
+    enum: XpTransactionType,
+    example: XpTransactionType.GAIN
   })
-  /**
-   * Identifiant unique de l'utilisateur concerné par la transaction
-   * 
-   * @property {string} userId
-   * @description Doit être un UUID v4 valide de 36 caractères
-   * 
-   * @example "123e4567-e89b-12d3-a456-426614174000"
-   * 
-   * @throws {ValidationError} Si l'userId n'est pas une chaîne de 36 caractères
-   * 
-   * @validations
-   * - IsString() : Doit être une chaîne de caractères
-   * - Length(36) : Doit faire exactement 36 caractères
-   */
-  @IsString()
-  @Length(36)
-  userId: string;
+  @IsEnum(XpTransactionType)
+  transaction_type: XpTransactionType;
 
   @ApiProperty({
-    description: 'Montant de points d\'expérience (XP) à attribuer ou retirer (entre -1000 et 1000)',
-    example: 100,
-    minimum: -1000,
-    maximum: 1000
+    description: 'Source de la transaction',
+    enum: XpTransactionSource,
+    example: XpTransactionSource.VOTE
   })
-  /**
-   * Montant de points d'expérience (XP) à attribuer ou retirer
-   * 
-   * @property {number} amount
-   * @description Le montant peut être positif (gain d'XP) ou négatif (perte d'XP)
-   * 
-   * @example 100
-   * 
-   * @throws {ValidationError} Si amount n'est pas un nombre ou est hors limites
-   * 
-   * @validations
-   * - IsNumber() : Doit être un nombre
-   * - Min(-1000) : Ne peut pas être inférieur à -1000
-   * - Max(1000) : Ne peut pas être supérieur à 1000
-   */
-  @IsNumber()
-  @Min(-1000)
-  @Max(1000)
-  amount: number;
+  @IsEnum(XpTransactionSource)
+  source: XpTransactionSource;
 
   @ApiProperty({
-    description: 'Raison justifiant la transaction XP (max 200 caractères)',
-    example: 'Participation active dans le salon d\'entraide',
+    description: 'Valeur de la transaction XP',
+    example: '100.00'
+  })
+  @IsDecimal({ decimal_digits: '2', force_decimal: true })
+  transaction_value: string;
+
+  @ApiProperty({
+    description: 'Raison de la transaction',
+    example: 'Vote positif sur une ressource',
     maxLength: 200
   })
-  /**
-   * Raison justifiant la transaction XP
-   * 
-   * @property {string} reason
-   * @description Explication concise de la raison de l'attribution ou du retrait d'XP
-   * 
-   * @example "Participation active dans le salon d'entraide"
-   * 
-   * @throws {ValidationError} Si reason n'est pas une chaîne ou dépasse 200 caractères
-   * 
-   * @validations
-   * - IsString() : Doit être une chaîne de caractères
-   * - MaxLength(200) : Ne peut pas dépasser 200 caractères
-   */
   @IsString()
   @MaxLength(200)
   reason: string;
 
   @ApiProperty({
-    description: 'Notes additionnelles sur la transaction (optionnel, max 500 caractères)',
-    example: 'Aide exceptionnelle sur un projet complexe',
+    description: 'Notes additionnelles sur la transaction',
+    example: 'Ressource particulièrement utile',
     required: false,
     maxLength: 500
   })
-  /**
-   * Notes additionnelles sur la transaction (optionnel)
-   * 
-   * @property {string} notes
-   * @description Informations complémentaires sur la transaction
-   * Ce champ est optionnel et peut être omis
-   * 
-   * @example "Aide exceptionnelle sur un projet complexe"
-   * 
-   * @throws {ValidationError} Si notes est présent mais n'est pas une chaîne ou dépasse 500 caractères
-   * 
-   * @validations
-   * - IsOptional() : Le champ est optionnel
-   * - IsString() : Si présent, doit être une chaîne de caractères
-   * - MaxLength(500) : Si présent, ne peut pas dépasser 500 caractères
-   */
   @IsOptional()
   @IsString()
   @MaxLength(500)
   notes?: string;
+
+  @ApiProperty({
+    description: 'Type de l\'objet référencé',
+    enum: ReferenceType,
+    example: ReferenceType.RESOURCE,
+    required: false
+  })
+  @IsOptional()
+  @IsEnum(ReferenceType)
+  reference_type?: ReferenceType;
+
+  @ApiProperty({
+    description: 'UUID de l\'objet référencé',
+    example: '123e4567-e89b-12d3-a456-426614174000',
+    required: false
+  })
+  @IsOptional()
+  @IsUUID()
+  reference_uuid?: string;
 }

@@ -1,7 +1,9 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToOne } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Course } from '../../courses/entities/course.entity';
 import { Guild } from '../../guilds/entities/guild.entity';
+import { Role } from 'src/roles/entities/role.entity';
+
 @Entity('Promotions')
 export class Promotion {
   @ApiProperty({
@@ -59,18 +61,37 @@ export class Promotion {
   })
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
-
-  @Column({ name: 'uuidCourse', type: 'uuid' })
+  
+  @ApiProperty({
+    description: 'UUID unique de la formation',
+    example: '123e4567-e89b-12d3-a456-426614174000'
+  })
+  @Column({ name: 'uuid_course', type: 'uuid' })
   uuidCourse: string;
 
-  @Column({ type: 'uuid', name: 'uuidGuild' })
+  @Column({ type: 'uuid', name: 'uuid_guild' })
   uuidGuild: string;
 
+  @ApiProperty({
+    description: 'Formation associées aux promotions',
+    type: () => [Course],
+    isArray: true
+  })
   @ManyToOne(() => Course, course => course.promotions)
-  @JoinColumn({ name: 'uuidCourse' })
+  @JoinColumn({ name: 'uuid_course' })
   course: Course;
 
-  @ManyToOne(() => Guild, guild => guild.promotions)
-  @JoinColumn({ name: 'uuidGuild' })
+  @Column({ name: 'uuid_guild', type: 'varchar', length: 19, nullable: true })
+  uuid_guild: string;
+
+ @ManyToOne(() => Guild, guild => guild.promotions)
+  @JoinColumn({ name: 'uuid_guild' })
   guild: Guild;
+
+  @Column({ name: 'uuid_role', type: 'varchar', length: 19, nullable: true })
+  uuidRole: string;
+
+  @OneToOne(() => Role, role => role.promotion)
+  @JoinColumn({ name: 'uuid_role' })
+  role: Role
 }

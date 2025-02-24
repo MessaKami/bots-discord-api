@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CreateAnswerDto } from './dto/create-answer.dto';
 import { UpdateAnswerDto } from './dto/update-answer.dto';
 import { Answer } from './entities/answer.entity';
+import { CreateAnswerQuestionDto } from './dto/create-answer-question.dto';
 
 @Injectable()
 export class AnswersService {
@@ -12,8 +12,8 @@ export class AnswersService {
     private answersRepository: Repository<Answer>,
   ) {}
 
-  create(createAnswerDto: CreateAnswerDto) {
-    const answer = this.answersRepository.create(createAnswerDto);
+  create(createAnswerQuestionDto: CreateAnswerQuestionDto) {
+    const answer = this.answersRepository.create(createAnswerQuestionDto);
     return this.answersRepository.save(answer);
   }
 

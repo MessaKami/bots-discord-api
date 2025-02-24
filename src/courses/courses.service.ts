@@ -1,7 +1,8 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Course } from './entities/course.entity';
+import { Role } from 'src/roles/entities/role.entity';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
 
@@ -10,22 +11,56 @@ export class CoursesService {
     constructor(
         @InjectRepository(Course)
         private readonly courseRepository: Repository<Course>,
+
+        @InjectRepository(Role)
+        private readonly roleRepository: Repository<Role>,
+
     ) {}
 
     async create(createCourseDto: CreateCourseDto): Promise<Course> {
-        const existingCourse = await this.courseRepository.findOne({
-            where: { name: createCourseDto.name }
-        });
-        if (existingCourse) {
-            throw new ConflictException(`Course with name ${createCourseDto.name} already exists`);
+        try {
+            // Vérifier si une formation existe déjà avec le même nom
+            const existingCourse = await this.courseRepository.findOne({
+                where: { name: createCourseDto.name },
+            });
+    
+            if (existingCourse) {
+                throw new ConflictException(`Course with name ${createCourseDto.name} already exists`);
+            }
+    
+            // Créer un rôle associé à la formation
+            const newRole = this.roleRepository.create({
+                uuid_guild: createCourseDto.uuid_guild,
+                uuid_role: createCourseDto.uuid_role,
+                name: createCourseDto.name,
+                member_count: "0",
+                role_position: "0",
+                hoist: false,
+                color: "#000000",
+            });
+    
+            const savedRole = await this.roleRepository.save(newRole);
+    
+            if (!savedRole || !savedRole.uuid_role) {
+                throw new BadRequestException('Failed to create role before assigning to course.');
+            }
+    
+            // Créer la formation en associant le rôle
+            const newCourse = this.courseRepository.create({
+                ...createCourseDto,
+                role: savedRole, 
+            });
+    
+            return await this.courseRepository.save(newCourse);
+        } catch (error) {
+            throw new BadRequestException('Erreur lors de la création du cours: ' + error.message);
         }
+    }    
 
-        const course = this.courseRepository.create({
-            name: createCourseDto.name,
-            isCertified: createCourseDto.isCertified,
+    async findAll(): Promise<Course[]> {
+        return await this.courseRepository.find({
+            relations: ['category', 'guild', 'roles', 'promotions', 'channels'],
         });
-
-        return await this.courseRepository.save(course);
     }
 
     async getByUUID(uuid: string): Promise<Course> {
@@ -33,6 +68,7 @@ export class CoursesService {
             where: { uuid },
             relations: ['category', 'guild', 'roles', 'promotions', 'channels'],
         });
+
         if (!course) {
             throw new NotFoundException(`Course with UUID ${uuid} not found`);
         }
@@ -44,21 +80,20 @@ export class CoursesService {
             where: { uuid },
             relations: ['category', 'guild', 'roles', 'promotions', 'channels']
         });
-    
+
         if (!course) {
             throw new NotFoundException(`Course with UUID ${uuid} not found`);
         }
-    
+
         if (updateCourseDto.name) {
             const existingCourse = await this.courseRepository.findOne({
-                where: { name: updateCourseDto.name }
+                where: { name: updateCourseDto.name },
             });
-    
             if (existingCourse && existingCourse.uuid !== uuid) {
                 throw new ConflictException(`Course with name ${updateCourseDto.name} already exists`);
             }
         }
-    
+
         Object.assign(course, updateCourseDto);
         return await this.courseRepository.save(course);
     }
@@ -67,15 +102,13 @@ export class CoursesService {
         const course = await this.courseRepository.findOne({ 
             where: { uuid } 
         });
-        
+
         if (!course) {
             throw new NotFoundException(`Course with UUID ${uuid} not found`);
         }
-        
         const result = await this.courseRepository.delete({ uuid });
-    
         if (result.affected === 0) {
-            throw new Error('Failed to delete course');
+            throw new BadRequestException('Failed to delete course'); // Correction ici
         }
     }
 }

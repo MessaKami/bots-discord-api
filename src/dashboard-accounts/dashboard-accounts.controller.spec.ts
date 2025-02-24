@@ -12,7 +12,6 @@ describe('DashboardAccountController', () => {
   let service: DashboardAccountService;
 
   const mockDashboardAccount = {
-    uuidDashboardAccount: '123e4567-e89b-12d3-a456-426614174000',
     email: 'test@example.com',
     password: 'hashedPassword123'
   };
@@ -46,9 +45,9 @@ describe('DashboardAccountController', () => {
   describe('create', () => {
     it('should create a dashboard account', async () => {
       const dto: CreateDashboardAccountDto = {
+        uuid_discord: '123456789012345678',
         email: 'test@example.com',
-        password: 'password123',
-        uuidDashboardAccount: '123e4567-e89b-12d3-a456-426614174000'  
+        password: 'password123' 
       };
 
       mockService.create.mockResolvedValue(mockDashboardAccount);
@@ -64,14 +63,12 @@ describe('DashboardAccountController', () => {
         const invalidDto = new CreateDashboardAccountDto();
         invalidDto.email = 'invalid-email';
         invalidDto.password = 'short';
-        invalidDto.uuidDashboardAccount = 'invalid-uuid';
 
         const errors = await validate(invalidDto);
       
         expect(errors.length).toBeGreaterThan(0);
         expect(errors.some(err => err.property === 'email')).toBeTruthy();
         expect(errors.some(err => err.property === 'password')).toBeTruthy();
-        expect(errors.some(err => err.property === 'uuidDashboardAccount')).toBeTruthy();
       });
 });
 
@@ -92,7 +89,6 @@ describe('DashboardAccountController', () => {
       const uuid = '123e4567-e89b-12d3-a456-426614174000';
       const updateDto: UpdateDashboardAccountDto = {
           email: 'updated@example.com',
-          uuidDashboardAccount: '',
           password: ''
       };
       const updatedAccount = { ...mockDashboardAccount, ...updateDto };

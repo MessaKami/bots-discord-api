@@ -11,17 +11,20 @@ describe('CoursesService', () => {
   let repository: Repository<Course>;
 
   const mockCourse = {
-    uuidCourse: '123e4567-e89b-12d3-a456-426614174000',
-    name: 'cda-vals-p4',
+    uuid: '123e4567-e89b-12d3-a456-426614174000',
+    name: 'Développeur web',
     isCertified: true,
     createdAt: new Date(),
-    updatedAt: null
+    updatedAt: null,
+    uuidCategory: '123e4567-e89b-12d3-a456-426614174000',
+    uuidGuild: '123e4567-e89b-12d3-a456-426614174000',
   };
 
   const mockRepository = {
     create: vi.fn(),
     save: vi.fn(),
     findOne: vi.fn(),
+    find: vi.fn(),
     delete: vi.fn(),
   };
 
@@ -43,9 +46,11 @@ describe('CoursesService', () => {
   describe('create', () => {
     it('should create a course', async () => {
       const dto = {
-        uuidCourse: '123e4567-e89b-12d3-a456-426614174000',
-        name: 'cda-vals-p4',
-        isCertified: true
+        uuid: '123e4567-e89b-12d3-a456-426614174000',
+        name: 'Développeur web',
+        isCertified: true,
+        uuidCategory: '123e4567-e89b-12d3-a456-426614174000',
+        uuidGuild: '123456789012345678',
       };
 
       mockRepository.findOne.mockResolvedValue(null);
@@ -59,8 +64,10 @@ describe('CoursesService', () => {
 
     it('should throw ConflictException if course name exists', async () => {
       const dto = {
-        uuidCourse: '123e4567-e89b-12d3-a456-426614174000',
-        name: 'cda-vals-p4',
+        uuid: '123e4567-e89b-12d3-a456-426614174000',
+        name: 'Développeur web',
+        uuidCategory: '123e4567-e89b-12d3-a456-426614174000',
+        uuidGuild: '123456789012345678',
         isCertified: true
       };
 
@@ -70,11 +77,36 @@ describe('CoursesService', () => {
     });
   });
 
+  describe('findAll', () => {
+    it('should return an array of courses', async () => {
+      const courses = [mockCourse, { ...mockCourse, uuid: '456' }];
+      mockRepository.find.mockResolvedValue(courses);
+
+      const result = await service.findAll();
+
+      expect(result).toEqual(courses);
+      expect(mockRepository.find).toHaveBeenCalledWith({
+        relations: ['category', 'guild', 'roles', 'promotions', 'channels']
+      });
+    });
+
+    it('should return empty array when no courses exist', async () => {
+      mockRepository.find.mockResolvedValue([]);
+
+      const result = await service.findAll();
+
+      expect(result).toEqual([]);
+      expect(mockRepository.find).toHaveBeenCalledWith({
+        relations: ['category', 'guild', 'roles', 'promotions', 'channels']
+      });
+    });
+  });
+
   describe('getByUUID', () => {
     it('should return a course', async () => {
       mockRepository.findOne.mockResolvedValue(mockCourse);
 
-      const result = await service.getByUUID(mockCourse.uuidCourse);
+      const result = await service.getByUUID(mockCourse.uuid);
 
       expect(result).toEqual(mockCourse);
     });
@@ -105,7 +137,7 @@ describe('CoursesService', () => {
 
       expect(result).toEqual(updatedCourse);
       expect(mockRepository.findOne).toHaveBeenCalledWith({
-        where: { uuidCourse: uuid },
+        where: { uuid: uuid },
         relations: ['category', 'guild', 'roles', 'promotions', 'channels']
       });
       expect(mockRepository.save).toHaveBeenCalledWith({
@@ -130,7 +162,7 @@ describe('CoursesService', () => {
       
       expect(mockRepository.findOne).toHaveBeenCalledTimes(1);
       expect(mockRepository.findOne).toHaveBeenCalledWith({
-        where: { uuidCourse: uuid },
+        where: { uuid: uuid },
         relations: ['category', 'guild', 'roles', 'promotions', 'channels']
       });
 
@@ -154,7 +186,7 @@ describe('CoursesService', () => {
       })
       .mockResolvedValueOnce({ 
         ...mockCourse, 
-        uuidCourse: 'different-uuid',
+        uuid: 'different-uuid',
         name: 'existing-course' 
       }); 
 
@@ -202,9 +234,9 @@ describe('CoursesService', () => {
       await service.deleteByUUID(uuid);
 
       expect(mockRepository.findOne).toHaveBeenCalledWith({
-        where: { uuidCourse: uuid }
+        where: { uuid: uuid }
       });
-      expect(mockRepository.delete).toHaveBeenCalledWith({ uuidCourse: uuid });
+      expect(mockRepository.delete).toHaveBeenCalledWith({ uuid: uuid });
     });
 
     it('should throw NotFoundException when deleting non-existent course', async () => {
@@ -221,7 +253,7 @@ describe('CoursesService', () => {
 
       expect(mockRepository.findOne).toHaveBeenCalledTimes(1);
       expect(mockRepository.findOne).toHaveBeenCalledWith({
-        where: { uuidCourse: uuid }
+        where: { uuid: uuid }
       });
       
       expect(mockRepository.delete).not.toHaveBeenCalled();
@@ -241,10 +273,10 @@ describe('CoursesService', () => {
         .toThrow('Failed to delete course');
 
       expect(mockRepository.findOne).toHaveBeenCalledWith({
-        where: { uuidCourse: uuid }
+        where: { uuid: uuid }
       });
 
-      expect(mockRepository.delete).toHaveBeenCalledWith({ uuidCourse: uuid });
+      expect(mockRepository.delete).toHaveBeenCalledWith({ uuid: uuid });
     });
   });
 });

@@ -1,16 +1,17 @@
-import { Entity, Column, PrimaryColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, ManyToMany } from 'typeorm';
+import { Entity, Column, PrimaryColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, OneToOne, JoinColumn, ManyToMany } from 'typeorm';import { ApiProperty } from '@nestjs/swagger';
 import { Guild } from '../../guilds/entities/guild.entity';
 import { Member } from '../../members/entities/member.entity';
-import { ApiProperty } from '@nestjs/swagger';
 import { Course } from '../../courses/entities/course.entity';
+import { Campus } from '../../campuses/entities/campus.entity';
+import { Promotion } from 'src/promotions/entities/promotion.entity';
 
 @Entity('roles')
 export class Role {
   @ApiProperty({
     description: 'UUID unique du rôle',
-    example: '123e4567-e89b-12d3-a456-426614174000'
+    example: '172653890987364567'
   })
-  @PrimaryColumn('uuid', { name: 'uuid_role' })
+  @PrimaryColumn('varchar', { name: 'uuid_role' })
   uuid: string;
 
   @ApiProperty({
@@ -65,7 +66,7 @@ export class Role {
 
   @ApiProperty({
     description: 'UUID de la guilde à laquelle appartient le rôle',
-    example: '123e4567-e89b-12d3-a456-426614174001'
+    example: '123456789012345678'
   })
   @Column('uuid', { name: 'uuid_guild', nullable: false })
   uuidGuild: string;
@@ -84,12 +85,18 @@ export class Role {
   })
   @ManyToMany(() => Member, member => member.roles)
   members: Member[];
-
+  
   @ApiProperty({
-    description: 'Le cours associé au rôle',
-    type: () => Course
+    description: 'Formation associée à un role',
+    type: () => [Course],
+    isArray: true
   })
-  @ManyToOne(() => Course, course => course.roles)
-  @JoinColumn({ name: 'uuidCourse' })
+  @OneToOne(() => Course, course => course.role)
   course: Course;
+
+  @OneToOne(() => Campus, campus => campus.role)
+  campus: Campus;
+
+  @OneToOne(() => Promotion, promotion => promotion.role)
+  promotion: Promotion;
 }

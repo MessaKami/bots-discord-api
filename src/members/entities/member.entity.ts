@@ -1,10 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToOne, ManyToMany, JoinTable } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, JoinTable, OneToOne, ManyToMany, OneToMany } from 'typeorm';
 import { Guild } from '../../guilds/entities/guild.entity'
 import { MemberInformation } from '../../members-informations/entities/member-information.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { IdentificationRequest } from 'src/identification-requests/entities/identification-request.entity';
 import { DiscordUser } from 'src/discord-users/entities/discord-user.entity';
-import { Role } from '../../roles/entities/role.entity';
+import { Resource } from '../../resources/entities/resource.entity';
+import { XpTransaction } from '../../xp-transactions/entities/xp-transaction.entity';
+import { Role } from 'src/roles/entities/role.entity';
 
 @Entity('members')
 export class Member {
@@ -92,21 +94,25 @@ export class Member {
   identificationRequest: IdentificationRequest;
 
   @ApiProperty({
-    description: 'Les rôles du membre',
+    description: 'Les ressources créées par ce membre',
+    type: () => [Resource]
+  })
+  @OneToMany(() => Resource, resource => resource.creator)
+  resources: Resource[];
+
+  @ApiProperty({
+    description: 'Historique des transactions XP du membre',
+    type: () => [XpTransaction]
+  })
+  @OneToMany(() => XpTransaction, transaction => transaction.member)
+  xp_transactions: XpTransaction[];
+
+  @ApiProperty({
+    description: 'Rôles du membre',
     type: () => [Role]
   })
-  @ManyToMany(() => Role, role => role.members)
-  @JoinTable({
-    name: 'members_roles',
-    joinColumn: {
-      name: 'uuid_member',
-      referencedColumnName: 'uuid'
-    },
-    inverseJoinColumn: {
-      name: 'uuid_role',
-      referencedColumnName: 'uuid'
-    }
-  })
+  @ManyToMany(() => Role, (role) => role.members)
+  @JoinTable()
   roles: Role[];
 
 }
