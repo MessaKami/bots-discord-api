@@ -10,15 +10,18 @@ describe('CoursesController', () => {
   let service: CoursesService;
 
   const mockCourse = {
-    uuidCourse: '123e4567-e89b-12d3-a456-426614174000',
-    name: 'cda-vals-p4',
+    uuid: '123e4567-e89b-12d3-a456-426614174000',
+    name: 'Développeur web',
     isCertified: true,
+    uuidCategory: '123456789012345678',
+    uuidGuild: '123456789012345678',
     createdAt: new Date(),
-    updatedAt: null
+    updatedAt: null,
   };
 
   const mockService = {
     create: vi.fn(),
+    findAll: vi.fn(),
     getByUUID: vi.fn(),
     updateByUUID: vi.fn(),
     deleteByUUID: vi.fn(),
@@ -42,12 +45,14 @@ describe('CoursesController', () => {
   describe('create', () => {
     it('should create a course', async () => {
       const dto: CreateCourseDto = {
-        name: 'cda-vals-p4',
-        isCertified: true
+        name: 'Développeur web',
+        isCertified: true,
+        uuidCategory: '123456789012345678',
+        uuidGuild: '123456789012345678'
       };
 
       mockService.create.mockResolvedValue({
-        uuidCourse: '123e4567-e89b-12d3-a456-426614174000',
+        uuid: '123e4567-e89b-12d3-a456-426614174000',
         ...dto,
         createdAt: expect.any(Date),
         updatedAt: null
@@ -55,10 +60,22 @@ describe('CoursesController', () => {
 
       const result = await controller.create(dto);
 
-      expect(result).toHaveProperty('uuidCourse');
+      expect(result).toHaveProperty('uuid');
       expect(result.name).toBe(dto.name);
       expect(result.isCertified).toBe(dto.isCertified);
       expect(mockService.create).toHaveBeenCalledWith(dto);
+    });
+  });
+
+  describe('findAll', () => {
+    it('should return an array of courses', async () => {
+      const courses = [mockCourse, { ...mockCourse, uuid: '456' }];
+      mockService.findAll.mockResolvedValue(courses);
+
+      const result = await controller.findAll();
+
+      expect(result).toEqual(courses);
+      expect(mockService.findAll).toHaveBeenCalled();
     });
   });
 

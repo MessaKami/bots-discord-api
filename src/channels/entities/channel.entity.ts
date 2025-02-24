@@ -66,6 +66,11 @@ export class Channel {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
+  @ApiProperty({
+    description: 'Formation associées aux channels',
+    type: () => [Course],
+    isArray: true
+  })
   @ManyToOne(() => Course, course => course.channels)
   @JoinColumn({ name: 'uuid_course' })
   course: Course;

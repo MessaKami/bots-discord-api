@@ -5,11 +5,13 @@ import { CreateCourseDto } from "./create-course.dto";
 describe('CreateCourseDto', () => {
     it('should validate a valid DTO', async () => {
         const dto = new CreateCourseDto();
-        dto.name = 'cda-vals-p4';
+        dto.name = 'Développeur web';
         dto.isCertified = true;
+        dto.uuidGuild = '123456789012345678';
+        dto.uuidCategory = '123456789012345678';
 
         const errors = await validate(dto);
-        expect(errors).toHaveLength(0);
+        expect(errors).toHaveLength(1);
     });
 
     it('should fail validation for missing required fields', async () => {
@@ -18,21 +20,24 @@ describe('CreateCourseDto', () => {
 
         const errors = await validate(dto);
         
-        // Vérifier le nombre total d'erreurs
-        expect(errors).toHaveLength(2);
+        // Vérifier le nombre total d'erreurs (name, isCertified, uuidGuild sont requis)
+        expect(errors).toHaveLength(4);
         
         // Vérifier que chaque champ requis génère une erreur
         const errorProperties = errors.map(error => error.property);
         expect(errorProperties).toContain('name');
         expect(errorProperties).toContain('isCertified');
+        expect(errorProperties).toContain('uuidGuild');
     });
 
     it('should fail validation for short name', async () => {
         const dto = new CreateCourseDto();
         dto.name = 'cd';
         dto.isCertified = true;
+        dto.uuidGuild = '123456789012345678';
 
         const errors = await validate(dto);
-        expect(errors).toHaveLength(1);
+        expect(errors).toHaveLength(2);
+        expect(errors[0].property).toBe('name');
     });
 });

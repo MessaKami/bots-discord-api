@@ -11,7 +11,7 @@ describe('DashboardAccountService', () => {
   let repository: Repository<DashboardAccount>;
 
   const mockDashboardAccount = {
-    uuid_dashboard_account: '123e4567-e89b-12d3-a456-426614174000',
+    uuid_discord: '123456789012345678',
     email: 'test@example.com',
     password: 'hashedPassword123'
   };
@@ -50,7 +50,7 @@ describe('DashboardAccountService', () => {
 
       const createDtoWithUUID = {
         ...createDto,
-        uuid_dashboard_account: mockDashboardAccount.uuid_dashboard_account
+        uuid_discord: mockDashboardAccount.uuid_discord
       };
 
       const result = await service.create(createDtoWithUUID);

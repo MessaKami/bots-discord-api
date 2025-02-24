@@ -65,6 +65,11 @@ export class Category {
   @JoinColumn({ name: 'uuid_guild' })
   guild: Guild;
 
+  @ApiProperty({
+    description: 'Formation associée à la catégorie',
+    type: () => [Course],
+    isArray: true
+  })
   @OneToOne(() => Course, course => course.category)
   @JoinColumn({ name: 'uuid_course' })
   course: Course;
