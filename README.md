@@ -51,6 +51,7 @@ Cette API est conçue pour gérer des bots Discord en utilisant le framework Nes
   - [Reports Endpoints](#reports-endpoints)
   - [Questions Endpoints](#questions-endpoints)
   - [Votes Endpoints](#votes-endpoints)
+  - [XP Transactions Endpoints](#xp-transactions-endpoints)
 
 
 # Normes pour les commits et les pull requests ✍️
@@ -871,5 +872,35 @@ Example: `/votes/123e4567-e89b-12d3-a456-426614174000`
 #### Delete a Vote
 - **DELETE** `/votes/:id`
 Example: `/votes/123e4567-e89b-12d3-a456-426614174000`
+
+### XP Transactions Endpoints
+
+#### Create an XP Transaction
+- **POST** `/xp-transactions`
+```json
+{
+  "transaction_type": "GAIN",
+  "source": "VOTE",
+  "transaction_value": "100.00",
+  "reason": "Vote positif sur une ressource",
+  "notes": "Ressource particulièrement utile",
+  "reference_type": "RESOURCE",
+  "reference_uuid": "123e4567-e89b-12d3-a456-426614174000",
+  "uuid_member": "123e4567-e89b-12d3-a456-426614174000"
+}
+```
+
+#### Get All XP Transactions
+- **GET** `/xp-transactions`
+
+#### Get Member's XP Transactions
+- **GET** `/xp-transactions/member/:uuid_member`
+Example: `/xp-transactions/member/123e4567-e89b-12d3-a456-426614174000`
+
+#### Get One XP Transaction
+- **GET** `/xp-transactions/:uuid`
+Example: `/xp-transactions/123e4567-e89b-12d3-a456-426614174000`
+
+Note: Les transactions XP ne peuvent pas être modifiées ou supprimées une fois créées pour maintenir l'intégrité des données.
 
 
