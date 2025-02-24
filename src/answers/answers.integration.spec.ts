@@ -14,7 +14,7 @@ describe('Answers Integration Tests', () => {
 
   const testAnswer = {
     content: 'Test answer',
-    questionUuid: '123e4567-e89b-12d3-a456-426614174000'
+    uuidQuestion: '123e4567-e89b-12d3-a456-426614174000'
   };
 
   beforeAll(async () => {
@@ -55,7 +55,7 @@ describe('Answers Integration Tests', () => {
         .post('/answers')
         .send({
           content: '',
-          questionUuid: 'invalid-uuid'
+          uuidQuestion: 'invalid-uuid'
         })
         .expect(400);
     });

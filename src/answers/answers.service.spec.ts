@@ -42,7 +42,7 @@ describe('AnswersService', () => {
       const createAnswerDto: CreateAnswerDto = {
         content: 'Test answer',
         isMultipleAnswer: false,
-        questionUuid: '123e4567-e89b-12d3-a456-426614174000'
+        uuidQuestion: '123e4567-e89b-12d3-a456-426614174000'
       };
 
       const answer = { uuid: 'test-uuid', ...createAnswerDto };
