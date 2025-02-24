@@ -69,28 +69,28 @@ export class AnswersController {
 
   @Put(':uuid')
   @ApiOperation({
-    summary: 'Mettre à jour une réponse',
-    description: 'Met à jour une réponse existante en fonction de son UUID avec les nouvelles informations fournies.'
+    summary: 'Update an answer',
+    description: 'Updates an existing answer based on its UUID with the provided information.'
   })
   @ApiParam({
     name: 'uuid',
-    description: 'UUID de la réponse à mettre à jour',
+    description: 'UUID of the answer to update',
     type: String,
     required: true
   })
   @ApiBody({ type: UpdateAnswerDto })
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'La réponse a été mise à jour avec succès.',
+    description: 'Answer successfully updated.',
     type: Answer
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,
-    description: 'La réponse avec l\'UUID spécifié n\'a pas été trouvée.'
+    description: 'Answer with the specified UUID was not found.'
   })
   @ApiResponse({
     status: HttpStatus.BAD_REQUEST,
-    description: 'Données invalides fournies dans la requête.'
+    description: 'Invalid data provided in the request.'
   })
   async update(@Param('uuid') uuid: string, @Body() updateAnswerDto: UpdateAnswerDto) {
     const answer = await this.answersService.update(uuid, updateAnswerDto);
