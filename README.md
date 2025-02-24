@@ -45,6 +45,7 @@ Cette API est conçue pour gérer des bots Discord en utilisant le framework Nes
   - [Comments Endpoints](#comments-endpoints)
   - [Courses Endpoints](#courses-endpoints)
   - [Dashboard Accounts Endpoints](#dashboard-accounts-endpoints)
+  - [Discord Users Endpoints](#discord-users-endpoints)
 
 
 # Normes pour les commits et les pull requests ✍️
@@ -658,5 +659,37 @@ Example: `/dashboardAccounts/123e4567-e89b-12d3-a456-426614174000`
 #### Delete a Dashboard Account
 - **DELETE** `/dashboardAccounts/:uuid_dashboard_account`
 Example: `/dashboardAccounts/123e4567-e89b-12d3-a456-426614174000`
+
+### Discord Users Endpoints
+
+#### Create a Discord User
+- **POST** `/discord-users`
+```json
+{
+  "uuid_discord": "123456789012345678",
+  "discordUsername": "JohnDoe#1234",
+  "discriminator": "1234"
+}
+```
+
+#### Get All Discord Users
+- **GET** `/discord-users`
+
+#### Get One Discord User
+- **GET** `/discord-users/:uuid_discord`
+Example: `/discord-users/123456789012345678`
+
+#### Update a Discord User
+- **PUT** `/discord-users/:uuid_discord`
+```json
+{
+  "discordUsername": "UpdatedJohnDoe#1234",
+  "discriminator": "4321"
+}
+```
+
+#### Delete a Discord User
+- **DELETE** `/discord-users/:uuid_discord`
+Example: `/discord-users/123456789012345678`
 
 
