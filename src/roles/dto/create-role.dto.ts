@@ -1,31 +1,21 @@
 import { IsString, IsUUID, MaxLength, IsBoolean, Matches } from 'class-validator';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, IntersectionType, PickType } from '@nestjs/swagger';
+import { PickableDtoFields } from 'src/utils/pickable-dto-fields';
+import { PickableDiscordUUIDFields } from 'src/utils/pickable-discord-uuid-fields';
 
-export class CreateRoleDto {
-    @ApiProperty({
-        description: 'UUID unique du rôle',
-        example: '123e4567-e89b-12d3-a456-426614174000'
-    })
-    @IsUUID()
-    uuid_role: string;
-
-    @ApiProperty({
-        description: 'Nom du rôle',
-        example: 'Modérateur',
-        maxLength: 50
-    })
-    @IsString()
-    @MaxLength(50)
-    name: string;
-
+export class CreateRoleDto extends PickType(IntersectionType(PickableDtoFields, PickableDiscordUUIDFields), [
+    'uuid_role', 'name', 'uuid_guild'
+]) {
+    
     @ApiProperty({
         description: 'Nombre de membres ayant ce rôle',
-        example: '10'
+        example: '0',
+        default: '0'
     })
     @IsString()
     @MaxLength(50)
     @Matches(/^\d+$/, { message: 'member_count doit être une chaîne numérique' })
-    member_count: string;
+    member_count: string = '0';
 
     @ApiProperty({
         description: 'Position du rôle dans la hiérarchie',
@@ -52,11 +42,4 @@ export class CreateRoleDto {
     @MaxLength(50)
     @Matches(/^#[0-9A-Fa-f]{6}$/, { message: 'color doit être un code hexadécimal valide (ex: #FF0000)' })
     color: string;
-
-    @ApiProperty({
-        description: 'UUID de la guilde à laquelle appartient le rôle',
-        example: '123e4567-e89b-12d3-a456-426614174001'
-    })
-    @IsUUID()
-    uuid_guild: string;
 }
