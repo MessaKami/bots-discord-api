@@ -1,4 +1,4 @@
-import { IsString, IsBoolean, MaxLength, IsUUID, Length } from 'class-validator';
+import { IsString, MaxLength, Length } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateAnswerDto {
@@ -11,14 +11,6 @@ export class CreateAnswerDto {
   @IsString({message: 'Le contenu de la réponse doit être une chaîne de caractères'})
   @MaxLength(50, {message: 'Le contenu de la réponse ne doit pas dépasser 50 caractères'})
   content: string;
-
-  @ApiProperty({
-    description: 'Indique si la réponse fait partie d\'une question à choix multiples',
-    example: true,
-    type: Boolean
-  })
-  @IsBoolean({message: 'La réponse doit être un boolean'})
-  isMultipleAnswer: boolean;
 
   @ApiProperty({
     description: 'UUID de la question associée à cette réponse',
