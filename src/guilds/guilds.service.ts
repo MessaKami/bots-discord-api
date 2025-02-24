@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateGuildDto } from './dto/create-guild.dto';
@@ -24,15 +24,20 @@ export class GuildsService {
   }
 
   // Récupérer une guild par son uuid
-  findOne(uuid: string) {
-    return this.guildRepository.findOneBy({ uuid });
+  async findOne(uuid: string): Promise<Guild> {
+    const guild = await this.guildRepository.findOneBy({ uuid });
+    if (!guild) {
+      throw new NotFoundException(`Guild with UUID "${uuid}" not found`);
+    }
+    return guild;
   }
 
   // Mettre à jour une guild
-  async update(uuid: string, updateGuildDto: UpdateGuildDto) {
+  async update(uuid: string, updateGuildDto: UpdateGuildDto): Promise<Guild> {
+    // Cherche la guild
     const guild = await this.guildRepository.findOneBy({ uuid });
     if (!guild) {
-      return null;
+      throw new NotFoundException(`Guild with UUID "${uuid}" not found`);
     }
     
     // Mise à jour des champs autorisés uniquement
@@ -46,7 +51,10 @@ export class GuildsService {
   }
 
   // Supprimer une guild
-  remove(uuid: string) {
-    return this.guildRepository.delete({ uuid });
+  async remove(uuid: string): Promise<void> {
+    const result = await this.guildRepository.delete({ uuid });
+    if (result.affected === 0) {
+      throw new NotFoundException(`Guild with UUID "${uuid}" not found`);
+    }
   }
 }

@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToOne, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, JoinTable, OneToOne, ManyToMany, OneToMany } from 'typeorm';
 import { Guild } from '../../guilds/entities/guild.entity'
 import { MemberInformation } from '../../members-informations/entities/member-information.entity';
 import { ApiProperty } from '@nestjs/swagger';
@@ -6,6 +6,7 @@ import { IdentificationRequest } from 'src/identification-requests/entities/iden
 import { DiscordUser } from 'src/discord-users/entities/discord-user.entity';
 import { Resource } from '../../resources/entities/resource.entity';
 import { XpTransaction } from '../../xp-transactions/entities/xp-transaction.entity';
+import { Role } from 'src/roles/entities/role.entity';
 
 @Entity('members')
 export class Member {
@@ -105,4 +106,13 @@ export class Member {
   })
   @OneToMany(() => XpTransaction, transaction => transaction.member)
   xp_transactions: XpTransaction[];
+
+  @ApiProperty({
+    description: 'Rôles du membre',
+    type: () => [Role]
+  })
+  @ManyToMany(() => Role, (role) => role.members)
+  @JoinTable()
+  roles: Role[];
+
 }
