@@ -46,6 +46,7 @@ Cette API est conçue pour gérer des bots Discord en utilisant le framework Nes
   - [Courses Endpoints](#courses-endpoints)
   - [Dashboard Accounts Endpoints](#dashboard-accounts-endpoints)
   - [Discord Users Endpoints](#discord-users-endpoints)
+  - [Members Endpoints](#members-endpoints)
 
 
 # Normes pour les commits et les pull requests ✍️
@@ -691,5 +692,44 @@ Example: `/discord-users/123456789012345678`
 #### Delete a Discord User
 - **DELETE** `/discord-users/:uuid_discord`
 Example: `/discord-users/123456789012345678`
+
+### Members Endpoints
+
+#### Create a Member
+- **POST** `/members`
+```json
+{
+  "guild_username": "JohnDoe",
+  "xp": "100.00",
+  "level": 1,
+  "community_role": "Member",
+  "status": "Active",
+  "uuid_guild": "123456789012345678",
+  "uuid_discord": "123456789012345678"
+}
+```
+
+#### Get All Members
+- **GET** `/members`
+
+#### Get One Member
+- **GET** `/members/:uuid`
+Example: `/members/123e4567-e89b-12d3-a456-426614174000`
+
+#### Update a Member
+- **PATCH** `/members/:uuid`
+```json
+{
+  "guild_username": "UpdatedUser",
+  "status": "Inactive",
+  "level": 2,
+  "xp": "200.00",
+  "community_role": "Moderator"
+}
+```
+
+#### Delete a Member
+- **DELETE** `/members/:uuid`
+Example: `/members/123e4567-e89b-12d3-a456-426614174000`
 
 
