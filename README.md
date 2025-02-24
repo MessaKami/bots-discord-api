@@ -49,6 +49,7 @@ Cette API est conçue pour gérer des bots Discord en utilisant le framework Nes
   - [Members Endpoints](#members-endpoints)
   - [Resources Endpoints](#resources-endpoints)
   - [Reports Endpoints](#reports-endpoints)
+  - [Questions Endpoints](#questions-endpoints)
 
 
 # Normes pour les commits et les pull requests ✍️
@@ -805,5 +806,37 @@ Note: Seuls les modérateurs peuvent mettre à jour les signalements.
 - **DELETE** `/reports/:uuid_report`
 Example: `/reports/123e4567-e89b-12d3-a456-426614174000`
 Note: Un utilisateur ne peut supprimer que ses propres signalements.
+
+### Questions Endpoints
+
+#### Create a Question
+- **POST** `/questions`
+```json
+{
+  "content": "Quelle est la capitale de la France ?",
+  "isMultipleAnswer": false,
+  "uuidPoll": "123e4567-e89b-12d3-a456-426614174000"
+}
+```
+
+#### Get All Questions
+- **GET** `/questions`
+
+#### Get One Question
+- **GET** `/questions/:uuid`
+Example: `/questions/123e4567-e89b-12d3-a456-426614174000`
+
+#### Update a Question
+- **PUT** `/questions/:uuid`
+```json
+{
+  "content": "Quelle est la capitale de l'Italie ?",
+  "isMultipleAnswer": true
+}
+```
+
+#### Delete a Question
+- **DELETE** `/questions/:uuid`
+Example: `/questions/123e4567-e89b-12d3-a456-426614174000`
 
 
