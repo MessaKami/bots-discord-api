@@ -42,8 +42,8 @@ Cette API est conçue pour gérer des bots Discord en utilisant le framework Nes
   - [Roles Endpoints](#roles-endpoints)
   - [Messages Endpoints](#messages-endpoints)
   - [Answers Endpoints](#answers-endpoints)
-- [Support](#support)
-- [Contact](#contact)
+  - [Comments Endpoints](#comments-endpoints)
+
 
 # Normes pour les commits et les pull requests ✍️
 
@@ -561,13 +561,38 @@ Example: `/answers/123e4567-e89b-12d3-a456-426614174000`
 - **DELETE** `/answers/:uuid`
 Example: `/answers/123e4567-e89b-12d3-a456-426614174000`
 
-## Support
+### Comments Endpoints
 
-- [GitHub Issues](https://github.com/nestjs/nest/issues)
-- [Discord](https://discord.gg/G7Qnnhy)
-- [Open Collective](https://opencollective.com/nest#backer)
+#### Create a Comment
+- **POST** `/comments`
+```json
+{
+  "content": "Très bon travail sur ce projet !",
+  "comment_status": "active",
+  "uuid_member": "123e4567-e89b-12d3-a456-426614174000",
+  "resource_uuid": "123e4567-e89b-12d3-a456-426614174000",
+  "user_uuid": "123e4567-e89b-12d3-a456-426614174000"
+}
+```
 
-## Contact
+#### Get All Comments
+- **GET** `/comments`
 
-- [GitHub](https://github.com/nestjs/nest)
-- [Twitter](https://twitter.com/nestframework)
+#### Get One Comment
+- **GET** `/comments/:uuid`
+Example: `/comments/123e4567-e89b-12d3-a456-426614174000`
+
+#### Update a Comment
+- **PATCH** `/comments/:uuid`
+```json
+{
+  "content": "Contenu mis à jour",
+  "comment_status": "inactive"
+}
+```
+
+#### Delete a Comment
+- **DELETE** `/comments/:uuid`
+Example: `/comments/123e4567-e89b-12d3-a456-426614174000`
+
+
