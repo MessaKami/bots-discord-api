@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, OneToMany, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
 import { Category } from '../../categories/entities/category.entity';
 import { Guild } from '../../guilds/entities/guild.entity';
 import { Role } from '../../roles/entities/role.entity';
@@ -7,8 +7,8 @@ import { Channel } from '../../channels/entities/channel.entity';
 
 @Entity('courses')
 export class Course {
-    @PrimaryGeneratedColumn('uuid')
-    uuidCourse: string;
+    @PrimaryGeneratedColumn('uuid', { name: 'uuid_course' })
+    uuid_course: string;
 
     @Column({ type: 'varchar' })
     name: string;
@@ -37,12 +37,15 @@ export class Course {
     @Column({ name: 'uuid_category', type: 'varchar', length: 19, nullable: true })
     uuidCategory: string;
 
-    //@OneToOne(() => Guild, guild => guild.course)
-    //@JoinColumn({ name: 'uuidGuild' })
-    //guild: Guild;
-
     @Column({ name: 'uuid_guild', type: 'varchar', length: 19, nullable: true})
-    uuidGuild: string;
+    uuid_uuild: string;
+
+    @ManyToOne(() => Guild, guild => guild.courses)
+    @JoinColumn({ name: 'uuid_guild' })
+    guild: Guild;
+
+    @Column({ name: 'uuid_role', type: 'varchar', length: 19, nullable: true })
+    uuid_role: string;
 
     @OneToMany(() => Role, role => role.course)
     roles: Role[];

@@ -1,47 +1,78 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreatePromotionDto } from './dto/create-promotion.dto';
 import { UpdatePromotionDto } from './dto/update-promotion.dto';
 import { Promotion } from './entities/promotion.entity';
+import { Role } from '../roles/entities/role.entity';
 
 @Injectable()
 export class PromotionsService {
   constructor(
     @InjectRepository(Promotion)
     private promotionRepository: Repository<Promotion>,
+
+    @InjectRepository(Role)
+    private roleRepository: Repository<Role>,
   ) {}
 
-  create(createPromotionDto: CreatePromotionDto) {
-    const promotion = this.promotionRepository.create(createPromotionDto);
-    return this.promotionRepository.save(promotion);
+  async create(createPromotionDto: CreatePromotionDto): Promise<Promotion> {
+    try {
+      // Création du rôle associé à la promotion
+      const newRole = this.roleRepository.create({
+        uuid_role: createPromotionDto.uuid_role, // UUID fourni par le DTO
+        uuid_guild: createPromotionDto.uuid_guild, // Lié à la guilde
+        name: createPromotionDto.name, // Même nom que la promotion
+        member_count: "0",
+        role_position: "0",
+        hoist: false,
+        color: "#000000",
+      });
+
+      // Sauvegarde du rôle
+      const savedRole = await this.roleRepository.save(newRole);
+
+      // Création de la promotion avec le rôle associé
+      const newPromotion = this.promotionRepository.create({
+        ...createPromotionDto,
+        uuid_role: savedRole.uuid_role, // Associe le rôle créé à la promotion
+      });
+
+      return await this.promotionRepository.save(newPromotion);
+    } catch (error) {
+      throw new BadRequestException('Erreur lors de la création de la promotion: ' + error.message);
+    }
   }
 
-  findAll() {
-    return this.promotionRepository.find();
+  async findAll(): Promise<Promotion[]> {
+    return await this.promotionRepository.find();
   }
 
-  findOne(uuid: string) {
-    return this.promotionRepository.findOneBy({ uuid });
-  }
-
-  async update(uuid: string, updatePromotionDto: UpdatePromotionDto) {
+  async findOne(uuid: string): Promise<Promotion> {
     const promotion = await this.promotionRepository.findOneBy({ uuid });
     if (!promotion) {
-      return null;
+      throw new NotFoundException(`Promotion avec UUID ${uuid} non trouvée`);
     }
-    
-    // Mise à jour des champs autorisés uniquement
+    return promotion;
+  }
+
+  async update(uuid: string, updatePromotionDto: UpdatePromotionDto): Promise<Promotion> {
+    const promotion = await this.findOne(uuid);
+
+    // Mise à jour des champs autorisés
     const { name, startDate, endDate } = updatePromotionDto;
     if (name !== undefined) promotion.name = name;
     if (startDate !== undefined) promotion.startDate = startDate;
     if (endDate !== undefined) promotion.endDate = endDate;
     
     promotion.updatedAt = new Date();
-    return this.promotionRepository.save(promotion);
+    return await this.promotionRepository.save(promotion);
   }
 
-  remove(uuid: string) {
-    return this.promotionRepository.delete({ uuid });
+  async remove(uuid: string): Promise<void> {
+    const result = await this.promotionRepository.delete({ uuid });
+    if (result.affected === 0) {
+      throw new NotFoundException(`Promotion avec UUID ${uuid} non trouvée`);
+    }
   }
-} 
+}

@@ -1,9 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, JoinTable, OneToOne, ManyToMany } from 'typeorm';
 import { Guild } from '../../guilds/entities/guild.entity'
 import { MemberInformation } from '../../members-informations/entities/member-information.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { IdentificationRequest } from 'src/identification-requests/entities/identification-request.entity';
 import { DiscordUser } from 'src/discord-users/entities/discord-user.entity';
+import { Role } from 'src/roles/entities/role.entity';
 
 @Entity('members')
 export class Member {
@@ -89,5 +90,13 @@ export class Member {
 
   @OneToOne(() => IdentificationRequest, (identificationRequest) => identificationRequest.member)
   identificationRequest: IdentificationRequest;
+
+  @ApiProperty({
+    description: 'Rôles du membre',
+    type: () => [Role]
+  })
+  @ManyToMany(() => Role, (role) => role.members)
+  @JoinTable()
+  roles: Role[];
 
 }

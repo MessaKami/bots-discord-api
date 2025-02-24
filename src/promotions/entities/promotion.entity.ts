@@ -1,6 +1,8 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToOne } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Course } from '../../courses/entities/course.entity';
+import { Guild } from '../../guilds/entities/guild.entity';
+import { Role } from 'src/roles/entities/role.entity';
 
 @Entity('Promotions')
 export class Promotion {
@@ -61,9 +63,23 @@ export class Promotion {
   updatedAt: Date;
 
   @Column({ name: 'uuid_course', type: 'uuid' })
-  uuidCourse: string;
+  uuid_course: string;
 
   @ManyToOne(() => Course, course => course.promotions)
   @JoinColumn({ name: 'uuid_course' })
   course: Course;
+
+  @Column({ name: 'uuid_guild', type: 'varchar', length: 19, nullable: true })
+  uuid_guild: string;
+
+  @ManyToOne(() => Guild, guild => guild.promotions)
+  @JoinColumn({ name: 'uuid_guild' })
+  guild: Guild;
+
+  @Column({ name: 'uuid_role', type: 'varchar', length: 19, nullable: true })
+  uuid_role: string;
+
+  @OneToOne(() => Role, role => role.promotion)
+  @JoinColumn({ name: 'uuid_role' })
+  role: Role
 }
