@@ -22,12 +22,6 @@ export class Answer {
   @Column({ type: 'varchar', length: 50 })
   content: string;
 
-  @Column({
-    name: 'is_multiple_answer',
-    type: 'boolean',
-  })
-  isMultipleAnswer: boolean;
-
   @ApiProperty({
     description: 'La question associée à cette réponse',
     type: () => Question
