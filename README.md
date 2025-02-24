@@ -47,6 +47,7 @@ Cette API est conçue pour gérer des bots Discord en utilisant le framework Nes
   - [Dashboard Accounts Endpoints](#dashboard-accounts-endpoints)
   - [Discord Users Endpoints](#discord-users-endpoints)
   - [Members Endpoints](#members-endpoints)
+  - [Resources Endpoints](#resources-endpoints)
 
 
 # Normes pour les commits et les pull requests ✍️
@@ -731,5 +732,41 @@ Example: `/members/123e4567-e89b-12d3-a456-426614174000`
 #### Delete a Member
 - **DELETE** `/members/:uuid`
 Example: `/members/123e4567-e89b-12d3-a456-426614174000`
+
+### Resources Endpoints
+
+#### Create a Resource
+- **POST** `/resources`
+```json
+{
+  "title": "Guide de démarrage",
+  "description": "Un guide complet pour démarrer avec le bot",
+  "content": "Voici les étapes pour configurer le bot...",
+  "status": "active",
+  "uuid_member": "123e4567-e89b-12d3-a456-426614174000"
+}
+```
+
+#### Get All Resources
+- **GET** `/resources`
+
+#### Get One Resource
+- **GET** `/resources/:uuid`
+Example: `/resources/123e4567-e89b-12d3-a456-426614174000`
+
+#### Update a Resource
+- **PATCH** `/resources/:uuid`
+```json
+{
+  "title": "Guide de démarrage mis à jour",
+  "description": "Guide mis à jour avec les nouvelles fonctionnalités",
+  "content": "Nouvelles étapes de configuration...",
+  "status": "inactive"
+}
+```
+
+#### Delete a Resource
+- **DELETE** `/resources/:uuid`
+Example: `/resources/123e4567-e89b-12d3-a456-426614174000`
 
 
