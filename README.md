@@ -48,6 +48,7 @@ Cette API est conçue pour gérer des bots Discord en utilisant le framework Nes
   - [Discord Users Endpoints](#discord-users-endpoints)
   - [Members Endpoints](#members-endpoints)
   - [Resources Endpoints](#resources-endpoints)
+  - [Reports Endpoints](#reports-endpoints)
 
 
 # Normes pour les commits et les pull requests ✍️
@@ -768,5 +769,41 @@ Example: `/resources/123e4567-e89b-12d3-a456-426614174000`
 #### Delete a Resource
 - **DELETE** `/resources/:uuid`
 Example: `/resources/123e4567-e89b-12d3-a456-426614174000`
+
+### Reports Endpoints
+
+#### Create a Report
+- **POST** `/reports`
+```json
+{
+  "type": "resource",
+  "category": "inappropriate",
+  "reason": "Contenu offensant envers la communauté",
+  "uuid_resource": "123e4567-e89b-12d3-a456-426614174000",
+  "uuid_reporter": "323b07a1-7cea-4916-82a5-76ff201fa0e2"
+}
+```
+
+#### Get All Reports
+- **GET** `/reports`
+
+#### Get One Report
+- **GET** `/reports/:uuid_report`
+Example: `/reports/123e4567-e89b-12d3-a456-426614174000`
+
+#### Update a Report
+- **PATCH** `/reports/:uuid_report`
+```json
+{
+  "status": "resolved",
+  "reason": "Contenu mis à jour"
+}
+```
+Note: Seuls les modérateurs peuvent mettre à jour les signalements.
+
+#### Delete a Report
+- **DELETE** `/reports/:uuid_report`
+Example: `/reports/123e4567-e89b-12d3-a456-426614174000`
+Note: Un utilisateur ne peut supprimer que ses propres signalements.
 
 
