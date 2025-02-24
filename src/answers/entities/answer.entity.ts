@@ -1,4 +1,4 @@
-import { Entity, Column, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
+import { Entity, Column, ManyToOne, PrimaryGeneratedColumn, JoinColumn} from 'typeorm';
 import { Question } from 'src/questions/entities/question.entity';  
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -27,6 +27,7 @@ export class Answer {
     type: () => Question
   })
   @ManyToOne(() => Question, (question) => question.answers)
+  @JoinColumn({ name: 'uuid_question' })
   question: Question;
 
 }
