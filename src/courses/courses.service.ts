@@ -22,34 +22,39 @@ export class CoursesService {
             const existingCourse = await this.courseRepository.findOne({
                 where: { name: createCourseDto.name },
             });
-
+    
             if (existingCourse) {
                 throw new ConflictException(`Course with name ${createCourseDto.name} already exists`);
             }
-
+    
             // Créer un rôle associé au cours
             const newRole = this.roleRepository.create({
                 uuid_guild: createCourseDto.uuid_guild,
+                uuid_role: createCourseDto.uuid_role,
                 name: createCourseDto.name,
                 member_count: "0",
                 role_position: "0",
                 hoist: false,
                 color: "#000000",
             });
-
+    
             const savedRole = await this.roleRepository.save(newRole);
-
+    
+            if (!savedRole || !savedRole.uuid_role) {
+                throw new BadRequestException('Failed to create role before assigning to course.');
+            }
+    
             // Créer le cours en associant le rôle
             const newCourse = this.courseRepository.create({
                 ...createCourseDto,
-                roles: [savedRole], // Correction ici
+                role: savedRole, 
             });
-
+    
             return await this.courseRepository.save(newCourse);
         } catch (error) {
             throw new BadRequestException('Erreur lors de la création du cours: ' + error.message);
         }
-    }
+    }    
 
     async findAll(): Promise<Course[]> {
         return await this.courseRepository.find({
