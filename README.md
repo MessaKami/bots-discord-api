@@ -57,6 +57,7 @@ Cette API est conçue pour gérer des bots Discord en utilisant le framework Nes
   - [Identification Requests Endpoints](#identification-requests-endpoints)
   - [Members Informations Endpoints](#members-informations-endpoints)
   - [Moderator Actions Endpoints](#moderator-actions-endpoints)
+  - [Tags](#tags)
 
 
 # Normes pour les commits et les pull requests ✍️
@@ -907,5 +908,74 @@ Example: `/xp-transactions/member/123e4567-e89b-12d3-a456-426614174000`
 Example: `/xp-transactions/123e4567-e89b-12d3-a456-426614174000`
 
 Note: Les transactions XP ne peuvent pas être modifiées ou supprimées une fois créées pour maintenir l'intégrité des données.
+
+### Moderator Actions Endpoints
+
+#### Créer une action de modération
+- **POST** `/moderator-actions`
+- **Corps de la requête** :
+```json
+{
+  "userId": "123e4567-e89b-12d3-a456-426614174001",
+  "actionType": "ban",
+  "reason": "Violation des règles de la communauté",
+  "duration": "24h",
+  "notes": "Récidive après deux avertissements"
+}
+```
+
+#### Récupérer toutes les actions de modération
+- **GET** `/moderator-actions`
+
+#### Récupérer une action de modération
+- **GET** `/moderator-actions/:id`
+- **Exemple** : `/moderator-actions/123e4567-e89b-12d3-a456-426614174000`
+
+#### Mettre à jour une action de modération
+- **PUT** `/moderator-actions/:id`
+- **Corps de la requête** :
+```json
+{
+  "reason": "Mise à jour de la raison",
+  "notes": "Notes additionnelles"
+}
+```
+
+#### Supprimer une action de modération
+- **DELETE** `/moderator-actions/:id`
+- **Exemple** : `/moderator-actions/123e4567-e89b-12d3-a456-426614174000`
+
+### Tags
+
+#### Créer un tag
+- **POST** `/tags`
+- **Corps de la requête** :
+```json
+{
+  "name": "JavaScript",
+  "description": "Langage de programmation pour le web"
+}
+```
+
+#### Récupérer tous les tags
+- **GET** `/tags`
+
+#### Récupérer un tag
+- **GET** `/tags/:id`
+- **Exemple** : `/tags/550e8400-e29b-41d4-a716-446655440000`
+
+#### Mettre à jour un tag
+- **PATCH** `/tags/:id`
+- **Corps de la requête** :
+```json
+{
+  "name": "JavaScript ES2022",
+  "description": "Dernière version du langage JavaScript"
+}
+```
+
+#### Supprimer un tag
+- **DELETE** `/tags/:id`
+- **Exemple** : `/tags/550e8400-e29b-41d4-a716-446655440000`
 
 
