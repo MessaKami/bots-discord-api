@@ -13,21 +13,21 @@ export class DashboardAccountController {
         return this.dashboardAccountService.create(createDashboardAccountDto);
     }
 
-    @Get(':uuid_dashboard_account')
-    async getByUUID(@Param('uuid_dashboard_account') uuid_dashboard_account: string): Promise<DashboardAccount> {
-        return this.dashboardAccountService.getByUUID(uuid_dashboard_account);
+    @Get(':uuidDashboardAccount')
+    async getByUUID(@Param('uuidDashboardAccount') uuidDashboardAccount: string): Promise<DashboardAccount> {
+        return this.dashboardAccountService.getByUUID(uuidDashboardAccount);
     }
 
-    @Put(':uuid_dashboard_account')
+    @Put(':uuidDashboardAccount')
     async updateByUUID(
-        @Param('uuid_dashboard_account') uuid_dashboard_account: string,
+        @Param('uuidDashboardAccount') uuidDashboardAccount: string,
         @Body() updateDashboardAccountDto: UpdateDashboardAccountDto,
     ): Promise<DashboardAccount> {
-        return this.dashboardAccountService.updateByUUID(uuid_dashboard_account, updateDashboardAccountDto);
+        return this.dashboardAccountService.updateByUUID(uuidDashboardAccount, updateDashboardAccountDto);
     }
 
-    @Delete(':uuid_dashboard_account')
-    async deleteByUUID(@Param('uuid_dashboard_account') uuid_dashboard_account: string): Promise<void> {
-        return this.dashboardAccountService.deleteByUUID(uuid_dashboard_account);
+    @Delete(':uuidDashboardAccount')
+    async deleteByUUID(@Param('uuidDashboardAccount') uuidDashboardAccount: string): Promise<void> {
+        return this.dashboardAccountService.deleteByUUID(uuidDashboardAccount);
     }
 }
