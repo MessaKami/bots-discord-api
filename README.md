@@ -43,6 +43,7 @@ Cette API est conçue pour gérer des bots Discord en utilisant le framework Nes
   - [Messages Endpoints](#messages-endpoints)
   - [Answers Endpoints](#answers-endpoints)
   - [Comments Endpoints](#comments-endpoints)
+  - [Courses Endpoints](#courses-endpoints)
 
 
 # Normes pour les commits et les pull requests ✍️
@@ -594,5 +595,38 @@ Example: `/comments/123e4567-e89b-12d3-a456-426614174000`
 #### Delete a Comment
 - **DELETE** `/comments/:uuid`
 Example: `/comments/123e4567-e89b-12d3-a456-426614174000`
+
+### Courses Endpoints
+
+#### Create a Course
+- **POST** `/courses`
+```json
+{
+  "name": "cda-vals-p4",
+  "isCertified": true,
+  "uuidGuild": "123456789012345678",
+  "uuidCategory": "123456789012345678"
+}
+```
+
+#### Get All Courses
+- **GET** `/courses`
+
+#### Get One Course
+- **GET** `/courses/:uuid`
+Example: `/courses/123e4567-e89b-12d3-a456-426614174000`
+
+#### Update a Course
+- **PUT** `/courses/:uuid`
+```json
+{
+  "name": "updated-course",
+  "isCertified": false
+}
+```
+
+#### Delete a Course
+- **DELETE** `/courses/:uuid`
+Example: `/courses/123e4567-e89b-12d3-a456-426614174000`
 
 
