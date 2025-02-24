@@ -40,6 +40,8 @@ Cette API est conçue pour gérer des bots Discord en utilisant le framework Nes
   - [Channel Endpoints](#channel-endpoints)
   - [Promotion Endpoints](#promotion-endpoints)
   - [Roles Endpoints](#roles-endpoints)
+  - [Messages Endpoints](#messages-endpoints)
+  - [Answers Endpoints](#answers-endpoints)
 - [Support](#support)
 - [Contact](#contact)
 
@@ -411,6 +413,7 @@ Example: `/roles/123456789012345678`
 - **DELETE** `/roles/:uuid`
 Example: `/roles/123456789012345678`
 
+
 ### Identification Requests Endpoints
 
 #### Create identification request
@@ -525,3 +528,46 @@ Note:
 - All timestamps (`createdAt`, `updatedAt`) are managed automatically
 - For Guild endpoints, the `uuid` must be a valid Discord server ID (17-20 digits)
 - For Campus endpoints, the `uuid` is automatically generated
+
+### Answers Endpoints
+
+#### Create an Answer
+- **POST** `/answers`
+```json
+{
+  "content": "Paris",
+  "isMultipleAnswer": false,
+  "questionUuid": "123e4567-e89b-12d3-a456-426614174000"
+}
+```
+
+#### Get All Answers
+- **GET** `/answers`
+
+#### Get One Answer
+- **GET** `/answers/:uuid`
+Example: `/answers/123e4567-e89b-12d3-a456-426614174000`
+
+#### Update an Answer
+- **PUT** `/answers/:uuid`
+```json
+{
+  "content": "Updated answer",
+  "isMultipleAnswer": true
+}
+```
+
+#### Delete an Answer
+- **DELETE** `/answers/:uuid`
+Example: `/answers/123e4567-e89b-12d3-a456-426614174000`
+
+## Support
+
+- [GitHub Issues](https://github.com/nestjs/nest/issues)
+- [Discord](https://discord.gg/G7Qnnhy)
+- [Open Collective](https://opencollective.com/nest#backer)
+
+## Contact
+
+- [GitHub](https://github.com/nestjs/nest)
+- [Twitter](https://twitter.com/nestframework)
