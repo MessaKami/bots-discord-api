@@ -20,12 +20,17 @@ export class MembersService {
 
   // Récupérer tous les membres
   async findAll(): Promise<Member[]> {
-    return await this.membersRepository.find();
+    return await this.membersRepository.find({
+      relations: ['resources']
+    });
   }
 
   // Récupérer un membre par son uuid
   async findOne(uuid_member: string): Promise<Member> {
-    const member = await this.membersRepository.findOneBy({ uuid_member });
+    const member = await this.membersRepository.findOne({
+      where: { uuid_member },
+      relations: ['resources']
+    });
     if (!member) {
       throw new NotFoundException(`Member with UUID ${uuid_member} not found`);
     }
