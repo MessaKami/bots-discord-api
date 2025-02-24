@@ -1,9 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToOne, ManyToMany, JoinTable } from 'typeorm';
 import { Guild } from '../../guilds/entities/guild.entity'
 import { MemberInformation } from '../../members-informations/entities/member-information.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { IdentificationRequest } from 'src/identification-requests/entities/identification-request.entity';
 import { DiscordUser } from 'src/discord-users/entities/discord-user.entity';
+import { Role } from '../../roles/entities/role.entity';
 
 @Entity('members')
 export class Member {
@@ -13,7 +14,7 @@ export class Member {
     example: '123e4567-e89b-12d3-a456-426614174000'
   })
   @PrimaryGeneratedColumn('uuid', { name: 'uuid_member' })
-  uuid_member: string;
+  uuid: string;
 
   @ApiProperty({
     description: 'Nom d\'utilisateur du membre dans la guilde',
@@ -67,7 +68,7 @@ export class Member {
   updatedAt: Date;
 
   @Column({ type: 'uuid', name: 'uuid_guild' })
-  uuid_guild: string;
+  uuidGuild: string;
 
   @ApiProperty({
     description: 'Relation avec la guilde',
@@ -78,7 +79,7 @@ export class Member {
   guild: Guild;  
 
   @Column({ type: 'uuid', name: 'uuid_discord' }) 
-  uuid_discord: string;
+  uuidDiscord: string;
 
   @OneToOne(() => DiscordUser, (discordUser) => discordUser.member)
   @JoinColumn({ name: 'uuid_discord' })
@@ -89,5 +90,23 @@ export class Member {
 
   @OneToOne(() => IdentificationRequest, (identificationRequest) => identificationRequest.member)
   identificationRequest: IdentificationRequest;
+
+  @ApiProperty({
+    description: 'Les rôles du membre',
+    type: () => [Role]
+  })
+  @ManyToMany(() => Role, role => role.members)
+  @JoinTable({
+    name: 'members_roles',
+    joinColumn: {
+      name: 'uuid_member',
+      referencedColumnName: 'uuid'
+    },
+    inverseJoinColumn: {
+      name: 'uuid_role',
+      referencedColumnName: 'uuid'
+    }
+  })
+  roles: Role[];
 
 }
