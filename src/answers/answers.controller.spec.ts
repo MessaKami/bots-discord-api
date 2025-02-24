@@ -41,8 +41,7 @@ describe('AnswersController', () => {
     it('should create a new answer', async () => {
       const createAnswerDto: CreateAnswerDto = {
         content: 'Test answer',
-        questionUuid: 'test-question-uuid',
-        isMultipleAnswer: false,
+        questionUuid: 'test-question-uuid'
       };
       const expectedResult = { uuid: 'test-uuid', ...createAnswerDto };
 
@@ -58,8 +57,8 @@ describe('AnswersController', () => {
   describe('findAll', () => {
     it('should return an array of answers', async () => {
       const expectedResult = [
-        { uuid: 'uuid1', content: 'Answer 1', questionUuid: 'q-uuid1', isMultipleAnswer: false },
-        { uuid: 'uuid2', content: 'Answer 2', questionUuid: 'q-uuid2', isMultipleAnswer: true },
+        { uuid: 'uuid1', content: 'Answer 1', questionUuid: 'q-uuid1' },
+        { uuid: 'uuid2', content: 'Answer 2', questionUuid: 'q-uuid2' }
       ];
 
       mockAnswersService.findAll.mockResolvedValue(expectedResult);
@@ -77,8 +76,7 @@ describe('AnswersController', () => {
       const expectedResult = {
         uuid,
         content: 'Test answer',
-        questionUuid: 'q-uuid',
-        isMultipleAnswer: false,
+        questionUuid: 'q-uuid'
       };
 
       mockAnswersService.findOne.mockResolvedValue(expectedResult);
@@ -94,13 +92,12 @@ describe('AnswersController', () => {
     it('should update an answer', async () => {
       const uuid = 'test-uuid';
       const updateAnswerDto: UpdateAnswerDto = {
-        content: 'Updated answer',
-        isMultipleAnswer: true,
+        content: 'Updated answer'
       };
       const expectedResult = {
         uuid,
         ...updateAnswerDto,
-        questionUuid: 'q-uuid',
+        questionUuid: 'q-uuid'
       };
 
       mockAnswersService.update.mockResolvedValue(expectedResult);
@@ -114,8 +111,7 @@ describe('AnswersController', () => {
     it('should throw NotFoundException when answer not found', async () => {
       const uuid = 'non-existent-uuid';
       const updateAnswerDto: UpdateAnswerDto = {
-        content: 'Updated answer',
-        isMultipleAnswer: false,
+        content: 'Updated answer'
       };
 
       mockAnswersService.update.mockResolvedValue(null);
